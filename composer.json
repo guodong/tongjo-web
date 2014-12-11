@@ -1,0 +1,13 @@
+{
+    "name": "tongjo-api",
+    "repositories": [{
+        "type": "composer",
+        "url": "http://pkg.phpcomposer.com/repo/packagist/"
+    },
+    {
+        "packagist": false
+    }],
+    "require": {
+		"smarty/smarty": "3.1.21"
+	}
+}

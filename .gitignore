@@ -1,0 +1,8 @@
+/vendor
+.DS_Store
+.settings
+.project
+.buildpath
+/templates_c
+node_modules
+bower_components
