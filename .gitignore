@@ -1,8 +1,11 @@
-/vendor
+vendor
 .DS_Store
 .settings
 .project
 .buildpath
-/templates_c
+templates_c
 node_modules
 bower_components
+public/build
+public/lib
+dest

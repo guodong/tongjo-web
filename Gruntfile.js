@@ -1,5 +1,4 @@
 module.exports = function(grunt) {
-
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         uglify: {
@@ -7,23 +6,53 @@ module.exports = function(grunt) {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             build: {
-                src: 'src/<%= pkg.name %>.js',
-                dest: 'build/<%= pkg.name %>.min.js'
+                src: 'src/js/*.js',
+                dest: 'public/build/tongjo.min.js'
+            }
+        },
+        concat: {
+            css: {
+                src: ['src/css/*.css'],
+                dest: 'dest/css/all.css'
+            }
+        },
+        less: {
+            production: {
+                options: {
+                	cleancss: true
+                },
+                files: {
+                    "dest/css/tongjo.css": "src/less/tongjo.less"
+                }
+            }
+        },
+        cssmin: {
+            css: {
+                src: 'dest/css/tongjo.css',
+                dest: 'public/build/css/tongjo.min.css'
             }
         },
         bower: {
             install: {
-              options: {
-                targetDir: './public/lib'
-              }
+                options: {
+                    targetDir: './public/lib'
+                }
             }
-          }
+        },
+        watch: {
+            css: {
+                files: ['src/less/*.less'],
+                tasks: ['less', 'concat', 'cssmin'],
+            },
+        },
     });
-    
+    grunt.loadNpmTasks('grunt-css');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-less');
 
-    // 默认被执行的任务列表。
-    grunt.registerTask('default', ['uglify', 'bower']);
-
+    grunt.registerTask('all', ['uglify', 'bower', 'concat', 'cssmin']);
+    grunt.registerTask('default', ['uglify', 'less', 'concat', 'cssmin']);
 };

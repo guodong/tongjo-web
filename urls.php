@@ -3,5 +3,6 @@ $urls = array(
         '#^/$#' => 'index',
 		'#^/login$#' => 'login',
 		'#^/signup$#' => 'signup',
-        '#^/me$#' => 'me'
+        '#^/me$#' => 'me',
+        '#^/project!#' => 'project'
 );
