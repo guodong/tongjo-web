@@ -7,7 +7,7 @@ module.exports = function(grunt) {
             },
             build: {
                 src: 'src/js/*.js',
-                dest: 'public/build/tongjo.min.js'
+                dest: 'public/build/js/tongjo.min.js'
             }
         },
         concat: {
