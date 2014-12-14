@@ -1,3 +1,6 @@
+html, body {
+    height: 100%;
+}
 a{
 	cursor: pointer;
 }
@@ -39,12 +42,12 @@ header{
 		background: #83c257;
 		padding-left: 20px;
 		background-size: cover;
-		background-clip: content-box;
+		background-clip: border-box;
 		box-sizing: border-box;
 		position: absolute;
 		bottom: -22px;
+		padding-left: 20px;		
 		ul{
-			padding-left: 20px;
 			li{
 				display: inline;
 				a{
@@ -70,6 +73,65 @@ header{
 			right: -25px;
 			box-shadow: 0px 7px 6px -9px black;
 			transform: rotate(45deg);
+		}
+	}
+}
+.footer-fix{
+	min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -140px;
+}
+
+footer{
+	position: relative;
+	width: 100%;
+	height: 140px;
+	background: #424242;
+	.wrapper{
+		position: relative;
+	}
+	.stat{
+		background: #83c257;
+		height: 80px;
+		width: 960px;
+		position: absolute;
+		top: -22px;
+		color: #fff;
+		font-size: 24px;
+		padding-top: 10px;
+		text-align: center;
+		.silk{
+			background: #83c257;		
+			width: 3000px;
+			height: 100%;
+			position: absolute;
+			right: 50%;
+			top: 0;
+		}
+		.sm{
+			font-size: 14px;
+		}
+		&:after{
+			content: "";
+			display: block;
+			position: absolute;
+			border: 20px solid transparent;
+			border-bottom: 20px solid #424242;
+			bottom: -25px;
+			right: -25px;
+			box-shadow: 0px 7px 6px -9px black;
+			transform: rotate(135deg);
+		}
+	}
+
+	.text{
+		padding-top: 70px;
+		text-align: center;
+		line-height: 30px;
+		color: #fff;
+		a{
+			color: #fff;
 		}
 	}
 }
