@@ -1,12 +1,142 @@
+html, body {
+    height: 100%;
+}
+a{
+	cursor: pointer;
+}
 .wrapper{
 	width: 960px;
 	margin: 0 auto;
 }
+
 header{
 	height: 90px;
 	background: #424242;
+	.wrapper{
+		position: relative;
+		height: 100%;
+	}
 	img{
 		height: 50px;
 		margin-top: 10px;  
+	}
+	.topbar{
+		float: right;
+		li{
+			display: inline-block;
+			margin-top: 20px;
+			a{
+				display: block;
+				margin: 0 7px;
+				color: #fff;
+				font-size: 16px;
+				&:hover{
+					text-decoration: none;
+				}
+			}
+		}
+	}
+	.subnav {
+		width: 100%;
+		height: 44px;
+		background: #83c257;
+		padding-left: 20px;
+		background-size: cover;
+		background-clip: border-box;
+		box-sizing: border-box;
+		position: absolute;
+		bottom: -22px;
+		padding-left: 20px;		
+		ul{
+			li{
+				display: inline;
+				a{
+					display: inline-block;
+					line-height: 44px;
+					height: 100%;
+					color: #fff;
+					padding: 0 10px;
+					&:hover{
+						background: #93d267;
+					}
+				}
+			}		
+		}
+		
+		&:after {
+			content: "";
+			display: block;
+			position: absolute;
+			border: 18px solid transparent;
+			border-bottom: 20px solid #424242;
+			top: -25px;
+			right: -25px;
+			box-shadow: 0px 7px 6px -9px black;
+			transform: rotate(45deg);
+		}
+	}
+}
+.footer-fix{
+	min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -142px;
+}
+.push{
+	height: 180px;
+}
+footer{
+	position: relative;
+	bottom: 0;
+	width: 100%;
+	height: 140px;
+	background: #424242;
+	.wrapper{
+		position: relative;
+	}
+	.stat{
+		background: #83c257;
+		height: 60px;
+		width: 960px;
+		position: absolute;
+		top: -22px;
+		color: #fff;
+		font-size: 24px;
+		padding-top: 10px;
+		text-align: center;
+		line-height: 26px;
+		.silk{
+			background: #83c257;		
+			width: 3000px;
+			height: 100%;
+			position: absolute;
+			right: 50%;
+			top: 0;
+		}
+		.sm{
+			font-size: 14px;
+			line-height: 18px;
+		}
+		&:after{
+			content: "";
+			display: block;
+			position: absolute;
+			border: 20px solid transparent;
+			border-bottom: 20px solid #424242;
+			bottom: -25px;
+			right: -25px;
+			box-shadow: 0px 7px 6px -9px black;
+			transform: rotate(135deg);
+		}
+	}
+
+	.text{
+		padding-top: 70px;
+		text-align: center;
+		line-height: 30px;
+		color: #fff;
+		a{
+			color: #fff;
+		}
 	}
 }

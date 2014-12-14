@@ -7,7 +7,7 @@ module.exports = function(grunt) {
             },
             build: {
                 src: 'src/js/*.js',
-                dest: 'public/build/tongjo.min.js'
+                dest: 'public/build/js/tongjo.min.js'
             }
         },
         concat: {
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
         },
         watch: {
             css: {
-                files: ['src/less/*.less'],
+                files: ['src/less/*.less', 'src/less/*/*.less'],
                 tasks: ['less', 'concat', 'cssmin'],
             },
         },
