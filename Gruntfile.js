@@ -44,6 +44,13 @@ module.exports = function(grunt) {
                 files: ['src/less/*.less', 'src/less/*/*.less'],
                 tasks: ['less', 'concat', 'cssmin'],
             },
+            another: {
+                files: ['src/js/*.js'],
+                tasks: ['uglify'],
+                options: {
+                  livereload: 1337,
+                },
+              }
         },
     });
     grunt.loadNpmTasks('grunt-css');
