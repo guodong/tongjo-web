@@ -15,7 +15,7 @@ foreach ($urls as $reg => $tpl) {
         $smarty->setConfigDir('../configs/');
         $smarty->setCacheDir('../cache/');
         $smarty->left_delimiter = '{!';
-        $smarty->right_delimiter = '!}';
+        $smarty->right_delimiter = '!}';  
         foreach ($matched as $k=>$v){
             $smarty->assign($k, $v);
         }
