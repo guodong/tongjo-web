@@ -1,15 +1,15 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        uglify: {
-            options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-            },
-            build: {
-                src: 'src/js/*.js',
-                dest: 'public/build/js/tongjo.min.js'
-            }
-        },
+//        uglify: {
+//            options: {
+//                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+//            },
+//            build: {
+//                src: 'src/js/*.js',
+//                dest: 'public/build/js/tongjo.min.js'
+//            }
+//        },
         concat: {
             css: {
                 src: ['src/css/*.css'],
@@ -19,7 +19,7 @@ module.exports = function(grunt) {
         less: {
             production: {
                 options: {
-                	cleancss: true
+                    cleancss: true
                 },
                 files: {
                     "dest/css/tongjo.css": "src/less/tongjo.less"
@@ -39,27 +39,36 @@ module.exports = function(grunt) {
                 }
             }
         },
+        requirejs: {
+            compile: {
+                options: {
+                    baseUrl: "src/js",
+                    mainConfigFile: "src/js/config.js",
+                    name: "tongjo",
+                    out: "public/build/js/tongjo.min.js"
+                }
+            }
+        },
         watch: {
             css: {
                 files: ['src/less/*.less', 'src/less/*/*.less'],
                 tasks: ['less', 'concat', 'cssmin'],
             },
-            another: {
+            js: {
                 files: ['src/js/*.js'],
-                tasks: ['uglify'],
-                options: {
-                  livereload: 1337,
-                },
-              }
+                tasks: ['requirejs']
+            }
         },
     });
+    
     grunt.loadNpmTasks('grunt-css');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
 
-    grunt.registerTask('all', ['uglify', 'bower', 'concat', 'cssmin']);
-    grunt.registerTask('default', ['uglify', 'less', 'concat', 'cssmin']);
+    grunt.registerTask('all', ['bower', 'concat', 'cssmin']);
+    grunt.registerTask('default', ['less', 'concat', 'cssmin']);
 };

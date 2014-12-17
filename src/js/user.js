@@ -1,1 +1,3 @@
-alert();
+define(['angular'], function(ng) {
+	alert()
+});

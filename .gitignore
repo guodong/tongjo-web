@@ -9,3 +9,4 @@ bower_components
 public/build
 public/lib
 dest
+deployment.properties
