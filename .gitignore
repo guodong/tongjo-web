@@ -6,5 +6,6 @@ vendor
 templates_c/*
 node_modules
 bower_components
+public/build/css
 dest
 deployment.properties
