@@ -1,10 +1,11 @@
 <?php
 session_start();
-require_once ('../vendor/smarty/smarty/libs/Smarty.class.php');
+define('PATH_BASE', realpath('../') . '/');
+require_once (PATH_BASE.'vendor/smarty/smarty/libs/Smarty.class.php');
 
 $uri = $_SERVER['REQUEST_URI'];
 
-require_once '../urls.php';
+require_once PATH_BASE.'urls.php';
 $has = false;
 foreach ($urls as $reg => $tpl) {
     if (preg_match($reg, $uri, $matched)) {
