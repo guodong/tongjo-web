@@ -39,24 +39,21 @@ module.exports = function(grunt) {
                 }
             }
         },
-        requirejs: {
-            compile: {
-                options: {
-                    baseUrl: "src/js",
-                    mainConfigFile: "src/js/config.js",
-                    name: "tongjo",
-                    out: "public/build/js/tongjo.min.js"
-                }
-            }
-        },
+//        requirejs: {
+//            compile: {
+//                options: {
+//                    baseUrl: "src/js",
+//                    mainConfigFile: "src/js/config.js",
+//                    name: "config",
+//                    dir: "public/build/js",
+//                    out: "public/build/js/tongjo.min.js"
+//                }
+//            }
+//        },
         watch: {
             css: {
                 files: ['src/less/*.less', 'src/less/*/*.less'],
                 tasks: ['less', 'concat', 'cssmin'],
-            },
-            js: {
-                files: ['src/js/*.js'],
-                tasks: ['requirejs']
             }
         },
     });
