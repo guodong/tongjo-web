@@ -1,0 +1,28 @@
+<section class="tech">
+	<div class="clear clearfix">
+		<h2 class="title">{{title}}</h2>
+		<article ng-repeat="project in projects|paging:page.index:page.size track by $index">
+			<span ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()"> 
+			<img src="{{project.imgurl}}">
+				<div class="transparent_class" ng-show="hoverEdit">
+					<p>已报名团队：{{project.teamcount}}</p>
+					<p>个人报名：{{project.personcount}}</p>
+					<a class="small-button red" href="{{project.link}}">我要参加</a>
+				</div>
+			</span>
+			<h5>{{project.title}}</h5>
+		</article>		   
+	</div>
+	<pagination 
+	class="pagination-bottom"
+	ng-model="page.index"
+    total-items="projects|size"
+    items-per-page="page.size"
+    max-size="10"
+    previous-text="上一页"
+    next-text="下一页"
+    first-text="首页"
+    last-text="尾页"
+    boundary-links="true">
+    </pagination>
+</section>

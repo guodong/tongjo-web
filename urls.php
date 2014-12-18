@@ -6,5 +6,15 @@ $urls = array(
         '#^/me$#' => 'me',
 		'#^/team$#' => 'teamdetail',
 		'#^/newteam$#' => 'newteam',
-        '#^/project!#' => 'project'
+        '#^/project!#' => 'project',
+		'#^/login$#' => 'login',
+		'#^/signup$#' => 'signup',
+		'#^/personjoin$#' => 'personjoin',
+		'#^/personjoinsuccess$#' => 'personjoinsuccess',
+		'#^/jointeamsuccess$#' => 'jointeamsuccess',
+		'#^/scanproject$#' => 'scanproject',
+		'#^/scanproject-1$#' => 'scanproject-1',
+		'#^/scanproject-2$#' => 'scanproject-2',
+		'#^/recomproject$#' => 'recomproject',
+		'#^/choseskill$#' => 'choseskill'
 );

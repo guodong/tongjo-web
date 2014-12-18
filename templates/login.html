@@ -1,0 +1,56 @@
+{!extends file='base.html'!} {!block name=base!}
+
+<div ng-app="loginApp" class="loginsignup">
+	<div>
+		<div class="fullscreen_post_bg" style="background-image: url('/img/denglu.jpg');">
+        <!-- 主体 -->		
+		<div ng-controller="loginController" class="container-fluid loginsignupbox">
+			<div class="row">
+			<div class="div-logo-mid">
+			<a href="/index">
+                <h3 class="logo-mid">
+                </h3>
+            </a>
+            </div>
+				<div class="col-sm-12">
+							<form class="form-horizontal w5c-form" role="form"
+							w5c-form-validate="vm.validateOptions"
+								name="loginForm" novalidate >
+								<div class="form-group">
+									<div class="col-sm-12">
+										<input type="email" class="form-control" name="email"
+											placeholder="请输入邮箱"  ng-model="email" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-12">
+										<input type="password" class="form-control" name="password"
+											placeholder="请输入密码"  ng-model="password" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-12 boxcenter">
+										<div class="checkbox boxtext">
+											<label> <input type="checkbox"> 记住我
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-12">
+										<button type="submit" class="btn btn-primary col-sm-12" w5c-form-submit="vm.saveEntity()">登录</button>
+									</div>
+								</div>
+							</form>
+				</div>
+		    <div>
+            <div class="col-sm-5 col-sm-offset-1"><a  class = "logina" href="">找回密码</a></div>
+            <div class="col-sm-5 col-sm-offset-1"><a  class = "logina" href="/signup">快速注册</a></div>
+            </div>
+			</div>
+          
+		</div>
+	</div>		
+	</div><!-- 整体 -->
+</div>
+{!/block!}

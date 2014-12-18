@@ -1,0 +1,113 @@
+{!extends file='layout.html'!} {!block name=main!}
+<div class="recompro">
+<h2 class="title">适合您专业或特长的项目</h2>
+<hr>
+<section class="tech">
+		<div class="clear clearfix">
+			
+			<article>
+				<span >
+				<img src="/img/web.png">
+					<div class="transparent_class" style="display:none">
+						<p>已报名团队：2</p>
+						<p>个人报名：3</p>
+						<a class="small-button red" href="#">我要参加</a>
+					</div>
+				</span>
+				<h3>网站开发</h3>
+			</article>
+			<article>
+				<span>
+				<img src="/img/cpt.png">
+					<div class="transparent_class" style="display:none">
+						<p>已报名团队：2</p>
+						<p>个人报名：3</p>
+						<a class="small-button red" href="#">我要参加</a>
+					</div>
+				</span>
+				<h3>比赛</h3>
+			</article>
+			<article>
+				<span>
+				<img src="/img/market.png">
+					<div class="transparent_class" style="display:none">
+						<p>已报名团队：2</p>
+						<p>个人报名：3</p>
+						<a class="small-button red" href="#">我要参加</a>
+					</div>
+				</span>
+				<h3>商业市场</h3>
+			</article>
+			<article>
+				<span>
+				<img src="/img/phone.png">
+					<div class="transparent_class" style="display:none">
+						<p>已报名团队：2</p>
+						<p>个人报名：3</p>
+						<a class="small-button red" href="#">我要参加</a>
+					</div>
+				</span>
+				<h3>移动设备</h3>
+			</article>
+<article>
+				<span >
+				<img src="/img/web.png">
+					<div class="transparent_class" style="display:none">
+						<p>已报名团队：2</p>
+						<p>个人报名：3</p>
+						<a class="small-button red" href="#">我要参加</a>
+					</div>
+				</span>
+				<h3>网站开发</h3>
+			</article>
+			<article>
+				<span>
+				<img src="/img/cpt.png">
+					<div class="transparent_class" style="display:none">
+						<p>已报名团队：2</p>
+						<p>个人报名：3</p>
+						<a class="small-button red" href="#">我要参加</a>
+					</div>
+				</span>
+				<h3>比赛</h3>
+			</article>
+			<article>
+				<span>
+				<img src="/img/market.png">
+					<div class="transparent_class" style="display:none">
+						<p>已报名团队：2</p>
+						<p>个人报名：3</p>
+						<a class="small-button red" href="#">我要参加</a>
+					</div>
+				</span>
+				<h3>商业市场</h3>
+			</article>
+			<article>
+				<span>
+				<img src="/img/phone.png">
+					<div class="transparent_class" style="display:none">
+						<p>已报名团队：2</p>
+						<p>个人报名：3</p>
+						<a class="small-button red" href="#">我要参加</a>
+					</div>
+				</span>
+				<h3>移动设备</h3>
+			</article>
+		</div>
+	</section>
+	<hr>
+	<div style="overflow:hidden">		
+		<button type="button" class="btn btn-default" style="float: right;margin:10px;">跳过</button>
+	</div>
+<script>
+$(function(){
+	console.log("test");
+	$(".tech span").hover(function(){
+		$(this).find("div").fadeIn();
+	},function(){
+		$(this).find("div").fadeOut();
+	})
+})();
+</script>
+</div>
+{!/block!}
