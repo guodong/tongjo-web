@@ -1,6 +1,5 @@
 {!extends file='layout.html'!} {!block name=main!}
 <div class="ucenter">
-
 	<div class="row">
 		<div class="col-md-3">
 			<div class="avatar clearfix">
@@ -29,8 +28,14 @@
 	</div>
 </div>
 <script>
-	require(['model/user'],function(u){
-		var us = new u;us.fetch()
-	})
+require(['collection/users'], function(Users){
+	var users = new Users();
+	users.fetch({success: function(d){
+		users.each(function(user){
+			alert(user.get("email"))
+		})
+	}});
+	
+});
 </script>
 {!/block!}
