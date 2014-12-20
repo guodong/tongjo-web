@@ -1,33 +1,94 @@
 {!extends file='layout.html'!} {!block name=main!}
 
-<div class="newteam row">
+<div class="newteam">
 	<div class="col-md-3"></div>
 	<div class="col-md-6">
-		<form class="navbar-form" action="" method="post">
-			<div class="form-group formgroup-line">
-				<input type="text"
-					class="form-control inputtext" placeholder="团队名称">
-					<label>团队名称：</label> 
+		<form class="form-horizontal" role="form">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">团队名称：</label>
+				<div class="col-sm-6 inputline">
+					<input type="email" class="form-control inputtext"
+						id="inputteamname" placeholder="团队名称">
+				</div>
 			</div>
-			<div class="form-group formgroup-line">
-				<input type="text"
-					class="form-control inputtext" placeholder="团队名称">
-					<label>申请团队人数 ：</label> 
+			<div class="form-group">
+				<label class="col-sm-4 control-label">申请团队人数 ：</label>
+				<div class="input-group col-sm-6">
+					<input type="text" class="form-control">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default dropdown-toggle"
+							data-toggle="dropdown" aria-expanded="false">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+						</ul>
+					</div>
+				</div>
+
 			</div>
-			<div class="form-group formgroup-line">
-				 <input type="text"
-					class="form-control inputtext" placeholder="团队名称">
-					<label>设置申请人数：</label>
+			<div class="form-group">
+				<label class="col-sm-4 control-label">设置申请人数：</label>
+				<div class="input-group col-sm-6">
+					<input type="text" class="form-control">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default dropdown-toggle"
+							data-toggle="dropdown" aria-expanded="false">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+						</ul>
+					</div>
+				</div>
 			</div>
-			<div class="form-group formgroup-line">
-				<input type="text"
-					class="form-control inputtext" placeholder="团队名称">
-					<label>设置团队报名时间：</label> 
+			<div class="form-group">
+				<label class="col-sm-4 control-label">设置团队报名时间：</label>
+				<div class="input-group col-sm-6">
+					<input type="text" class="form-control">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default dropdown-toggle"
+							data-toggle="dropdown" aria-expanded="false">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+						</ul>
+					</div>
+				</div>
 			</div>
-			<div class="form-group formgroup-line">
-				<input type="text"
-					class="form-control inputtext" placeholder="团队名称">
-					<label>是否开启报名确认</label> 
+			<div class="form-group">
+				<label class="col-sm-4 control-label">是否开启报名确认：</label>
+				<div class="input-group col-sm-6">
+					<div class="checkbox checkbox_me">
+						<label> <input type="checkbox">是
+						</label>
+					</div>
+
+					<div class="checkbox checkbox_me">
+						<label> <input type="checkbox">否
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group" style="margin-top:30px">
+				<div class="col-sm-4"></div>
+				<div class="input-group col-sm-6 input-group-center">
+					<button type="submit" class="btn btn-success summitbutton">确     认</button>
+				</div>
 			</div>
 		</form>
 	</div>
