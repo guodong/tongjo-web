@@ -32,7 +32,10 @@
 localStorage.setItem("id", 1);
 require(['model/user', 'angular'], function(User, Angular){
 	var user = new User({id: localStorage.getItem("id")});
-	user.fetch({async: false});
+	user.fetch({success: function(){
+		user.name = "123";
+		user.save();
+	}});
 	console.log(user.get("email"))
 });
 </script>

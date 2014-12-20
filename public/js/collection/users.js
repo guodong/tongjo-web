@@ -1,6 +1,6 @@
 define(['backbone', 'model/user'], function(Backbone, User) {
 	return Backbone.Collection.extend({
-		url: API+'user',
+		urlRoot: API+'user',
 		model: User
 	});
 })
