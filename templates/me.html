@@ -27,15 +27,13 @@
 		</div>
 	</div>
 </div>
+{{u.name}}
 <script>
-require(['collection/users'], function(Users){
-	var users = new Users();
-	users.fetch({success: function(d){
-		users.each(function(user){
-			alert(user.get("email"))
-		})
-	}});
-	
+localStorage.setItem("id", 1);
+require(['model/user', 'angular'], function(User, Angular){
+	var user = new User({id: localStorage.getItem("id")});
+	user.fetch({async: false});
+	console.log(user.get("email"))
 });
 </script>
 {!/block!}
