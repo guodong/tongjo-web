@@ -17,9 +17,18 @@ requirejs.config({
 		backbone: '/lib/backbone/backbone',
 		underscore: '/lib/underscore/underscore',
 		jquery: '/lib/jquery/jquery',
-		angular: '/lib/angularjs/angular'
+		angular: '/lib/angularjs/angular',
+		angularroute: '/lib/angular-route/angular-route',
 	},
-	deps: ['angular']
+	shim:{
+        angular: {
+            exports:"angular"
+        },
+        angularroute: {
+        	deps:['angular'],
+            exports:"angular-route"
+        }
+    }
 });
 </script>
 </head>
