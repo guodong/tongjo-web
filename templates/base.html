@@ -18,7 +18,9 @@ requirejs.config({
 		jquery: '/lib/jquery/jquery',
 		angular: '/lib/angularjs/angular'
 	},
-	deps: ['angular']
+	shim: {
+	    angular : { exports : 'angular'}
+	}
 });
 </script>
 </head>
