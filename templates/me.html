@@ -1,4 +1,22 @@
 {!extends file='layout.html'!} {!block name=main!}
+<script>
+	require(['angular', 'angular-route'], function(angular, route) {
+		var app = angular.module('me', ['ngRoute']).config(
+				['$routeProvider', function($routeProvider) {
+					$routeProvider.when('/info', {
+						templateUrl: 'tpl/me/info.html',
+						controller: 'info'
+					}).otherwise({
+						redirectTo: '/'
+					});
+				}]);
+		app.controller('info', function($scope) {
+
+		})
+		angular.bootstrap(document, ['me']);
+	});
+</script>
+
 <div class="ucenter">
 	<div class="row">
 		<div class="col-md-3">
@@ -9,33 +27,20 @@
 				<div>Tongjo</div>
 			</div>
 			<div class="list-group">
-				<a href="#" class="list-group-item active"><span
+				<a href="#" class="list-group-item"><span
 					class="glyphicon glyphicon-th-list"></span> 我发布的项目</a> <a href="#"
 					class="list-group-item"><span
 					class="glyphicon glyphicon-cloud-upload"></span> 我参加的项目</a> <a href="#"
 					class="list-group-item"><span class="glyphicon glyphicon-tower"></span>
-					我的团队</a> <a href="#" class="list-group-item"><span
+					我的团队</a> <a href="#info" class="list-group-item"><span
 					class="glyphicon glyphicon-user"></span> 个人信息</a> <a href="#"
 					class="list-group-item"><span class="glyphicon glyphicon-off"></span>
 					退出</a>
 			</div>
 		</div>
 		<div class="col-md-9">
-			<div class="page-header">
-				<h2>我发布的项目</h2>
-			</div>
+			<div ng-view></div>
 		</div>
 	</div>
 </div>
-<script>
-require(['collection/users'], function(Users){
-	var users = new Users();
-	users.fetch({success: function(d){
-		users.each(function(user){
-			alert(user.get("email"))
-		})
-	}});
-	
-});
-</script>
 {!/block!}

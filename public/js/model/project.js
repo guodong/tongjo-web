@@ -1,6 +1,6 @@
 define(['backbone'], function(Backbone) {
 	return Backbone.Model.extend({
-		url: API + 'project',
+		urlRoot: API + 'project',
 		defaults: {
 			id: '',
 			name: '',
