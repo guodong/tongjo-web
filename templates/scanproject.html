@@ -202,9 +202,9 @@
 </div>
 <script>
 	require(
-			[ 'model/user', 'jquery', 'angular', 'lib/ycd-validation' ],
-			function(Users, $, angular) {
-				var scanApp = angular.module('scanApp',['ngRoute','ui.bootstrap']);
+			[ 'model/user', 'jquery', 'angular', 'angular-route' ],
+			function(Users, $, angular,route) {
+				var scanApp = angular.module('scanApp',['ngRoute']);
 				scanApp.config(['$routeProvider',function($routeProvider){
 					$routeProvider.when('/',{
 						templateUrl:'scanproject-1',
