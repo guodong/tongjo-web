@@ -1,5 +1,7 @@
 <?php
 return array(
         '#^/team$#' => 'teamdetail',
-        '#^/newteam$#' => 'newteam'
+		'#^/teamold$#' => 'teamdetail-old',
+        '#^/newteam$#' => 'newteam',
+		'#^/userinfodetail$#' => 'userinfo-detail'
 );
