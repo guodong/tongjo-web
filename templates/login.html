@@ -1,0 +1,135 @@
+{!extends file='base.html'!} {!block name=base!}
+<div class="loginsignup">
+	<div>
+		<div class="fullscreen_post_bg" style="background-image: url('/img/denglu.jpg');">
+        <!-- 主体 -->		
+		<div ng-controller="loginController" class="container-fluid loginsignupbox">
+			<div class="row">
+			<div class="div-logo-mid">
+			<a href="/index">
+                <h3 class="logo-mid">
+                </h3>
+            </a>
+            </div>
+				<div class="col-sm-12">
+							<form class="form-horizontal w5c-form" role="form"
+							w5c-form-validate="vm.validateOptions"
+								name="loginForm" novalidate >
+								<div class="form-group">
+									<div class="col-sm-12">
+										<input type="email" class="form-control" name="email"
+											placeholder="请输入邮箱"  ng-model="email" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-12">
+										<input type="password" class="form-control" name="password"
+											placeholder="请输入密码"  ng-model="password" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-12 boxcenter">
+										<div class="checkbox boxtext">
+											<label> <input type="checkbox"> 记住我
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-12">
+										<button type="submit" class="btn btn-primary col-sm-12" w5c-form-submit="vm.saveEntity()">登录</button>
+									</div>
+								</div>
+							</form>
+				</div>
+		    <div>
+            <div class="col-sm-5 col-sm-offset-1"><a  class = "logina" href="">找回密码</a></div>
+            <div class="col-sm-5 col-sm-offset-1"><a  class = "logina" href="/signup">快速注册</a></div>
+            </div>
+			</div>
+          
+		</div>
+	</div>		
+	</div><!-- 整体 -->
+</div>
+<script type="text/javascript">
+require(['model/user','jquery','angular','lib/ycd-validation'], function(Users,$,angular){
+	var users = new Users();
+	/*users.fetch({success: function(d){
+		users.each(function(user){
+			alert(user.get("email"))
+		})
+	}});*/
+ console.log(angular);
+  var loginApp = angular.module('loginApp', ["w5c.validator"]);
+  /*angular.element(document).ready(function() {
+	    angular.bootstrap(document, ['loginApp']);
+  });*/
+	loginApp.config(["w5cValidatorProvider", function (w5cValidatorProvider) {
+      // 全局配置
+		w5cValidatorProvider.config({
+          blurTrig: false,
+          showError: true,
+          removeError: true
+
+      });
+		w5cValidatorProvider.setRules({
+          username: {
+              required: "该项不能为空"
+          },
+          password:{
+          	required: "密码不能为空"
+          }
+      });
+  }]);
+  loginApp.controller("loginController", ["$scope", "$http", function ($scope, $http) {
+
+	  console.log($scope);
+      var vm = $scope.vm = {
+          htmlSource: "",
+          showErrorType: 1
+      };
+
+      vm.saveEntity = function (form) {
+      	// 表单验证完成后调用
+      	//TODO 提交数据
+      	alert("提交数据");
+      	var emailVal = $scope['loginForm']['email'].$modelValue;
+      	var passwordVal = $scope['loginForm']['password'].$modelValue;
+      	var data={
+      			email:emailVal,
+      	        password:passwordVal
+      	};
+      	console.log(data);
+      	/*$.ajax({
+      		   type: "GET",
+      		   url: "http://api.tongjo.com/accesstoken",
+      		   data: data,
+      		   success: function(msg){
+      		       console.log(msg);
+      		   },
+      	       error: function(data) {
+      	    	   console.log(data);
+                 }
+      	});*/
+      };
+      //每个表单的配置，如果不设置，默认和全局配置相同
+      vm.validateOptions = {
+          blurTrig: false
+      };
+
+      vm.changeShowType = function () {
+          if (vm.showErrorType == 2) {
+              vm.validateOptions.showError = false;
+              vm.validateOptions.removeError = false;
+          } else {
+              vm.validateOptions.showError = true;
+              vm.validateOptions.removeError = true;
+          }
+      };
+
+  }]); 
+  angular.bootstrap(document, ['loginApp']);
+});
+</script>
+{!/block!}
