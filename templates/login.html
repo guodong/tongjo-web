@@ -60,11 +60,8 @@ require(['model/user','jquery','angular','lib/ycd-validation'], function(Users,$
 			alert(user.get("email"))
 		})
 	}});*/
- console.log(angular);
+  "use strict";
   var loginApp = angular.module('loginApp', ["w5c.validator"]);
-  /*angular.element(document).ready(function() {
-	    angular.bootstrap(document, ['loginApp']);
-  });*/
 	loginApp.config(["w5cValidatorProvider", function (w5cValidatorProvider) {
       // 全局配置
 		w5cValidatorProvider.config({

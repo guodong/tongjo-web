@@ -1,10 +1,10 @@
 {!extends file='base.html'!} {!block name=base!}
 
-<div ng-app="loginApp" class="loginsignup">
+<div class="loginsignup">
 	<div>
 		<div class="fullscreen_post_bg" style="background-image: url('/img/denglu.jpg');">
         <!-- 主体 -->		
-		<div ng-controller="loginController" class="container-fluid loginsignupbox">
+		<div ng-controller="forgetpsdController" class="container-fluid loginsignupbox">
 			<div class="row">
 			<div class="div-logo-mid">
 			<a href="/index">
@@ -15,7 +15,7 @@
 				<div class="col-sm-12">
 							<form class="form-horizontal w5c-form" role="form"
 							w5c-form-validate="vm.validateOptions"
-								name="loginForm" novalidate >
+								name="forgetpsdForm" novalidate >
 								<div class="form-group">
 									<div class="col-sm-12">
 										<input type="email" class="form-control" name="email"
@@ -35,4 +35,71 @@
 	</div>		
 	</div><!-- 整体 -->
 </div>
+<script type="text/javascript">
+require(['model/user','jquery','angular','lib/ycd-validation'], function(Users,$,angular,validation){
+  var forgetpsdApp = angular.module('forgetpsdApp', ["w5c.validator"]);
+  forgetpsdApp.config(["w5cValidatorProvider", function (w5cValidatorProvider) {
+      // 全局配置
+		w5cValidatorProvider.config({
+          blurTrig: false,
+          showError: true,
+          removeError: true
+
+      });
+		w5cValidatorProvider.setRules({
+          username: {
+              required: "该项不能为空"
+          },
+          password:{
+          	required: "密码不能为空"
+          }
+      });
+  }]);
+  forgetpsdApp.controller("forgetpsdController", ["$scope", "$http", function ($scope, $http) {
+
+      var vm = $scope.vm = {
+          htmlSource: "",
+          showErrorType: 1
+      };
+
+      vm.saveEntity = function (form) {
+      	// 表单验证完成后调用
+      	//TODO 提交数据
+      	alert("提交数据");
+      	var emailVal = $scope['forgetpsdForm']['email'].$modelValue;
+      	var data={
+      			email:emailVal,
+      	};
+      	console.log(data);
+      	/*$.ajax({
+      		   type: "GET",
+      		   url: "http://api.tongjo.com/accesstoken",
+      		   data: data,
+      		   success: function(msg){
+      		       console.log(msg);
+      		   },
+      	       error: function(data) {
+      	    	   console.log(data);
+                 }
+      	});*/
+      };
+      //每个表单的配置，如果不设置，默认和全局配置相同
+      vm.validateOptions = {
+          blurTrig: false
+      };
+
+      vm.changeShowType = function () {
+          if (vm.showErrorType == 2) {
+              vm.validateOptions.showError = false;
+              vm.validateOptions.removeError = false;
+          } else {
+              vm.validateOptions.showError = true;
+              vm.validateOptions.removeError = true;
+          }
+      };
+
+  }]); 
+  angular.bootstrap(document, ['forgetpsdApp']);
+});
+</script>
 {!/block!}
