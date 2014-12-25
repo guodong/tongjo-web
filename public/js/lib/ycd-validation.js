@@ -37,7 +37,6 @@ angular.module("w5c.validator", ["ng"])
                 var $group = $elem.parent().parent();
                 if (!this.isEmpty($group) && !$group.hasClass("has-error")) {
                     $group.addClass("has-error");
-                    console.log($elem);
                     if($elem.attr("type") != "checkbox")
                     $elem.after('<span class="w5c-error">' + errorMessages[0] + '</span>');
                     else $elem.parent().after('<span class="w5c-error">' + errorMessages[0] + '</span>');

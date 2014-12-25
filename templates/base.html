@@ -18,6 +18,7 @@ requirejs.config({
 		jquery: '/lib/jquery/jquery',
 		angular: '/lib/angularjs/angular',
 		'angular-route': '/lib/angular-route/angular-route',
+		'ui-bootstrap':'/lib/angular-uibootstrap/ui-bootstrap-tpls'
 	},
 	shim:{
         angular: {
@@ -26,8 +27,13 @@ requirejs.config({
         'angular-route': {
         	deps:['angular'],
             exports:"angular-route"
+        },
+        'ui-bootstrap':{
+        	deps:['angular'],
+            exports:"ui-bootstrap"
         }
-    }
+    },
+	deps:['lib/ycd-validation']
 });
 </script>
 </head>
