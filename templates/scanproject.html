@@ -207,8 +207,8 @@
 </div>
 <script>
 	require(
-			[ 'model/user', 'jquery', 'angular', 'angular-route', 'ui-bootstrap'],
-			function(Users, $, angular,route,bootstrap) {
+			['jquery', 'angular', 'angular-route', 'ui-bootstrap'],
+			function($, angular,route,bootstrap) {
 				var scanApp = angular.module('scanApp',['ngRoute','ui.bootstrap']);
 				scanApp.config(['$routeProvider',function($routeProvider){
 					$routeProvider.when('/',{
