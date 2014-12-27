@@ -1,6 +1,5 @@
 {!extends file='base.html'!} {!block name=base!}
-
-<div ng-app="loginApp" class="loginsignup">
+<div class="loginsignup">
 	<div>
 		<div class="fullscreen_post_bg" style="background-image: url('/img/denglu.jpg');">
         <!-- 主体 -->		
@@ -53,4 +52,80 @@
 	</div>		
 	</div><!-- 整体 -->
 </div>
+<script type="text/javascript">
+require(['model/user','jquery','angular','lib/ycd-validation'], function(Users,$,angular){
+	var users = new Users();
+	/*users.fetch({success: function(d){
+		users.each(function(user){
+			alert(user.get("email")
+		})
+	}});*/
+  "use strict";
+  var loginApp = angular.module('loginApp', ["w5c.validator"]);
+	loginApp.config(["w5cValidatorProvider", function (w5cValidatorProvider) {
+      // 全局配置
+		w5cValidatorProvider.config({
+          blurTrig: false,
+          showError: true,
+          removeError: true
+
+      });
+		w5cValidatorProvider.setRules({
+          username: {
+              required: "该项不能为空"
+          },
+          password:{
+          	required: "密码不能为空"
+          }
+      });
+  }]);
+  loginApp.controller("loginController", ["$scope", "$http", function ($scope, $http) {
+
+      var vm = $scope.vm = {
+          htmlSource: "",
+          showErrorType: 1
+      };
+
+      vm.saveEntity = function (form) {
+      	// 表单验证完成后调用
+      	//TODO 提交数据
+      	alert("提交数据");
+      	var emailVal = $scope['loginForm']['email'].$modelValue;
+      	var passwordVal = $scope['loginForm']['password'].$modelValue;
+      	var data={
+      			email:emailVal,
+      	        password:passwordVal
+      	};
+      	console.log(data);
+      	/*$.ajax({
+      		   type: "GET",
+      		   url: "http://api.tongjo.com/accesstoken",
+      		   data: data,
+      		   success: function(msg){
+      		       console.log(msg);
+      		   },
+      	       error: function(data) {
+      	    	   console.log(data);
+                 }
+      	});*/
+      };
+      //每个表单的配置，如果不设置，默认和全局配置相同
+      vm.validateOptions = {
+          blurTrig: false
+      };
+
+      vm.changeShowType = function () {
+          if (vm.showErrorType == 2) {
+              vm.validateOptions.showError = false;
+              vm.validateOptions.removeError = false;
+          } else {
+              vm.validateOptions.showError = true;
+              vm.validateOptions.removeError = true;
+          }
+      };
+
+  }]); 
+  angular.bootstrap(document, ['loginApp']);
+});
+</script>
 {!/block!}

@@ -1,79 +1,191 @@
 {!extends file='base.html'!} {!block name=base!}
-<link rel="stylesheet" href="/css/loginsignup.css">
-<script src="/js/angular.min.js"></script>
-<script src="/js/validation.js"></script>
-<script src="/js/signup.js"></script>
-<body ng-app="signupApp" class="loginsignup">
+<div class="loginsignup">
 	<div>
-		<div class="fullscreen_post_bg" style="background-image: url('/img/zhuce.jpg');">
-        </div>
-		<!-- 主体 -->
-		
-		<div ng-controller="signupController" class="container-fluid loginsignupbox">
-			<div class="row">
-			<div class="div-logo-mid">
-			<a href="/index">
-                <h3 class="logo-mid">
-                </h3>
-            </a>
-            </div>
-				<div class="col-sm-12">
-							<form class="form-horizontal w5c-form"
-								role="form" w5c-form-validate="vm.validateOptions"
-								name="signupForm" novalidate>
-								<div class="form-group">
-									<div class="col-sm-12">
-										<input type="email" id="email" name="email"
-											class="form-control"
-											placeholder="请输入邮箱" ng-model="email" required>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-12">
-									<!-- w5c-unique-check="{url:''+username}" -->
-										<input type="text" id="name" name="username"
-											class="form-control"
-											placeholder="请输入用户名" ng-model="username"
-											ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{1,19}$/"
-											 required>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-12">
-										<input type="password" name="password"
-											class="form-control"
-											placeholder="请输入密码" ng-minlength="5" ng-maxlength="15"
-											ng-model="password" required>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-12">
-										<input type="password" name="repeatpassword" w5c-repeat="password"
-											class="form-control"
-											placeholder="请确定密码" ng-model="repeatpassword"
-											required>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-12">
-										<div class="checkbox col-sm-12 boxcenter signuptext">
-											<label> <input type="checkbox" name="agree" ng-model="agree" required> 我同意<a>用户协议</a>
-											</label>
-										</div>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-12">
-										<button type="submit" class="btn btn-primary col-sm-12"
-											w5c-form-submit="vm.saveEntity()">注册</button>
-									</div>
-								</div>
-							</form>
+		<div class="fullscreen_post_bg"
+			style="background-image: url('/img/zhuce.jpg');">
 
+			<!-- 主体 -->
+			<div ng-controller="signupController"
+				class="container-fluid loginsignupbox">
+				<div class="row">
+					<div class="div-logo-mid">
+						<a href="/index">
+							<h3 class="logo-mid"></h3>
+						</a>
+					</div>
+					<div class="col-sm-12">
+						<form class="form-horizontal w5c-form" role="form"
+							w5c-form-validate="vm.validateOptions" name="signupForm"
+							novalidate>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<input type="email" id="email" name="email"
+										class="form-control" placeholder="请输入邮箱" ng-model="email"
+										required>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<!-- w5c-unique-check="{url:''+username}" -->
+									<input type="text" id="name" name="username"
+										class="form-control" placeholder="请输入用户名" ng-model="username"
+										ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{1,19}$/" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<input type="password" name="password" class="form-control"
+										placeholder="请输入密码" ng-minlength="5" ng-maxlength="15"
+										ng-model="password" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<input type="password" name="repeatpassword"
+										w5c-repeat="password" class="form-control" placeholder="请确定密码"
+										ng-model="repeatpassword" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12  boxcenter signuptext">
+								    <div class="col-sm-6">
+									<label class="radio-inline"> <input type="radio"
+										name="type" id="typeRadio1" value="1" ng-model="type" >
+										个人
+									</label> </div><div class="col-sm-6"><label class="radio-inline"> <input type="radio"
+										name="type" id="typeRadio2" value="2" ng-model="type" >
+										组织
+									</label></div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<div class="checkbox col-sm-12 boxcenter signuptext">
+										<label> <input type="checkbox" name="agree"
+											ng-model="agree" required> 我同意<a>用户协议</a>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<button type="submit" class="btn btn-primary col-sm-12"
+										w5c-form-submit="vm.saveEntity()">注册</button>
+								</div>
+							</div>
+						</form>
+
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- 整体 -->
 </div>
+<script>
+	require(
+			[ 'model/user', 'jquery', 'angular', 'lib/ycd-validation' ],
+			function(Users, $, angular) {
+				"use strict";
+				var signupApp = angular
+						.module('signupApp', [ "w5c.validator" ]);
+				signupApp.config([ "w5cValidatorProvider",
+						function(w5cValidatorProvider) {
+							// 全局配置
+							w5cValidatorProvider.config({
+								blurTrig : false,
+								showError : true,
+								removeError : true
+
+							});
+							w5cValidatorProvider.setRules({
+								email : {
+									required : "输入的邮箱地址不能为空",
+									email : "输入邮箱地址格式不正确"
+								},
+								username : {
+									required : "输入的用户名不能为空",
+									pattern : "用户名必须输入字母、数字、下划线,以字母开头",
+									w5cuniquecheck : "输入用户名已经存在，请重新输入"
+								},
+								password : {
+									required : "密码不能为空",
+									minlength : "密码长度不能小于{minlength}",
+									maxlength : "密码长度不能大于{maxlength}"
+								},
+								repeatPassword : {
+									required : "重复密码不能为空",
+									repeat : "两次密码输入不一致"
+								},
+								agree : {
+									required : "您必须同意用户协议"
+								},
+								type:{
+									required: "您必须选择一项"
+								}
+							});
+						} ]);
+				signupApp
+						.controller(
+								"signupController",
+								[
+										"$scope",
+										"$http",
+										function($scope, $http) {
+											$scope.type = 1;
+											var vm = $scope.vm = {
+												htmlSource : "",
+												showErrorType : 1
+											};
+
+											vm.saveEntity = function(form) {
+												// 表单验证完成后调用
+												var emailVal = $scope['signupForm']['email'].$modelValue;
+												var usernameVal = $scope['signupForm']['username'].$modelValue;
+												var passwordVal = $scope['signupForm']['password'].$modelValue;
+												var typeVal = $scope['signupForm']['type'].$modelValue;
+												var data = {
+													email : emailVal,
+													username : usernameVal,
+													password : passwordVal,
+													type:typeVal
+												};
+												console.log(data);
+												/*$
+														.ajax({
+															type : "POST",
+															url : "http://api.tongjo.com/user",
+															data : data,
+															success : function(
+																	msg) {
+																console
+																		.log(msg);
+															},
+															error : function(
+																	data) {
+																console
+																		.log(data);
+															}
+														});*/
+											};
+
+											//每个表单的配置，如果不设置，默认和全局配置相同
+											vm.validateOptions = {
+												blurTrig : false
+											};
+
+											vm.changeShowType = function() {
+												if (vm.showErrorType == 2) {
+													vm.validateOptions.showError = false;
+													vm.validateOptions.removeError = false;
+												} else {
+													vm.validateOptions.showError = true;
+													vm.validateOptions.removeError = true;
+												}
+											};
+
+										} ]);
+				angular.bootstrap(document, [ 'signupApp' ]);
+			});
+</script>
 {!/block!}

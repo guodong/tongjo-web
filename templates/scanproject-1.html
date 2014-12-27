@@ -5,8 +5,8 @@
 			<span ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()"> 
 			<img src="{{project.imgurl}}">
 				<div class="transparent_class" ng-show="hoverEdit">
+				    <p>{{project.title}}</p>
 					<p>已报名团队：{{project.teamcount}}</p>
-					<p>个人报名：{{project.personcount}}</p>
 					<a class="small-button red" href="{{project.link}}">我要参加</a>
 				</div>
 			</span>

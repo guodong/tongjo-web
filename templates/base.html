@@ -19,6 +19,7 @@ requirejs.config({
 		angular: '/lib/angularjs/angular',
 		'angular-route': '/lib/angular-route/angular-route',
 		'angular-resource': '/lib/angular-resource/angular-resource'
+		'ui-bootstrap':'/lib/angular-uibootstrap/ui-bootstrap-tpls'
 	},
 	shim:{
         angular: {
@@ -31,8 +32,12 @@ requirejs.config({
         'angular-resource': {
         	deps:['angular'],
             exports:"angular-resource"
+        'ui-bootstrap':{
+        	deps:['angular'],
+            exports:"ui-bootstrap"
         }
-    }
+    },
+	deps:['lib/ycd-validation']
 });
 </script>
 </head>
