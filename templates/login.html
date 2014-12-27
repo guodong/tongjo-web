@@ -30,7 +30,7 @@
 								<div class="form-group">
 									<div class="col-sm-12 boxcenter">
 										<div class="checkbox boxtext">
-											<label> <input type="checkbox"> 记住我
+											<label> <input type="checkbox" ng-model="remember"> 记住我
 											</label>
 										</div>
 									</div>
@@ -53,7 +53,7 @@
 	</div><!-- 整体 -->
 </div>
 <script type="text/javascript">
-require(['jquery','angular','lib/ycd-validation'], function($,angular){
+require(['angular','lib/ycd-validation'], function(angular){
 	//var users = new Users();
 	/*users.fetch({success: function(d){
 		users.each(function(user){
@@ -89,7 +89,6 @@ require(['jquery','angular','lib/ycd-validation'], function($,angular){
       vm.saveEntity = function (form) {
       	// 表单验证完成后调用
       	//TODO 提交数据
-      	alert("提交数据");
       	var emailVal = $scope['loginForm']['email'].$modelValue;
       	var passwordVal = $scope['loginForm']['password'].$modelValue;
       	var data={
@@ -97,17 +96,21 @@ require(['jquery','angular','lib/ycd-validation'], function($,angular){
       	        password:passwordVal
       	};
       	console.log(data);
-      	/*$.ajax({
+      	$.ajax({
       		   type: "GET",
       		   url: "http://api.tongjo.com/accesstoken",
       		   data: data,
       		   success: function(msg){
       		       console.log(msg);
+      		       if($scope['loginForm']['remember'].$modelValue)
+      		    	   {
+      		    	 $scope['loginForm']['password'].$modelValue;
+      		    	   }
       		   },
       	       error: function(data) {
       	    	   console.log(data);
                  }
-      	});*/
+      	});
       };
       //每个表单的配置，如果不设置，默认和全局配置相同
       vm.validateOptions = {
