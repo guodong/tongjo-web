@@ -1,7 +1,7 @@
 {!extends file='layout.html'!} {!block name=main!}
 <script>
 	require(['angular', 'angular-route', 'angular-resource'],
-			function(angular) {
+			function(angular, angular_route, $resource) {
 				var app = angular.module('me', ['ngRoute', 'ngResource'])
 						.config(['$routeProvider', function($routeProvider) {
 							$routeProvider.when('/info', {
@@ -16,14 +16,15 @@
 							}).when('/project/joined', {
 								templateUrl: 'tpl/me/project-joined.html',
 								controller: 'project-joined'
+							}).when('/team', {
+								templateUrl: 'tpl/me/team.html',
+								controller: 'team'
 							}).otherwise({
 								redirectTo: '/'
 							});
 						}]);
 				app.controller('info', function($scope, $resource) {
-					var User = $resource(API + 'user/:userId', {
-						userId: '@id'
-					});
+					var User = $resource(API + 'user/:userId');
 					var user = User.get({
 						userId: 1
 					}, function() {
@@ -31,14 +32,20 @@
 					});
 				});
 				app.controller('project-joined', function($scope, $resource) {
-					var Project = $resource(API + 'user/:user_id/type/:type/project/:project_id');
+					var Project = $resource(API + 'user/:user_id/type/:type/project');
 					var projects = Project.query({user_id: 1, type: 'joined'}, function() {
 						$scope.projects = projects;
 					});
 				});
 				app.controller('project', function($scope) {
 
-				})
+				});
+				app.controller('team', function($scope, $resource) {
+					var Team = $resource(API+'user/:user_id/team')
+					var teams = Team.query({user_id: 1}, function(){
+						$scope.teams = teams;
+					})
+				});
 				angular.bootstrap(document, ['me']);
 			});
 </script>
@@ -53,10 +60,10 @@
 				<div>Tongjo</div>
 			</div>
 			<div class="list-group">
-				<a href="#org/project" class="list-group-item"><span
-					class="glyphicon glyphicon-th-list"></span> 我发布的项目</a> <a href="#project/joined"
+				<!-- <a href="#org/project" class="list-group-item"><span
+					class="glyphicon glyphicon-th-list"></span> 我发布的项目</a>  --><a href="#project/joined"
 					class="list-group-item"><span
-					class="glyphicon glyphicon-cloud-upload"></span> 我参加的项目</a> <a href="#"
+					class="glyphicon glyphicon-cloud-upload"></span> 我参加的项目</a> <a href="#team"
 					class="list-group-item"><span class="glyphicon glyphicon-tower"></span>
 					我的团队</a> <a href="#info" class="list-group-item"><span
 					class="glyphicon glyphicon-user"></span> 个人信息</a> <a href="#"
