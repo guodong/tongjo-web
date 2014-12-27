@@ -2,7 +2,7 @@
  * 表单验证模块
  */
 /*! w5cValidator v2.3.0 2014-09-24 */
-require(['angular'], function(angular){
+define(['angular'], function(angular){
 angular.module("w5c.validator", ["ng"])
     .provider('w5cValidator', [function () {
         var defaultRules = {
