@@ -30,14 +30,14 @@
 								<div class="form-group">
 									<div class="col-sm-12 boxcenter">
 										<div class="checkbox boxtext">
-											<label> <input type="checkbox"> 记住我
+											<label> <input type="checkbox" ng-model="remember"> 记住我
 											</label>
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-12">
-										<button type="submit" class="btn btn-primary col-sm-12" w5c-form-submit="vm.saveEntity()">登录</button>
+										<button class="btn btn-primary col-sm-12" w5c-form-submit="vm.saveEntity()">登录</button>
 									</div>
 								</div>
 							</form>
@@ -53,8 +53,8 @@
 	</div><!-- 整体 -->
 </div>
 <script type="text/javascript">
-require(['model/user','jquery','angular','lib/ycd-validation'], function(Users,$,angular){
-	var users = new Users();
+require(['angular','lib/ycd-validation'], function(angular){
+	//var users = new Users();
 	/*users.fetch({success: function(d){
 		users.each(function(user){
 			alert(user.get("email")
@@ -81,6 +81,10 @@ require(['model/user','jquery','angular','lib/ycd-validation'], function(Users,$
   }]);
   loginApp.controller("loginController", ["$scope", "$http", function ($scope, $http) {
 
+	  if(localStorage.isRemember){
+		  $scope.email = localStorage.email;
+		  $scope.password = localStorage.password;
+	  }
       var vm = $scope.vm = {
           htmlSource: "",
           showErrorType: 1
@@ -89,25 +93,29 @@ require(['model/user','jquery','angular','lib/ycd-validation'], function(Users,$
       vm.saveEntity = function (form) {
       	// 表单验证完成后调用
       	//TODO 提交数据
-      	alert("提交数据");
-      	var emailVal = $scope['loginForm']['email'].$modelValue;
-      	var passwordVal = $scope['loginForm']['password'].$modelValue;
+      	var emailVal = $scope.email;
+      	var passwordVal = $scope.password;
       	var data={
       			email:emailVal,
       	        password:passwordVal
       	};
       	console.log(data);
-      	/*$.ajax({
+      	$.ajax({
       		   type: "GET",
       		   url: "http://api.tongjo.com/accesstoken",
       		   data: data,
       		   success: function(msg){
       		       console.log(msg);
+      		       if($scope.remember){
+      		    	   localStorage.email = emailVal;
+      		    	   localStorage.password = passwordVal;
+      		    	   localStorage.isRemember = true;
+      		       }
       		   },
       	       error: function(data) {
       	    	   console.log(data);
                  }
-      	});*/
+      	});
       };
       //每个表单的配置，如果不设置，默认和全局配置相同
       vm.validateOptions = {
