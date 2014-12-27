@@ -207,9 +207,9 @@
 </div>
 <script>
 	require(
-			['angular', 'angular-route', 'ui-bootstrap'],
+			['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 			function(angular,route,bootstrap) {
-				var scanApp = angular.module('scanApp',['ngRoute','ui.bootstrap']);
+				var scanApp = angular.module('scanApp',['ngRoute','ngResource','ui.bootstrap']);
 				scanApp.config(['$routeProvider',function($routeProvider){
 					$routeProvider.when('/',{
 						templateUrl:'scanproject-1',
@@ -236,10 +236,15 @@
 						$(this).find("div").fadeOut();
 					});
 				});
-				scanApp.controller('categoryCtl',function($scope,$routeParams){
+				scanApp.controller('categoryCtl',function($scope,$routeParams, $resource){
 					//TODO 获得数据
-					$scope.projects = projects.concat(projects).concat(projects.reverse())
-									  .concat(projects).concat(projects.reverse());
+				    var Project = $resource(API + 'category/:categoryId/project');
+					var projects = Project.query({categoryId: 2}, function() {
+						$scope.projects = projects;
+					});
+					console.log($scope.projects);
+					//$scope.projects = projects.concat(projects).concat(projects.reverse())
+					//				  .concat(projects).concat(projects.reverse());
 					if($routeParams.specialId != null){
 						$scope.title = specialTitle[$routeParams.specialId-1];
 					}else if($routeParams.subcategoryId != null){
@@ -251,6 +256,7 @@
 					}
 					$scope.page.index = 1;
 					//$scope.id = $routeParams.categoryId;
+
 				});
 				var specialTitle = new Array("最热项目","最新项目","推荐项目");
 				var categoryTitle = new Array("技术","设计","商业市场","校园创业","创意","公益","比赛");
@@ -322,6 +328,12 @@
 					    return items.slice(offset, offset + pageSize);
 					 }
 			  });
+			   scanApp.filter('defaultImg',function(){
+				   return function(item){
+					   if(item==null || item =="")
+						   return "/img/market.png"
+				   }
+			   })
 			   angular.bootstrap(document, [ 'scanApp' ]);
 			});
 </script>

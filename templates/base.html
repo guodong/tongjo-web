@@ -9,7 +9,7 @@
 <script src="/lib/bootstrap/bootstrap.js"></script>
 <script src="/lib/requirejs/require.js"></script>
 <script>
-var API = 'http://api.tongjo.me/';
+var API = 'http://api.tongjo.com/';
 requirejs.config({
 	baseUrl: '/js',
 	paths: {
@@ -18,7 +18,7 @@ requirejs.config({
 		jquery: '/lib/jquery/jquery',
 		angular: '/lib/angularjs/angular',
 		'angular-route': '/lib/angular-route/angular-route',
-		'angular-resource': '/lib/angular-resource/angular-resource'
+		'angular-resource': '/lib/angular-resource/angular-resource',
 		'ui-bootstrap':'/lib/angular-uibootstrap/ui-bootstrap-tpls'
 	},
 	shim:{
@@ -32,6 +32,7 @@ requirejs.config({
         'angular-resource': {
         	deps:['angular'],
             exports:"angular-resource"
+        },
         'ui-bootstrap':{
         	deps:['angular'],
             exports:"ui-bootstrap"
