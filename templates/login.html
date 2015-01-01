@@ -80,7 +80,11 @@ require(['angular','lib/ycd-validation'], function(angular){
       });
   }]);
   loginApp.controller("loginController", ["$scope", "$http", function ($scope, $http) {
-
+      $scope.remember = true;
+	  if(localStorage.isRemember){
+		  $scope.email = localStorage.email;
+		  $scope.password = localStorage.password;
+	  }
       var vm = $scope.vm = {
           htmlSource: "",
           showErrorType: 1
@@ -89,8 +93,8 @@ require(['angular','lib/ycd-validation'], function(angular){
       vm.saveEntity = function (form) {
       	// 表单验证完成后调用
       	//TODO 提交数据
-      	var emailVal = $scope['loginForm']['email'].$modelValue;
-      	var passwordVal = $scope['loginForm']['password'].$modelValue;
+      	var emailVal = $scope.email;
+      	var passwordVal = $scope.password;
       	var data={
       			email:emailVal,
       	        password:passwordVal
@@ -102,10 +106,14 @@ require(['angular','lib/ycd-validation'], function(angular){
       		   data: data,
       		   success: function(msg){
       		       console.log(msg);
-      		       if($scope['loginForm']['remember'].$modelValue)
-      		    	   {
-      		    	 $scope['loginForm']['password'].$modelValue;
-      		    	   }
+      		       localStorage.user = JSON.parse(msg);
+      		       localStorage.uid = localStorage.user.id;
+      		       if($scope.remember){
+      		    	   localStorage.email = emailVal;
+      		    	   localStorage.password = passwordVal;
+      		    	   localStorage.isRemember = true;
+      		       }
+      		       location.href = "/me";
       		   },
       	       error: function(data) {
       	    	   console.log(data);

@@ -65,8 +65,7 @@ require(['angular','lib/ycd-validation'], function(angular,validation){
       vm.saveEntity = function (form) {
       	// 表单验证完成后调用
       	//TODO 提交数据
-      	alert("提交数据");
-      	var emailVal = $scope['forgetpsdForm']['email'].$modelValue;
+      	var emailVal = $scope.email;
       	var data={
       			email:emailVal,
       	};

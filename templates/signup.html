@@ -26,36 +26,9 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-12">
-									<!-- w5c-unique-check="{url:''+username}" -->
-									<input type="text" id="name" name="username"
-										class="form-control" placeholder="请输入用户名" ng-model="username"
-										ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{1,19}$/" required>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-12">
 									<input type="password" name="password" class="form-control"
 										placeholder="请输入密码" ng-minlength="5" ng-maxlength="15"
 										ng-model="password" required>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-12">
-									<input type="password" name="repeatpassword"
-										w5c-repeat="password" class="form-control" placeholder="请确定密码"
-										ng-model="repeatpassword" required>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-12  boxcenter signuptext">
-								    <div class="col-sm-6">
-									<label class="radio-inline"> <input type="radio"
-										name="type" id="typeRadio1" value="1" ng-model="type" >
-										个人
-									</label> </div><div class="col-sm-6"><label class="radio-inline"> <input type="radio"
-										name="type" id="typeRadio2" value="2" ng-model="type" >
-										组织
-									</label></div>
 								</div>
 							</div>
 							<div class="form-group">
@@ -103,25 +76,13 @@
 									required : "输入的邮箱地址不能为空",
 									email : "输入邮箱地址格式不正确"
 								},
-								username : {
-									required : "输入的用户名不能为空",
-									pattern : "用户名必须输入字母、数字、下划线,以字母开头",
-									w5cuniquecheck : "输入用户名已经存在，请重新输入"
-								},
 								password : {
 									required : "密码不能为空",
 									minlength : "密码长度不能小于{minlength}",
 									maxlength : "密码长度不能大于{maxlength}"
 								},
-								repeatPassword : {
-									required : "重复密码不能为空",
-									repeat : "两次密码输入不一致"
-								},
 								agree : {
 									required : "您必须同意用户协议"
-								},
-								type:{
-									required: "您必须选择一项"
 								}
 							});
 						} ]);
@@ -132,7 +93,7 @@
 										"$scope",
 										"$http",
 										function($scope, $http) {
-											$scope.type = 1;
+											$scope.agree = true;
 											var vm = $scope.vm = {
 												htmlSource : "",
 												showErrorType : 1
@@ -140,33 +101,54 @@
 
 											vm.saveEntity = function(form) {
 												// 表单验证完成后调用
-												var emailVal = $scope['signupForm']['email'].$modelValue;
-												var usernameVal = $scope['signupForm']['username'].$modelValue;
-												var passwordVal = $scope['signupForm']['password'].$modelValue;
-												var typeVal = $scope['signupForm']['type'].$modelValue;
+												var emailVal = $scope.email;
+												var passwordVal = $scope.password;
 												var data = {
 													email : emailVal,
-													username : usernameVal,
-													password : passwordVal,
-													type:typeVal
+													password : passwordVal
 												};
 												console.log(data);
-												/*$
-														.ajax({
+												$.ajax({
 															type : "POST",
 															url : "http://api.tongjo.com/user",
 															data : data,
 															success : function(
 																	msg) {
-																console
-																		.log(msg);
+																console.log(msg);
+																var emailVal = $scope.email;
+														      	var passwordVal = $scope.password;
+														      	var data={
+														      			email:emailVal,
+														      	        password:passwordVal
+														      	};
+														      	console.log(data);
+														      	$.ajax({
+														      		   type: "GET",
+														      		   url: "http://api.tongjo.com/accesstoken",
+														      		   data: data,
+														      		   success: function(msg){
+														      		       console.log(msg);
+														      		       localStorage.user = JSON.parse(msg);
+														      		       localStorage.uid = localStorage.user.id;
+														      		       if($scope.remember){
+														      		    	   localStorage.email = emailVal;
+														      		    	   localStorage.password = passwordVal;
+														      		    	   localStorage.isRemember = true;
+														      		       }
+														      		       location.href = "/me";
+														      		   },
+														      	       error: function(data) {
+														      	    	   console.log(data);
+														                 }
+														      	});
+
 															},
 															error : function(
 																	data) {
 																console
 																		.log(data);
 															}
-														});*/
+												});
 											};
 
 											//每个表单的配置，如果不设置，默认和全局配置相同
