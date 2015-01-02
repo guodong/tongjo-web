@@ -10,5 +10,6 @@ return array(
 		'#^/scanproject-1$#' => 'scanproject-1',
 		'#^/scanproject-2$#' => 'scanproject-2',
 		'#^/recomproject$#' => 'recomproject',
-		'#^/choseskill$#' => 'choseskill'
+		'#^/choseskill$#' => 'choseskill',
+		'#^/loginmodal$#' => 'loginmodal'
 );
