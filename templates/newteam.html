@@ -110,12 +110,12 @@
 				$scope.team.user_id = localStorage.uid;
 				console.log(localStorage.uid);
 				t = new Team($scope.team);
-				/* t.$save(null,function(team){
+				t.$save(null,function(team){
 		            console.log(team);
 		            if(team.id > 0){
 		            	location.href = "/team!"+team.id;
 		            }
-		        }); */
+		        });
 				/* location.href = "/team";  */
 				
 		        /*  $.ajax({
