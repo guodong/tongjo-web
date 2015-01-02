@@ -1,171 +1,117 @@
 {!extends file='layout.html'!} {!block name=main!}
 
-<div class="team-detail">
+<div class="teamdetail" ng-controller="teamdetailControl">
 	<div class="team-name">
-		<h1 class="team-name-title">团队名称：</h1>
-		<h1>我们是傻狗</h1>
+		<h2 class="team-name-title">团队名称：</h2>
+		<h1 class="team-name-name" ng-bind="teamdetail.name"></h1>
+		<div class="team-add">
+			<button class="btn btn-warning">
+				<span class="glyphicon glyphicon-plus"></span> 加入这个团队
+			</button>
+		</div>
 	</div>
 
-	<div class="team-count">
-		<h5 class="team-count-title">团队人数：</h5>
-		<h5>2/5</h5>
+	<div class="team-sum">
+		<div class="team-count">
+			<div class="team-count-current col-md-5">
+				<h5 class="team-count-title">现有人数</h5>
+				<h5 class="team-count-digital"
+					ng-bind="teamdetail.teammember_current"></h5>
+			</div>
+			<span class="team-count-spilt col-md-2">|</span>
+			<div class="team-count-sum col-md-5">
+				<h5 class="team-count-title">共需人数</h5>
+				<h5 class="team-count-digital" ng-bind="teamdetail.teammember_all"></h5>
+			</div>
+		</div>
+
+		<div class="team-time">
+			<span class="team-time-title">成立时间：</span> <span
+				class="team-time-text" ng-bind="teamdetail.created_at"></span>
+		</div>
 	</div>
 
-	<div class="team-teamer">
-		<h5 class="team-teamer-title">团队成员介绍：</h5>
-		<table class="team-teamer-table">
-			<tbody>
-				<tr>
-					<td>
-						<div class="user">
-							<img alt="240x160" src="img/cop.png">
-						</div>
-						<div class="user userdetail">
-							<div class="userdetail-line">
-								<h6>姓名：黄小吃</h6>
-								<img alt=".." src="img/sex-femail.png" class="sex">
-							</div>
-							<div class="userdetail-line">
-								<h6>LV:99</h6>
-								<h6 class="secondh6">称号:大神</h6>
-							</div>
-							<div class="userdetail-line">
-								<h6>大学:同济大学</h6>
-							</div>
-							<div class="userdetail-line">
-								<h6>专业:嫁入计算机</h6>
-							</div>
-							<div class="userdetail-label">
-								<h6>标签</h6>
-							</div>
-							<ul>
-								<li><span class="rectangle"></span>平面设计</li>
-								<li><span class="rectangle"></span>图标设计</li>
-								<li><span class="rectangle"></span>宣传册设计</li>
-							</ul>
-							<ul>
-								<li><span class="rectangle"></span>平面设计</li>
-								<li><span class="rectangle"></span>图标设计</li>
-								<li><span class="rectangle"></span>宣传册设计</li>
-							</ul>
-						</div>
-					</td>
-					<td>
-						<div class="user">
-							<img alt="240x160" src="img/cop.png">
-						</div>
-						<div class="user userdetail">
-							<div class="userdetail-line">
-								<h6>姓名：黄小吃</h6>
-								<img alt=".." src="img/sex-femail.png" class="sex">
-							</div>
-							<div class="userdetail-line">
-								<h6>LV:99</h6>
-								<h6 class="secondh6">称号:大神</h6>
-							</div>
-							<div class="userdetail-line">
-								<h6>大学:同济大学</h6>
-							</div>
-							<div class="userdetail-line">
-								<h6>专业:嫁入计算机</h6>
-							</div>
-							<div class="userdetail-label">
-								<h6>标签</h6>
-							</div>
-							<ul>
-								<li><span class="rectangle"></span>平面设计</li>
-								<li><span class="rectangle"></span>图标设计</li>
-								<li><span class="rectangle"></span>宣传册设计</li>
-							</ul>
-							<ul>
-								<li><span class="rectangle"></span>平面设计</li>
-								<li><span class="rectangle"></span>图标设计</li>
-								<li><span class="rectangle"></span>宣传册设计</li>
-							</ul>
-						</div>
-					</td>
+	<div class="team-content">
+		<div class="col-md-8 team-introduce">
 
-				</tr>
-				<tr>
-					<td>
-						<div class="user">
-							<img alt="240x160" src="img/cop.png">
-						</div>
-						<div class="user userdetail">
-							<div class="userdetail-line">
-								<h6>姓名：黄小吃</h6>
-								<img alt=".." src="img/sex-femail.png" class="sex">
-							</div>
-							<div class="userdetail-line">
-								<h6>LV:99</h6>
-								<h6 class="secondh6">称号:大神</h6>
-							</div>
-							<div class="userdetail-line">
-								<h6>大学:同济大学</h6>
-							</div>
-							<div class="userdetail-line">
-								<h6>专业:嫁入计算机</h6>
-							</div>
-							<div class="userdetail-label">
-								<h6>标签</h6>
-							</div>
-							<ul>
-								<li><span class="rectangle"></span>平面设计</li>
-								<li><span class="rectangle"></span>图标设计</li>
-								<li><span class="rectangle"></span>宣传册设计</li>
-							</ul>
-							<ul>
-								<li><span class="rectangle"></span>平面设计</li>
-								<li><span class="rectangle"></span>图标设计</li>
-								<li><span class="rectangle"></span>宣传册设计</li>
-							</ul>
-						</div>
-					</td>
-					<td>
-						<div class="user">
-							<img alt="240x160" src="img/cop.png">
-						</div>
-						<div class="user userdetail">
-							<div class="userdetail-line">
-								<h6>姓名：黄小吃</h6>
-								<img alt=".." src="img/sex-femail.png" class="sex">
-							</div>
-							<div class="userdetail-line">
-								<h6>LV:99</h6>
-								<h6 class="secondh6">称号:大神</h6>
-							</div>
-							<div class="userdetail-line">
-								<h6>大学:同济大学</h6>
-							</div>
-							<div class="userdetail-line">
-								<h6>专业:嫁入计算机</h6>
-							</div>
-							<div class="userdetail-label">
-								<h6>标签</h6>
-							</div>
-							<ul>
-								<li><span class="rectangle"></span>平面设计</li>
-								<li><span class="rectangle"></span>图标设计</li>
-								<li><span class="rectangle"></span>宣传册设计</li>
-							</ul>
-							<ul>
-								<li><span class="rectangle"></span>平面设计</li>
-								<li><span class="rectangle"></span>图标设计</li>
-								<li><span class="rectangle"></span>宣传册设计</li>
-							</ul>
-						</div>
-					</td>
-				</tr>
-		</table>
-	</div>
-	
-	<div class="team-add">
-		<button class="btn btn-warning">
-			<span class="glyphicon glyphicon-plus"></span> 加入团队
-		</button>
+			<h1 class="team-content-title">团队简介:</h1>
+			<h5 class="team-content-text" ng-bind="teamdetail.description">我们是一个好团队，我们不怕困难，积极进取，一起开玩笑，一起玩，一起傻BI,一起逗比，一起哈哈哈，我们有爱，我们爱好和平，我们心底善良，赶紧加入我们把，美女越多越好呀，哈哈哈哈哈哈哈哈哈哈哈</h5>
+
+		</div>
+
+		<div class="col-md-4 team-leader">
+			<h3 class="team-leader-title">关于队长：</h3>
+			<h6 class="team-leader-name">彭涛</h6>
+			<div class="team-leader-comments">
+				<ul class="team-leader-star">
+					<li>★</li>
+					<li>★</li>
+					<li>★</li>
+					<li>★</li>
+					<li>★</li>
+				</ul>
+				<h6 class="team-leader-starcount">5.0</h6>
+				<h6 class="team-leader-commentscount">26条评论</h6>
+			</div>
+
+		</div>
 	</div>
 
+	<div class="clear"></div>
 
+	<table class="team-teamer">
+		<thead class="bg-primary">
+			<tr>
+				<th>团队成员介绍</th>
+				<th>大学</th>
+				<th>专业</th>
+				<th width="130px"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="member in teamdetail.members">
+				<td><img src="img/head.jpg" alt="*" class="smallhead">
+					<h3 class="text-primary" ng-bind="member.realname">彭涛</h3></td>
+				<td>
+					<h4 class="text-primary" ng-bind="member.school.name"></h4>
+				</td>
+
+				<td>
+					<h4 class="text-primary" ng-bind="member.major.name">电子与信息工程学院</h4>
+				</td>
+
+				<td>
+					<button class="btn btn-warning">参加团队</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
+
+
+<script>
+	require([ 'angular', 'angular-route', 'angular-resource' ], function(
+			angular) {
+		var app = angular.module('teamdetailApp', [ 'ngRoute', 'ngResource' ]);
+		app.controller('teamdetailControl', function($scope,$resource) {
+			
+			var url = window.location.href;
+			var tid = url.substr(url.indexOf("!") + 1,url.length);
+			console.log(tid);
+			
+			var Team = $resource(API + 'team/:teamId');
+			var team = Team.get({
+				teamId: tid
+			}, function() {
+				$scope.teamdetail = team;
+				$scope.teamdetail.created_at = team.created_at.substr(0, 10);
+				console.log($scope.teamdetail); 
+			});
+			
+		});
+		
+		angular.bootstrap(document, [ 'teamdetailApp' ]);
+	});
+</script>
 
 {!/block!}
