@@ -37,7 +37,7 @@
 								</div>
 								<div class="form-group">
 									<div class="col-sm-12">
-										<button class="btn btn-primary col-sm-12" w5c-form-submit="vm.saveEntity()">登录</button>
+										<button type="submit" class="btn btn-primary col-sm-12" w5c-form-submit="vm.saveEntity()">登录</button>
 									</div>
 								</div>
 							</form>
@@ -80,7 +80,7 @@ require(['angular','lib/ycd-validation'], function(angular){
       });
   }]);
   loginApp.controller("loginController", ["$scope", "$http", function ($scope, $http) {
-
+      $scope.remember = true;
 	  if(localStorage.isRemember){
 		  $scope.email = localStorage.email;
 		  $scope.password = localStorage.password;
@@ -106,11 +106,14 @@ require(['angular','lib/ycd-validation'], function(angular){
       		   data: data,
       		   success: function(msg){
       		       console.log(msg);
+      		       localStorage.user = JSON.parse(msg);
+      		       localStorage.uid = localStorage.user.id;
       		       if($scope.remember){
       		    	   localStorage.email = emailVal;
       		    	   localStorage.password = passwordVal;
       		    	   localStorage.isRemember = true;
       		       }
+      		       location.href = "/me";
       		   },
       	       error: function(data) {
       	    	   console.log(data);
