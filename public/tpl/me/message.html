@@ -1,0 +1,60 @@
+<div class="page-header">
+	<h2>消息通知</h2>
+</div>
+<ul id="myTab" class="nav nav-tabs" role="tablist">
+	<li role="presentation" class="active"><a role="tab" tabid="t1"
+		data-toggle="tab">消息</a></li>
+	<li role="presentation"><a role="tab" tabid="t2" data-toggle="tab">通知</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+	<div role="tabpanel" tcid="t1" class="tab-pane active" id="home">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>名称</th>
+					<th>描述</th>
+					<th>创建时间</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="v in messages">
+					<td ng-bind="v.id"></td>
+					<td ng-bind="v.id">{{v.title}}</td>
+					<td ng-bind="v.id">{{v.content}}</td>
+					<td ng-bind="v.id">{{v.created_at}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div role="tabpanel" tcid="t2" class="tab-pane" id="profile">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>名称</th>
+					<th>描述</th>
+					<th>创建时间</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="v in notices">
+					<td>{{v.id}}</td>
+					<td>{{v.title}}</td>
+					<td>{{v.content}}</td>
+					<td>{{v.created_at}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script>
+	$('#myTab a').click(function(e) {
+		e.preventDefault();
+		var p = $(this).attr("tabid");
+		$("[tcid=" + p + "]").siblings().removeClass("active");
+		$("[tcid=" + p + "]").addClass("active");
+	})
+</script>

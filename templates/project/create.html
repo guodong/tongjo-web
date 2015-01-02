@@ -60,13 +60,13 @@
 			
 			
 		});
-		angular.bootstrap(document, ['me']);
+		angular.bootstrap(document.getElementById("body"), ['me']);
 	})
 </script>
 <div class="page-header">
 	<h2>发布项目</h2>
 </div>
-<form name="createform" ng-controller="createform">
+<form id="createforsm" name="createform" ng-controller="createform">
 
 	<div class="form-group">
 		<label>项目名称</label> <input type="text" class="form-control"
@@ -105,7 +105,7 @@
 	<div class="form-group">
 		<label>选择项目标签</label>
 		<div>
-			<span ng-repeat="cate in selcates">{{cate.name}}</span>
+			<span ng-repeat="cate in selcates" style="margin-right: 20px">{{cate.name}}</span>
 			<a class="btn btn-success" data-toggle="modal" data-target="#myModal">添加标签</a>
 			<div class="modal fade" id="myModal">
 				<div class="modal-dialog">
