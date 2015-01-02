@@ -114,9 +114,13 @@
 		var app = angular.module('userinfoApp', [ 'ngRoute', 'ngResource' ]);
 		app.controller('userdetailControl', function($scope,$resource) {
 			
+			var url = window.location.href;
+			var uid = url.substr(url.indexOf("!") + 1,url.length);
+			console.log(uid);
+			
 			var User = $resource(API + 'user/:userId');
 			var user = User.get({
-				userId: 1
+				userId: uid
 			}, function() {
 				console.log(user);
 			});
