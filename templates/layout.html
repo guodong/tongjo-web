@@ -6,7 +6,7 @@ require(['angular', 'angular-resource'], function(angular){
 	
 	app.controller('topc', function($scope, $resource) {
 		var User = $resource(API + 'user/:id');
-		var user = User.get({id: localStorage.id});
+		var user = User.get({id: localStorage.uid});
 		$scope.user = user;
 	});
 	angular.bootstrap(document.getElementById("top"), ['top']);
