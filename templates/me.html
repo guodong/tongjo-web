@@ -7,7 +7,7 @@
 							$routeProvider.when('/info', {
 								templateUrl: 'tpl/me/info.html',
 								controller: 'info'
-							}).when('/org/project', {
+							}).when('/project', {
 								templateUrl: 'tpl/me/project.html',
 								controller: 'project'
 							}).when('/project/create', {
@@ -25,10 +25,8 @@
 						}]);
 				app.controller('info', function($scope, $resource) {
 					var User = $resource(API + 'user/:userId');
-					var user = User.get({
+					$scope.user = User.get({
 						userId: 1
-					}, function() {
-						$scope.user = user;
 					});
 				});
 				app.controller('project-joined', function($scope, $resource) {
@@ -37,8 +35,11 @@
 						$scope.projects = projects;
 					});
 				});
-				app.controller('project', function($scope) {
-
+				app.controller('project', function($scope, $resource) {
+					var Project = $resource(API + 'user/:user_id/type/:type/project');
+					var projects = Project.query({user_id: 1, type: 'created'}, function() {
+						$scope.projects = projects;
+					});
 				});
 				app.controller('team', function($scope, $resource) {
 					var Team = $resource(API+'user/:user_id/team')
@@ -52,7 +53,7 @@
 
 <div class="ucenter">
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-2">
 			<div class="avatar clearfix">
 				<img class="img-thumbnail" alt="140x140"
 					src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ0LjA0Njg3NSIgeT0iNzAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTBwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xNDB4MTQwPC90ZXh0PjwvZz48L3N2Zz4="
@@ -60,8 +61,8 @@
 				<div>Tongjo</div>
 			</div>
 			<div class="list-group">
-				<!-- <a href="#org/project" class="list-group-item"><span
-					class="glyphicon glyphicon-th-list"></span> 我发布的项目</a>  --><a href="#project/joined"
+				<a href="#project" class="list-group-item"><span
+					class="glyphicon glyphicon-th-list"></span> 我发布的项目</a><a href="#project/joined"
 					class="list-group-item"><span
 					class="glyphicon glyphicon-cloud-upload"></span> 我参加的项目</a> <a href="#team"
 					class="list-group-item"><span class="glyphicon glyphicon-tower"></span>
@@ -71,7 +72,7 @@
 					退出</a>
 			</div>
 		</div>
-		<div class="col-md-9">
+		<div class="col-md-10">
 			<div ng-view></div>
 		</div>
 	</div>
