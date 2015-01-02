@@ -128,8 +128,8 @@
 														      		   data: data,
 														      		   success: function(msg){
 														      		       console.log(msg);
-														      		       localStorage.user = JSON.parse(msg);
-														      		       localStorage.uid = localStorage.user.id;
+														      		       localStorage.user = msg;
+														      		       localStorage.uid = JSON.parse(msg).id;
 														      		       if($scope.remember){
 														      		    	   localStorage.email = emailVal;
 														      		    	   localStorage.password = passwordVal;
