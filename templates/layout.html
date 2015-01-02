@@ -1,23 +1,36 @@
 {!extends file='base.html'!} {!block name=base!}
+
+<script>
+require(['angular', 'angular-resource'], function(angular){
+	var app = angular.module('top', ['ngResource']);
+	
+	app.controller('topc', function($scope, $resource) {
+		var User = $resource(API + 'user/:id');
+		var user = User.get({id: localStorage.id});
+		$scope.user = user;
+	});
+	angular.bootstrap(document.getElementById("top"), ['top']);
+});
+</script>
 <div class="footer-fix">
-	<header>
+	<header ng-controller="topc" id="top">
 		<div class="wrapper">
 			<a href="/" class="logo"><img alt="" src="/img/LOGO3.png"></a>
 			<ul class="topbar">
 				<li><a><span class="glyphicon glyphicon-envelope"></span></a></li>
 				<li><a><span class="glyphicon glyphicon-bell"></span></a></li>
 				<li><a><span class="glyphicon glyphicon-user"></span>
-						guodong</a></li>
+						{{user.realname}}</a></li>
 			</ul>
 			<div class="subnav">
 				<ul>
-					<li><a href="/me#/project/create">发布项目</a></li>
-					<li><a href="/">浏览项目</a></li>
+					<li><a href="/project/create">发布项目</a></li>
+					<li><a href="/scanproject">浏览项目</a></li>
 				</ul>
 			</div>
 		</div>
 	</header>
-	<div class="bodyer wrapper">{!block name=main!} {!/block!}</div>
+	<div class="bodyer wrapper" id="body">{!block name=main!} {!/block!}</div>
 	<div class="push"></div>
 </div>
 <footer>

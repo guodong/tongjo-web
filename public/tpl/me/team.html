@@ -1,0 +1,19 @@
+<div class="page-header">
+	<h2>我的团队</h2>
+</div>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>名称</th>
+			<th>创建时间</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="v in teams">
+			<td>{{v.id}}</td>
+			<td>{{v.name}}</td>
+			<td>{{v.created_at}}</td>
+		</tr>
+	</tbody>
+</table>

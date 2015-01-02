@@ -68,7 +68,6 @@ require(['angular','lib/ycd-validation'], function(angular){
           blurTrig: false,
           showError: true,
           removeError: true
-
       });
 		w5cValidatorProvider.setRules({
           username: {
@@ -89,7 +88,6 @@ require(['angular','lib/ycd-validation'], function(angular){
           htmlSource: "",
           showErrorType: 1
       };
-
       vm.saveEntity = function (form) {
       	// 表单验证完成后调用
       	//TODO 提交数据
@@ -105,9 +103,12 @@ require(['angular','lib/ycd-validation'], function(angular){
       		   url: "http://api.tongjo.com/accesstoken",
       		   data: data,
       		   success: function(msg){
-      		       console.log(msg);
+      		       console.log("msg"+msg);
+      		       var user = JSON.parse(msg);
       		       localStorage.user = msg;
-      		       localStorage.uid = JSON.parse(msg).id;
+      		       localStorage.uid = user.id;
+      		       console.log("uid:"+localStorage.uid);
+      		       
       		       if($scope.remember){
       		    	   localStorage.email = emailVal;
       		    	   localStorage.password = passwordVal;
@@ -124,7 +125,6 @@ require(['angular','lib/ycd-validation'], function(angular){
       vm.validateOptions = {
           blurTrig: false
       };
-
       vm.changeShowType = function () {
           if (vm.showErrorType == 2) {
               vm.validateOptions.showError = false;
@@ -134,7 +134,6 @@ require(['angular','lib/ycd-validation'], function(angular){
               vm.validateOptions.removeError = true;
           }
       };
-
   }]); 
   angular.bootstrap(document, ['loginApp']);
 });

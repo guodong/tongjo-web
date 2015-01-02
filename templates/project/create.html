@@ -1,258 +1,167 @@
 {!extends file='layout.html'!} {!block name=main!}
-<!-- body -->
-<div class="ucenter">
-	<div class="row">
-		<div class="col-md-3">
-			<div class="avatar clearfix">
-				<img class="img-thumbnail" alt="140x140"
-					src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ0LjA0Njg3NSIgeT0iNzAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTBwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xNDB4MTQwPC90ZXh0PjwvZz48L3N2Zz4="
-					data-holder-rendered="true">
-				<div>Tongjo</div>
-			</div>
-			<div class="list-group">
-				<a href="#" class="list-group-item active"><span
-					class="glyphicon glyphicon-th-list"></span> 我发布的项目</a> <a href="#"
-					class="list-group-item"><span
-					class="glyphicon glyphicon-cloud-upload"></span> 我参加的项目</a> <a href="#"
-					class="list-group-item"><span class="glyphicon glyphicon-tower"></span>
-					我的团队</a> <a href="#" class="list-group-item"><span
-					class="glyphicon glyphicon-user"></span> 个人信息</a> <a href="#"
-					class="list-group-item"><span class="glyphicon glyphicon-off"></span>
-					退出</a>
-			</div>
-		</div>
-		<div class="col-md-9">
-			<div class="page-header">
-				<h2>发布项目</h2>
-			</div>
-			<form class="form-horizontal project-create-form" role="form"
-				w5c-form-validate="vm.validateOptions" name="publishForm" novalidate>
-				<div class="form-group">
-					<div class="panel-heading">
-						<h4>1 选择项目分类来源</h4>
-					</div>
-					<div class="col-sm-offset-0 col-sm-10">
-						<label class="checkbox-inline"> <input type="checkbox"
-							id="inlineCheckbox1" value="option1">个人
-						</label> <label class="checkbox-inline"> <input type="checkbox"
-							id="inlineCheckbox2" value="option1">赛事
-						</label> <label class="checkbox-inline"> <input type="checkbox"
-							id="inlineCheckbox3" value="option1">科研课题
-						</label> <label class="checkbox-inline"> <input type="checkbox"
-							id="inlineCheckbox4" value="option1">创新课题
-						</label> <label class="checkbox-inline"> <input type="checkbox"
-							id="inlineCheckbox5" value="option1">企业研究
-						</label>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="panel-heading">
-						<h4>2 设置更多详情</h4>
-					</div>
-					<div class="panel-heading">
-						<h5>
-							选择项目分类 <span class="glyphicon glyphicon-question-sign"
-								style="display: inline"></span>
-						</h5>
-					</div>
-					<div class="col-sm-offset-0 col-sm-10">
-						<div class="rectangle1"></div>
-						<div class="dropdown" style="float: left; margin-top: 10px">
-							<button class="btn btn-default dropdown-toggle" type="button"
-								id="tech" data-toggle="dropdown" style="width: 100px">
-								技术 <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" role="menu"
-								aria-labelledby="dropdownMenu1">
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Action</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Another action</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Something else here</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Separated link</a></li>
-							</ul>
-						</div>
-						<div class="dropdown" id="net"
-							style="float: left; display: inline; margin-top: 10px">
-							<button class="btn btn-default dropdown-toggle" type="button"
-								id="net" data-toggle="dropdown" style="width: 150px">
-								互联网 <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu dropdown-menu-right" role="menu"
-								aria-labelledby="dLabel">
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Action</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Another action</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Something else here</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Separated link</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="panel-heading">
-						<h5>
-							预计完成时间 <span class="glyphicon glyphicon-question-sign"
-								style="display: inline"></span>
-						</h5>
-					</div>
-					<div class="col-sm-offset-0 col-sm-10">
-						<div class="rectangle1"></div>
-						<div class="dropdown" style="float: left; margin-top: 10px">
-							<button class="btn btn-default dropdown-toggle" type="button"
-								id="duration" data-toggle="dropdown" style="width: 250px">
-								选择完成时间 <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu dropdown-menu-right" role="menu"
-								aria-labelledby="dLabel">
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Action</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Another action</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Something else here</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#">Separated link</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="panel-heading">
-						<h4>3 告诉我们更多关于项目的事宜</h4>
-					</div>
-					<div class="panel-heading">
-						<h5>
-							项目名称： <span class="glyphicon glyphicon-question-sign"
-								style="display: inline"></span>
-						</h5>
-					</div>
-					<div class="col-sm-offset-0 col-sm-12">
-						<input type="text" class="form-control" name="projectname"
-							placeholder="项目的名称是什么？" ng-model="projectname" required>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="panel-heading">
-						<h5>
-							描述一下项目： <span class="glyphicon glyphicon-question-sign"
-								style="display: inline"></span>
-						</h5>
-					</div>
-					<div class="col-sm-offset-0 col-sm-12">
-						<textarea class="form-control" name="projectcontent" rows="3"
-							placeholder="在这里描述一下你的项目......" ng-model="projectcontent"
-							required></textarea>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-0 col-sm-12">
-						<div class="bor">
-							<button type="button" class="btn btn-default" id="appendix"
-								data-dismiss="modal" style="margin-top: 10px; margin-left: 10px">+
-								添加文件 ...</button>
-							<div class="panel-heading" style="color: #777">
-								<h5>添加或者拖拽有用的图像或者文件</h5>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-5 col-sm-10">
-						<button type="button" class="btn btn-info" id="add"
-							data-toggle="tooltip" data-placement="right" title="给项目增加一个条目"
-							style="margin-top: 15px; margin-left: 20px">
-							<h4>+</h4>
-						</button>
-					</div>
-				</div>
-				<script>
-					$(function() {
+<link href="/lib/bootstrap-datepicker/datepicker3.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="/lib/umeditor/themes/default/css/umeditor.css">
+<script>
+	
+</script>
+<style>
+.form-group>label {
+	line-height: 2em;
+	font-size: 20px;
+}
 
-						$('#add').tooltip()
-						$('#add').click(function() {
-							$("#iterm").toggle();
-							$("#itermcontent").toggle();
-						})
-					})
-				</script>
-				<div class="form-group">
-					<div class="col-sm-offset-0 col-sm-4">
-						<input type="text" class="form-control" style="display: none"
-							id="iterm" name="projectiterm" placeholder="title如项目奖励"
-							ng-model="projectiterm">
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-0 col-sm-8">
-						<textarea class="form-control" style="display: none"
-							id="itermcontent" name="itermcontent" rows="3" placeholder="条目内容"
-							ng-model="itermcontent"></textarea>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="panel-heading">
-						<h5>
-							需要开启项目报名的方式 <span class="glyphicon glyphicon-question-sign"
-								style="display: inline"></span>
-						</h5>
-					</div>
-					<div class="col-sm-offset-0 col-sm-5">
-						<div class="rectangle2"></div>
-						<label class="checkbox-inline" style="margin-top: 10px"> <input
-							type="checkbox" id="inlineCheckbox6" value="option1">个人
-						</label> <label class="checkbox-inline" style="margin-top: 10px">
-							<input type="checkbox" id="team" value="option1">团队
-						</label>
-					</div>
-				</div>
-				<script>
-					$(function() {
-						$('#team').click(function() {
-							$("#remark").toggle();
-							$("#bar").toggle();
-							$("#projectremark").toggle();
-						})
-					})
-				</script>
-				<div class="form-group">
-					<div class="panel-heading" id="remark" style="display: none">
-						<h5>
-							备注 <span class="glyphicon glyphicon-question-sign"
-								style="display: inline"></span>
-						</h5>
-					</div>
-					<div class="col-sm-offset-0 col-sm-12">
-						<div class="rectangle3" id=bar style="display: none"></div>
-						<textarea class="form-control" id="projectremark"
-							name="projectremarks" placeholder="如对团队的要求" rows="3"
-							style="display: none; margin-top: 10px"></textarea>
-					</div>
-				</div>
+.form-group h4 {
+	line-height: 2em;
+}
+</style>
+<script>
+	require(['angular', 'angular-resource'], function(angular) {
+		var app = angular.module('me', ['ngResource']);
+		app.controller('createform', function($scope, $resource) {
+			var Project = $resource(API + 'project');
+			var um = UM.getEditor('dsc', {
+				autoFloatEnabled: false
+			});
+			var getCates = function(){
+				var cates = [];
+				for(var i in $scope.cates){
+					var cate = $scope.cates[i].children;
+					for(var j in cate){
+						if(cate[j].select){
+							cates.push(cate[j]);
+						}
+					}
+				}
+				$scope.selcates = cates;
+				return cates;
+			}
+			$scope.create = function(project) {
+				project.dsc = um.getContent();
+				p = new Project(project);
+				var categorys = getCates();
+				p.categorys = [];
+				for(var i in categorys){
+					p.categorys.push(categorys[i].id);
+				}
+				p.parttype = 0;
+				p.parttype += $scope.parttype.idd?1:0;
+				p.parttype += $scope.parttype.team?2:0;
+				p.$save();
+				location.href="/project!1";
+			};
+			var Cate = $resource(API + 'category');
+			$scope.cates = Cate.query();
+			$scope.select = function($event, cate){
+				var checkbox = $event.target;
+				cate.select = checkbox.checked?true:false;
+				getCates();
+			}
+			
+			
+		});
+		angular.bootstrap(document.getElementById("body"), ['me']);
+	})
+</script>
+<div class="page-header">
+	<h2>发布项目</h2>
+</div>
+<form id="createforsm" name="createform" ng-controller="createform">
 
-				<div class="form-group">
-					<div class="col-sm-offset-0 col-sm-5">
-						<label class="checkbox-inline"> <input type="checkbox"
-							name="agree" ng-model="agree" required> 您必须同意协议
-
-						</label>
-					</div>
-				</div>
-
-				<div class="form-group" style="display: block; float: left">
-					<div class="col-sm-offset-0 col-sm-5">
-						<button type="button" class="btn btn-info btn-lg" id="publish"
-							w5c-form-submit="vm.saveEntity()" data-dismiss="modal">发布项目</button>
-
-					</div>
-				</div>
-			</form>
+	<div class="form-group">
+		<label>项目名称</label> <input type="text" class="form-control"
+			ng-model="project.name" required>
+	</div>
+	<div class="form-group">
+		<label>预计完成时间</label>
+		<div>
+			<input data-provide="datepicker" class="form-control"
+				ng-model="project.deadline" required data-date-format="yyyy/mm/dd">
 		</div>
 	</div>
-</div>
+	<div class="form-group">
+		<label>选择项目分类来源</label>
+		<div class="radio">
+			<label> <input type="radio" name="optionsRadios"
+				ng-model="project.type" value="idd" checked> 个人
+			</label>
+		</div>
+		<div class="radio">
+			<label> <input type="radio" name="optionsRadios"
+				ng-model="project.type" value="cmp"> 赛事
+			</label>
+		</div>
+		<div class="radio">
+			<label> <input type="radio" name="optionsRadios"
+				ng-model="project.type" value="rsc"> 科研课题
+			</label>
+		</div>
+		<div class="radio">
+			<label> <input type="radio" name="optionsRadios"
+				ng-model="project.type" value="crs"> 企业研究
+			</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<label>选择项目标签</label>
+		<div>
+			<span ng-repeat="cate in selcates" style="margin-right: 20px">{{cate.name}}</span>
+			<a class="btn btn-success" data-toggle="modal" data-target="#myModal">添加标签</a>
+			<div class="modal fade" id="myModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+							</button>
+							<h4 class="modal-title">选择项目标签</h4>
+						</div>
+						<div class="modal-body">
+							<dl ng-repeat="cate in cates">
+								<dt>{{cate.name}}</dt>
+								<dd ng-repeat="c in cate.children"><input type="checkbox" ng-click="select($event, c)"> {{c.name}}</dd>
+							</dl>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">关 闭</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label>项目描述</label>
+		<script id="dsc" name="dsc" type="text/plain"
+			style="width: 100%; height: 200px;">
+</script>
+
+	</div>
+	<div class="form-group">
+		<label>报名方式</label>
+		<div class="checkbox">
+			<label> <input type="checkbox" name="parttype" value="idd" required
+				ng-model="parttype.idd"> 个人
+			</label>
+		</div>
+		<div class="checkbox">
+			<label> <input type="checkbox" name="parttype" value="team" required
+				ng-model="parttype.team"> 团队
+			</label>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<a class="btn btn-success btn-lg" ng-click="create(project)"
+			ng-disabled="createform.$invalid">发布项目</a>
+	</div>
+</form>
+
+<script src="/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript" src="/lib/umeditor/umeditor.config.js"></script>
+<script type="text/javascript" src="/lib/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" src="/lib/umeditor/lang/zh-cn/zh-cn.js"></script>
 {!/block!}

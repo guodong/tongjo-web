@@ -8,7 +8,9 @@ define([ 'angular','ui-bootstrap'],function(angular,uibootstrap) {
 											backdrop : true,
 											keyboard : true,
 											modalFade : true,
-											templateUrl : 'loginmodal'
+											backdropClick: true,
+											size: 'sm',
+											templateUrl : 'loginmodal',											
 										};
 
 										var modalOptions = {
