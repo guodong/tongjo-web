@@ -51,7 +51,7 @@ width:100%;
 		<h2 class="title">推荐项目</h2>
 		<article ng-repeat="project in projects track by $index">
 			<span ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
-			 <img src="{{project.imgurl}}">
+			 <img ng-src="{{project.imgurl}}">
 				<div class="transparent_class" ng-show="hoverEdit">
 					<p>{{project.description|defaultDescription}}</p>
 					<a class="small-button red" href="{{project.link}}">查看项目详情</a>

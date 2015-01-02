@@ -48,7 +48,7 @@
 				p.parttype += $scope.parttype.idd?1:0;
 				p.parttype += $scope.parttype.team?2:0;
 				p.$save();
-				location.href="/project!1";
+				location.href="/project!"+p.id;
 			};
 			var Cate = $resource(API + 'category');
 			$scope.cates = Cate.query();
