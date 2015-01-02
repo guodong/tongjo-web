@@ -31,6 +31,12 @@
 			$scope.user = User.get({
 				userId: localStorage.uid
 			});
+			$scope.save = function(user){
+				user = new User(user);
+				user.id = localStorage.uid;
+				user.$save();
+				alert("保存成功");
+			}
 		});
 		app.controller('project-joined', function($scope, $resource) {
 			var Project = $resource(API + 'user/:user_id/type/:type/project');
