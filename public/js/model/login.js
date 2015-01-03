@@ -25,8 +25,10 @@ define([ 'angular', 'ui-bootstrap' ], function(angular, uibootstrap) {
 				      		   url: "http://api.tongjo.com/accesstoken",
 				      		   data: data,
 				      		   success: function(msg){
+				      			   var user = JSON.parse(msg);
 				      		       localStorage.user = msg;
-				      		       localStorage.uid = JSON.parse(msg).id;
+				      		       localStorage.uid = user.id;
+				      		       localStorage.accesstoken = user.accesstoken;
 				      		       if(loginForm.remember.$modelValue){
 				      		    	   localStorage.email = emailVal;
 				      		    	   localStorage.password = passwordVal;

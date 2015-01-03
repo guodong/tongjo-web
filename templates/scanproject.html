@@ -53,10 +53,10 @@ width:100%;
 			<span ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
 			 <img src="{{project.imgurl}}">
 				<div class="transparent_class" ng-show="hoverEdit">
-					<p>{{project.description|defaultDescription}}</p>
+					<p ng-bind="project.description|defaultDescription"></p>
 					<a class="small-button red" href="{{project.link}}">查看项目详情</a>
 				</div>
-				<h5 class="transparent_class">{{project.title}}</h5>
+				<h5 class="transparent_class" ng-bind="project.title"></h5>
 			</span>			
 		</article>
 	</div>
@@ -110,8 +110,7 @@ width:100%;
  	<div class="wrapper">	 	
 			<ul>
 		<li ng-repeat = "subcategory in subcategorys">
-		<a ng-class="{current:isActive(subcategory.subcategoryId,subcategoryId)}" href="{{subcategory.href}}" ng-click="submenuClick(subcategory.subcategoryId)">
-		{{subcategory.name}}
+		<a ng-class="{current:isActive(subcategory.subcategoryId,subcategoryId)}" href="{{subcategory.href}}" ng-click="submenuClick(subcategory.subcategoryId)" ng-bind="subcategory.name">
 		</a>
 		</li>			
 		</ul>
