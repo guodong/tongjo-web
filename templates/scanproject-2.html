@@ -4,11 +4,11 @@
 			<span ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()"> 
 			<img src="{{project.imgurl|defaultImg}}">
 				<div class="transparent_class" ng-show="hoverEdit">
-					<p>{{project.description|defaultDescription}}</p>
+					<p ng-bind="project.description|defaultDescription"></p>
 					<a class="small-button red" href="project!{{project.id}}">查看项目详情</a>
 				</div>
 			</span>
-			<h5>{{project.name}}</h5>
+			<h5 ng-bind="project.name"></h5>
 		</article>		   
 	</div>
 	<pagination 
