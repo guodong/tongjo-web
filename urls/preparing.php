@@ -2,5 +2,5 @@
 return array(
         '#^/team!#' => 'teamdetail',
         '#^/newteam$#' => 'newteam',
-		'#^/userinfodetail$#' => 'userinfo-detail'
+		'#^/userinfodetail!#' => 'userinfo-detail'
 );
