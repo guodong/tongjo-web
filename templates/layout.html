@@ -5,9 +5,13 @@ require(['angular', 'angular-resource'], function(angular){
 	var app = angular.module('top', ['ngResource']);
 	
 	app.controller('topc', function($scope, $resource) {
-		var User = $resource(API + 'user/:id');
-		var user = User.get({id: localStorage.uid});
-		$scope.user = user;
+		if(localStorage.uid){
+			$scope.auth = true;
+			var user = JSON.parse(localStorage.user);
+			$scope.user = user;
+		}else{
+			$scope.auth = false;
+		}
 	});
 	angular.bootstrap(document.getElementById("top"), ['top']);
 });
@@ -16,11 +20,15 @@ require(['angular', 'angular-resource'], function(angular){
 	<header ng-controller="topc" id="top">
 		<div class="wrapper">
 			<a href="/" class="logo"><img alt="" src="/img/LOGO3.png"></a>
-			<ul class="topbar">
+			<ul class="topbar" ng-show="auth==true">
 				<li><a href="/me#message"><span class="glyphicon glyphicon-envelope"></span></a></li>
 				<li><a href="/me#message"><span class="glyphicon glyphicon-bell"></span></a></li>
 				<li><a href="/me"><span class="glyphicon glyphicon-user"></span>
-						{{user.realname}}</a></li>
+						<span ng-bind="user.realname"></span></a></li>
+			</ul>
+			<ul ng-show="auth==false" class="topbar">
+				<li><a href="/login">登陆</a></li>
+				<li><a href="/signup">注册</a></li>
 			</ul>
 			<div class="subnav">
 				<ul>

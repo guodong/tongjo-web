@@ -5,14 +5,14 @@
 	<div class="col-md-3">
 		<img
 			src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ0LjA0Njg3NSIgeT0iNzAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTBwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xNDB4MTQwPC90ZXh0PjwvZz48L3N2Zz4="
-			alt="..." class="img-thumbnail">
+			 class="img-thumbnail">
 	</div>
 	<div class="col-md-9">
 		<form role="form" class="form-horizontal">
 			<div class="form-group">
 				<label class="col-sm-2 control-label">姓名</label>
 				<div class="col-sm-10">
-					<input type="email" class="form-control" ng-model="user.realname" value="{{user.realname}}">
+					<input type="text" class="form-control" ng-model="user.realname">
 				</div>
 			</div>
 			<div class="form-group">
@@ -43,7 +43,7 @@
 			</div>
 			<div class="form-group">
 				<div class="col-sm-10">
-					<a class="btn btn-success" ng-click="save(user)">保存</a>
+					<a class="btn btn-success" ng-click="save()">保存</a>
 				</div>
 			</div>
 		</form>

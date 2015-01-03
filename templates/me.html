@@ -27,15 +27,14 @@
 					});
 				}]);
 		app.controller('info', function($scope, $resource) {
-			var User = $resource(API + 'user/:userId');
-			$scope.user = User.get({
+			var User = $resource(API + 'user/:userId', {userId:'@id'}, {save: {method: 'PUT'}});
+			var user = User.get({
 				userId: localStorage.uid
 			});
-			$scope.save = function(user){
-				user = new User(user);
-				user.id = localStorage.uid;
+			$scope.user = user;
+			$scope.save = function(){
 				user.$save();
-				alert("保存成功");
+				alert("修改成功");
 			}
 		});
 		app.controller('project-joined', function($scope, $resource) {
@@ -69,6 +68,11 @@
 			$scope.user = User.get({
 				user_id: localStorage.uid
 			});
+			$scope.logout = function(){
+				localStorage.removeItem("uid");
+				localStorage.removeItem("accesstoken");
+				location.href="/scanproject";
+			}
 		});
 		app.controller('message', function($scope, $resource) {
 			var User = $resource(API + 'user/:user_id')
@@ -98,7 +102,7 @@
 					class="glyphicon glyphicon-tower"></span> 我的团队</a> <a href="#info"
 					class="list-group-item"><span class="glyphicon glyphicon-user"></span>
 					个人信息</a> <a href="#message" class="list-group-item"><span
-					class="glyphicon glyphicon-envelope"></span> 消息通知</a> <a href="#"
+					class="glyphicon glyphicon-envelope"></span> 消息通知</a> <a href="#" ng-click="logout()"
 					class="list-group-item"><span class="glyphicon glyphicon-off"></span>
 					退出</a>
 			</div>
