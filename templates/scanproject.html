@@ -167,7 +167,7 @@ width:100%;
 					var projects = Project.query({categoryId: 2}, function() {
 						$scope.projects = projects;
 					});
-					console.log($scope.projects);
+					
 					//$scope.projects = projects.concat(projects).concat(projects.reverse())
 					//				  .concat(projects).concat(projects.reverse());
 					/*if($routeParams.specialId != null){
@@ -244,7 +244,6 @@ width:100%;
 					
 					$scope.change = function () {  
 						//TODO 获取更多数据
-						console.log(projects.length);
 					    $scope.recomdBatchStart =  ($scope.recomdBatchStart + 4) % projects.length;
 					    console.log($scope.recomdBatchStart);
 					    if($scope.recomdBatchStart + 4 < projects.length)
@@ -252,7 +251,6 @@ width:100%;
 						else{
 							$scope.projects = projects.slice($scope.recomdBatchStart,projects.length);
 							$scope.projects = $scope.projects.concat(projects.slice(0,($scope.recomdBatchStart + 4)%projects.length));
-							console.log($scope.projects);
 						}
 				   }
 					
@@ -314,13 +312,17 @@ width:100%;
 			   scanApp.filter('defaultImg',function(){
 				   return function(item){
 					   if(item==null || item =="")
-						   return "/img/market.png"
+						   return "/img/market.png";
+					   else return item;
 				   }
 			   });
 			   scanApp.filter('defaultDescription',function(){
 				   return function(item){
+					   console.log("item:"+item);
 					   if(item==null || item =="")
-						   return "项目是指一系列独特的、复杂的并相互关联的活动，这些活动有着一个明确的目标或目的，必须在特定的时间、预算、资源限定内，依据规范完成"
+						   return "项目是指一系列独特的、复杂的并相互关联的活动，这些活动有着一个明确的目标或目的，必须在特定的时间、预算、资源限定内，依据规范完成";
+					   else  return item;
+					   
 				   }
 			   });
 			   angular.bootstrap(document.getElementById("body"), [ 'scanApp' ]);
