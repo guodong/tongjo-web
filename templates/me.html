@@ -1,4 +1,12 @@
 {!extends file='layout.html'!} {!block name=main!}
+<link href="/lib/bootstrap-datepicker/datepicker3.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="/lib/umeditor/themes/default/css/umeditor.css">
+<script src="/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript" src="/lib/umeditor/umeditor.config.js"></script>
+<script type="text/javascript" src="/lib/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" src="/lib/umeditor/lang/zh-cn/zh-cn.js"></script>
 <script>
 	require(['angular', 'angular-route', 'angular-resource'], function(angular,
 			angular_route, $resource) {
@@ -10,9 +18,9 @@
 					}).when('/project', {
 						templateUrl: 'tpl/me/project.html',
 						controller: 'project'
-					}).when('/project', {
-						templateUrl: 'tpl/me/project.html',
-						controller: 'project'
+					}).when('/project/:project_id', {
+						templateUrl: 'tpl/me/project-edit.html',
+						controller: 'project-edit'
 					}).when('/team', {
 						templateUrl: 'tpl/me/team.html',
 						controller: 'team'
@@ -41,6 +49,66 @@
 				type: 'joined'
 			});
 			$scope.created = Project.query({user_id: localStorage.uid, type: 'created'});
+		});
+		app.controller('project-edit', function($scope, $resource, $routeParams) {
+			var um;
+			var Project = $resource(API + 'project/:project_id',{project_id: '@id'}, {save: {method: 'PUT'}});
+			$scope.project = Project.get({
+				project_id: $routeParams.project_id,
+			}, function(){
+				$scope.project.deadline = $scope.project.deadline.substr(0, 10);
+				um = UM.getEditor('dsc', {
+					autoFloatEnabled: false
+				});
+				um.ready(function(){
+					um.setContent($scope.project.description);
+				});
+				
+				$scope.selcates = $scope.project.categorys;
+				var Cate = $resource(API + 'category');
+				$scope.cates = Cate.query({}, function(){
+					for(var i in $scope.cates){
+						for(var k in $scope.cates[i].children){
+						for(var j in $scope.project.categorys){
+							if($scope.project.categorys[j].id == $scope.cates[i].children[k].id){
+								$scope.cates[i].children[k].select = true;
+							}
+						}
+						}
+					}
+				});
+			});
+			var getCates = function(){
+				var cates = [];
+				for(var i in $scope.cates){
+					var cate = $scope.cates[i].children;
+					for(var j in cate){
+						if(cate[j].select){
+							cates.push(cate[j]);
+						}
+					}
+				}
+				$scope.selcates = cates;
+				return cates;
+			}
+			$scope.create = function() {
+				$scope.project.description = um.getContent();
+				var categorys = getCates();
+				$scope.project.categorys = [];
+				for(var i in categorys){
+					$scope.project.categorys.push(categorys[i].id);
+				}
+				$scope.project.$save(function(){
+					alert("保存成功");
+				});
+			};
+			
+			$scope.select = function($event, cate){
+				var checkbox = $event.target;
+				cate.select = checkbox.checked?true:false;
+				getCates();
+			}
+			
 		});
 		app.controller('team', function($scope, $resource) {
 			var Team = $resource(API + 'user/:user_id/team')
@@ -82,7 +150,7 @@
 			</div>
 			<div class="list-group">
 				<a href="#project" class="list-group-item"><span
-					class="glyphicon glyphicon-th-list"></span> 我发布的项目</a> <a
+					class="glyphicon glyphicon-th-list"></span> 我的项目</a> <a
 					href="#team" class="list-group-item"><span
 					class="glyphicon glyphicon-tower"></span> 我的团队</a> <a href="#info"
 					class="list-group-item"><span class="glyphicon glyphicon-user"></span>

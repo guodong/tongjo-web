@@ -13,18 +13,16 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>#</th>
 					<th>名称</th>
-					<th>描述</th>
 					<th>创建时间</th>
+					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="v in created">
-					<td>{{v.id}}</td>
-					<td>{{v.name}}</td>
-					<td>{{v.des}}</td>
-					<td>{{v.created_at}}</td>
+					<td ng-bind="v.name"></td>
+					<td ng-bind="v.created_at"></td>
+					<td><a href="#project/{{v.id}}">修改</a></td>
 				</tr>
 			</tbody>
 		</table>
