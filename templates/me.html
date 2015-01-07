@@ -24,6 +24,9 @@
 					}).when('/team', {
 						templateUrl: 'tpl/me/team.html',
 						controller: 'team'
+					}).when('/team/:team_id', {
+						templateUrl: 'tpl/me/team-detail.html',
+						controller: 'team-detail'
 					}).when('/message', {
 						templateUrl: 'tpl/me/message.html',
 						controller: 'message'
@@ -57,6 +60,48 @@
 				type: 'joined'
 			});
 			$scope.created = Project.query({user_id: localStorage.uid, type: 'created'});
+		});
+		app.controller('team-detail', function($scope, $resource, $routeParams) {
+			var Team = $resource(API + 'team/:team_id');
+			$scope.team = Team.get({
+				team_id: $routeParams.team_id
+			});
+			$scope.update = function(){
+				$team.$save(function(){
+					alert("保存成功");
+				});
+			};
+			var Status = $resource(API + 'team/:team_id/user/:user_id/status', {team_id: '@team_id', user_id: '@user_id'}, {save: {method: 'PUT'}});
+			$scope.permit = function(user_id){
+				var status = Status.get({
+					team_id: $routeParams.team_id,
+					user_id: user_id
+				});
+				status.status = "permited";
+				status.$save(function(){
+					alert("修改成功");
+				})
+			};
+			$scope.deny = function(user_id){
+				var status = Status.get({
+					team_id: $routeParams.team_id,
+					user_id: user_id
+				});
+				status.status = "denied";
+				status.$save(function(){
+					alert("修改成功");
+				})
+			};
+			$scope.remove = function(user_id){
+				var status = Status.get({
+					team_id: $routeParams.team_id,
+					user_id: user_id
+				});
+				status.status = "removed";
+				status.$save(function(){
+					alert("修改成功");
+				})
+			}
 		});
 		app.controller('project-edit', function($scope, $resource, $routeParams) {
 			var um;
@@ -143,6 +188,7 @@
 				user_id: localStorage.uid
 			});
 		});
+		
 		angular.bootstrap(document.getElementById("body"), ['me']);
 	});
 </script>
