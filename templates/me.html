@@ -77,7 +77,7 @@
 					team_id: $routeParams.team_id,
 					user_id: user_id
 				});
-				status.status = permited;
+				status.status = "permited";
 				status.$save(function(){
 					alert("修改成功");
 				})
@@ -87,7 +87,7 @@
 					team_id: $routeParams.team_id,
 					user_id: user_id
 				});
-				status.status = denied;
+				status.status = "denied";
 				status.$save(function(){
 					alert("修改成功");
 				})
@@ -97,7 +97,7 @@
 					team_id: $routeParams.team_id,
 					user_id: user_id
 				});
-				status.status = removed;
+				status.status = "removed";
 				status.$save(function(){
 					alert("修改成功");
 				})
