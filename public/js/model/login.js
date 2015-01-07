@@ -1,79 +1,72 @@
 /**
  * 
  */
-define([ 'angular','ui-bootstrap'],function(angular,uibootstrap) {
-	return angular.module('loginModal',['ui.bootstrap'])
-					.service('loginService',function($modal) {
-										var modalDefaults = {
-											backdrop : true,
-											keyboard : true,
-											modalFade : true,
-											backdropClick: true,
-											windowClass: 'login-dialog',
-											templateUrl : 'loginmodal'
-										};
+define([ 'angular', 'ui-bootstrap' ], function(angular, uibootstrap) {
+	return angular.module('loginModal', [ 'ui.bootstrap' ]).service(
+			'loginService',
+			function($modal) {
+				var loginController = function($scope,$modalInstance){
+					$scope.remember = true;
+					if(localStorage.isRemember){
+						  $scope.email = localStorage.email;
+						  $scope.password = localStorage.password;
+					}
+					$scope.submit = function(loginForm) {
+						console.log(loginForm);
+						console.log($scope);
+				      	var emailVal = loginForm.email.$modelValue;
+				      	var passwordVal = loginForm.password.$modelValue;
+				      	var data={
+				      			email:emailVal,
+				      	        password:passwordVal
+				      	};
+				      	$.ajax({
+				      		   type: "GET",
+				      		   url: "http://api.tongjo.com/accesstoken",
+				      		   data: data,
+				      		   success: function(msg){
+				      			   var user = JSON.parse(msg);
+				      		       localStorage.user = msg;
+				      		       localStorage.uid = user.id;
+				      		       localStorage.accesstoken = user.accesstoken;
+				      		       if(loginForm.remember.$modelValue){
+				      		    	   localStorage.email = emailVal;
+				      		    	   localStorage.password = passwordVal;
+				      		    	   localStorage.isRemember = true;
+				      		       }
+				      		       $modalInstance.close(true);
+				      		   },
+				      	       error: function(data) {
+				      		       $modalInstance.close(false); 
+				      	       }
+				      	});
+					};
+					$scope.close = function(result) {
+						$modalInstance.dismiss('cancel');
+					};
+				};
+				var modalDefaults = {
+					backdrop : true,
+					keyboard : true,
+					modalFade : true,
+					backdropClick : true,
+					windowClass : 'login-dialog',
+					controller: loginController,
+					templateUrl : 'loginmodal'
+				};
+				this.showModal = function(customModalDefaults) {
+					if (!customModalDefaults)
+						customModalDefaults = {};
+					customModalDefaults.backdrop = 'static';
+					return this.show(customModalDefaults);
+				};
 
-										var modalOptions = {
-											closeButtonText : 'Close',
-											actionButtonText : 'OK',
-											headerText : 'Proceed?',
-											bodyText : 'Perform this action?'
-										};
+				this.show = function(customModalDefaults) {
+					var tempModalDefaults = {};
+					angular.extend(tempModalDefaults, modalDefaults,
+							customModalDefaults);
+					return $modal.open(tempModalDefaults).result;
+				};
 
-										this.showModal = function(
-												customModalDefaults,
-												customModalOptions) {
-											if (!customModalDefaults)
-												customModalDefaults = {};
-											customModalDefaults.backdrop = 'static';
-											return this.show(
-													customModalDefaults,
-													customModalOptions);
-										};
-
-										this.show = function(
-												customModalDefaults,
-												customModalOptions) {
-											// Create temp objects to work with
-											// since we're in a singleton
-											// service
-											var tempModalDefaults = {};
-											var tempModalOptions = {};
-
-											// Map angular-ui modal custom
-											// defaults to modal defaults
-											// defined in service
-											angular.extend(tempModalDefaults,
-													modalDefaults,
-													customModalDefaults);
-
-											// Map modal.html $scope custom
-											// properties to defaults defined in
-											// service
-											angular.extend(tempModalOptions,
-													modalOptions,
-													customModalOptions);
-
-											if (!tempModalDefaults.controller) {
-												tempModalDefaults.controller = function(
-														$scope, $modalInstance) {
-													$scope.modalOptions = tempModalOptions;
-													$scope.modalOptions.ok = function(
-															result) {
-														$modalInstance
-																.close(result);
-													};
-													$scope.modalOptions.close = function(
-															result) {
-														$modalInstance
-																.dismiss('cancel');
-													};
-												}
-											}
-
-											return $modal
-													.open(tempModalDefaults).result;
-										};
-
-									});
-		})
+			});
+})
