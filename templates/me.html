@@ -71,7 +71,7 @@
 					alert("保存成功");
 				});
 			};
-			var Status = $resource(API + 'team/:team_id/user/:user_id/status', {team_id: '@team_id', user_id: '@user_id'}, {save: {method: 'PUT'}});
+			var Status = $resource(API + 'team/:team_id/user/:user_id/status/:status', {team_id: '@team_id', user_id: '@user_id', status: '@status'}, {save: {method: 'PUT'}});
 			$scope.permit = function(user_id){
 				var status = Status.get({
 					team_id: $routeParams.team_id,
