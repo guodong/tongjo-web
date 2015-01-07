@@ -5,7 +5,7 @@
 		<h2 class="team-name-title">团队名称：</h2>
 		<h1 class="team-name-name" ng-bind="teamdetail.name"></h1>
 		<div class="team-add">
-			<button class="btn btn-warning">
+			<button class="btn btn-warning" ng-click="joinTeam()">
 				<span class="glyphicon glyphicon-plus"></span> 加入这个团队
 			</button>
 		</div>
@@ -99,19 +99,47 @@
 			var tid = url.substr(url.indexOf("!") + 1,url.length);
 			console.log(tid);
 			
-			var Team = $resource(API + 'team/:teamId');
-			var team = Team.get({
-				teamId: tid
-			}, function() {
-				$scope.teamdetail = team;
-				$scope.teamdetail.created_at = team.created_at.substr(0, 10);
-				console.log($scope.teamdetail); 
-			});
+			$scope.getteamdetail = function(){
+				var Team = $resource(API + 'team/:teamId');
+				var team = Team.get({
+					teamId: tid
+				}, function() {
+					$scope.teamdetail = team;
+					$scope.teamdetail.created_at = team.created_at.substr(0, 10);
+					console.log($scope.teamdetail); 
+				});
+			}
+			
+			$scope.getteamdetail();
+			
+			var JTeam = $resource(API + 'team/:teamId/user');
+			$scope.joinTeam = function(){
+				var uid = localStorage.uid;
+				console.log(uid);
+				
+				jt = new JTeam();
+				
+				jt.$save({
+					teamId: tid,
+					user_id: uid
+				},function(team){
+		            console.log(team);
+		            if(team.error){
+		            	alert(team.msg);
+		            }else{
+		            	alert("加入成功");
+		            	$scope.getteamdetail();
+		            }
+		            
+		        });
+			};
+			
 			
 		});
 		
 		angular.bootstrap(document.getElementById("body"), [ 'teamdetailApp' ]);
 	});
 </script>
+
 
 {!/block!}
