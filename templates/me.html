@@ -38,9 +38,17 @@
 			});
 			$scope.user = user;
 			$scope.save = function(){
-				user.$save();
-				alert("修改成功");
-			}
+				user.$save(function(){
+					localStorage.user = JSON.stringify(user);
+					alert("修改成功");
+					location.reload();
+				});
+				
+			};
+			var School = $resource(API + 'school');
+			$scope.schools = School.query();
+			var Major = $resource(API + 'major');
+			$scope.majors = Major.query();
 		});
 		app.controller('project', function($scope, $resource) {
 			var Project = $resource(API + 'user/:user_id/type/:type/project');
