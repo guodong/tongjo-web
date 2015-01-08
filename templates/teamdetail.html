@@ -112,7 +112,7 @@
 			
 			$scope.getteamdetail();
 			
-			var JTeam = $resource(API + 'team/:teamId/user');
+			var JTeam = $resource(API + 'team/:teamId/user/:user_id');
 			$scope.joinTeam = function(){
 				var uid = localStorage.uid;
 				console.log(uid);
