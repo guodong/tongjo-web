@@ -1,5 +1,12 @@
 {!extends file='layout.html'!} {!block name=main!}
 
+<style>
+	.active{
+	 	display: block;
+		visibility: visible;
+	}
+</style>
+
 <div class="userinfodetail container-fluid">
 	<div class="col-md-4">
 		<div class="leftbar">
@@ -44,13 +51,13 @@
 		<div class="userdetail" ng-controller="userdetailControl">
 
 			<div class="userdetail-title">
-				<h1 ng-bind="userinfo.name"></h1>
+				<h1 ng-bind="userinfo.realname"></h1>
 			</div>
 
 			<div class="userdetail-line">
 				<h6>姓名：</h6>
-				<h6 ng-bind="userinfo.name"></h6>
-				<img alt=".." ng-src="{{getseximg(userinfo.sex)}}" class="sex">
+				<h6 ng-bind="userinfo.realname"></h6>
+				<img alt=".." ng-src="{{getseximg(userinfo.gender)}}" class="sex">
 			</div>
 			<div class="userdetail-line">
 				<h6>LV：</h6>
@@ -60,49 +67,70 @@
 			</div>
 			<div class="userdetail-line">
 				<h6>大学:</h6>
-				<h6 ng-bind="userinfo.university">同济大学</h6>
+				<h6 ng-bind="userinfo.school.name">同济大学</h6>
 			</div>
 			<div class="userdetail-line">
 				<h6>专业:</h6>
-				<h6 ng-bind="userinfo.professional"></h6>
+				<h6 ng-bind="userinfo.major.name"></h6>
 			</div>
 			<div class="userdetail-label">
 				<h6>感兴趣的学术标签</h6>
 			</div>
-			<ul >
-				<li ng-repeat="label in userinfo.userlabels"><span class="rectangle{{$index}}" ></span>{{label}}</li>
+			<ul>
+				<li ng-repeat="label in userinfo.userlabels"><span
+					class="rectangle{{$index}}"></span>{{label}}</li>
 			</ul>
 
 			<div class="clear"></div>
 			<div class="userdetail-label">
 				<h6>共同标签（3）</h6>
 			</div>
-			<ul >
-				<li ng-repeat="label in userinfo.commonlabels"><span class="rectangle{{$index}}"></span>平面设计</li>
+			<ul>
+				<li ng-repeat="label in userinfo.commonlabels"><span
+					class="rectangle{{$index}}"></span>平面设计</li>
 			</ul>
 		</div>
 
 		<div class="userproject" ng-controller="userprojectControl">
-			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="mactive"><a href="#">已参加项目</a></li>
-				<li role="presentation"><a href="#">已发布项目</a></li>
+			<ul id="myTab" class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a role="tab" tabid="t1"
+					data-toggle="tab">已参加项目</a></li>
+				<li role="presentation"><a role="tab" tabid="t2"
+					data-toggle="tab">已发布项目</a></li>
 			</ul>
 
-			<div class="projectitem" ng-repeat="project in projects">
-				<div class="projectitem-title">
-					<h4 ng-bind="project.name"></h4>
-					<h6 class="time" ng-bind="project.time">2015年01月01日</h6>
-					<h6 class="time deadtime">结束-6天12小时</h6>
-				</div>
-				<div class="projectitem-content">
-					<img alt="100*100" src="img/head.jpg" class="headimg">
-					<div class="detail">
-						<img src="img/dialog.png" class="background">
-						<p class="detailtext" ng-bind="project.detail"></p>
+			<div class="tab-content">
+				<div role="tabpanel" tcid="t1" class="tab-pane projectitem active" ng-repeat="project in projects">
+					<div class="projectitem-title">
+						<h4 ng-bind="project.name"></h4>
+						<h6 class="time" ng-bind="project.created_at">2015年01月01日</h6>
+						<h6 class="time deadtime" ng-bind="project.deadline">结束-6天12小时</h6>
+					</div>
+					<div class="projectitem-content">
+						<img alt="100*100" src="img/head.jpg" class="headimg">
+						<div class="detail">
+							<img src="img/dialog.png" class="background">
+							<p class="detailtext" ng-bind="project.description"></p>
+						</div>
 					</div>
 				</div>
+				
+				<div role="tabpanel" tcid="t2" class="tab-pane projectitem" ng-repeat="project in jprojects">
+					<div class="projectitem-title">
+						<h4 ng-bind="project.name"></h4>
+						<h6 class="time" ng-bind="project.created_at">2015年01月01日</h6>
+						<h6 class="time deadtime" ng-bind="project.deadline">结束-6天12小时</h6>
+					</div>
+					<div class="projectitem-content">
+						<img alt="100*100" src="img/head.jpg" class="headimg">
+						<div class="detail">
+							<img src="img/dialog.png" class="background">
+							<p class="detailtext" ng-bind="project.description"></p>
+						</div>
+					</div>
+					
+				</div>
 			</div>
-
 		</div>
 	</div>
 
@@ -119,22 +147,23 @@
 			console.log(uid);
 			
 			var User = $resource(API + 'user/:userId');
-			var user = User.get({
+			$scope.userinfo = User.get({
 				userId: uid
 			}, function() {
-				console.log(user);
+				console.log($scope.userinfo);
+				
+				$scope.userinfo.userlabels=["吃货","学习","平面设计","网站设计","Photoshop"];
+				$scope.userinfo.commonlabels = ["吃货","学习","平面设计","网站设计","Photoshop"];
+				
+				if($scope.userinfo.degree<10){
+					$scope.userinfo.honor = "菜鸟";
+				}else if($scope.userinfo.degree < 40){
+					$scope.userinfo.honor="中级";
+				}else{
+					$scope.userinfo.honor="大神";
+				}
 			});
-			
-			$scope.userinfo = {
-				"name" : "黄小吃",
-				"sex":"0",
-				"degree" : "990",
-				"honor" : "大神的大神",
-				"university" : "同济大学黄渡理工学院",
-				"professional" : "计算机科学与技术",
-				"userlabels":["吃货","学习","平面设计","网站设计","Photoshop"],
-				"commonlabels":["吃货","学习","平面设计","网站设计","Photoshop"],
-			};
+
 			
 			$scope.getseximg = function($sex){
 				 if($sex==0){
@@ -149,30 +178,48 @@
 		
 		
 		app.controller('userprojectControl', function($scope,$resource) {
+			var url = window.location.href;
+			var uid = url.substr(url.indexOf("!") + 1,url.length);
 			
-			var Project = $resource(API + 'project/:projectId');
-			var project = Project.get({
-				projectId: 1
+			var Project = $resource(API + 'user/:user_id/type/:type/project');
+			var projects = Project.query({
+				user_id: uid,
+				type: 'created'
 			}, function() {
-				console.log(project);
+				for(var i=0; i<projects.length; i++){
+					projects[i].created_at = projects[i].created_at.substr(0, 10);
+					projects[i].deadline = projects[i].created_at;
+				}
+				$scope.projects = projects;
+				console.log(projects);
 			});
 			
+			var jprojects = Project.query({
+				user_id: uid,
+				type: 'joined'
+			}, function() {
+				for(var i=0; i<projects.length; i++){
+					projects[i].created_at = projects[i].created_at.substr(0, 10);
+					projects[i].deadline = projects[i].created_at;
+				}
+				$scope.jprojects = jprojects;
+				console.log(jprojects);
+			});
 			
-			$scope.projects = [{
-				"name" : "我是一个项目名称哈哈哈",
-				"time":"2015-02-78",
-				"detail" : "我们都是好孩子异想天开的孩子 相信爱 可以永远啊 我们都是好孩子 最最善良的孩子怀念着 伤害我们的 推开窗看天边白色的鸟 想起你薄荷味的笑 那时你在操场上奔跑 大声喊 我爱你",
-				},
-				{
-					"name" : "黄小吃",
-					"time":"2015-02-78",
-					"detail" : "我们都是好孩子异想天开的孩子 相信爱 可以永远啊 我们都是好孩子 最最善良的孩子怀念着 伤害我们的 推开窗看天边白色的鸟 想起你薄荷味的笑 那时你在操场上奔跑 大声喊 我爱你",
-					},
-				];
 		}); 
 		
 		angular.bootstrap(document.getElementById("body"), [ 'userinfoApp' ]);
 	});
+</script>
+
+
+<script>
+	$('#myTab a').click(function(e) {
+		e.preventDefault();
+		var p = $(this).attr("tabid");
+		$("[tcid=" + p + "]").siblings().removeClass("active");
+		$("[tcid=" + p + "]").addClass("active");
+	})
 </script>
 
 {!/block!}
