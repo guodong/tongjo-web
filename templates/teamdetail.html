@@ -71,17 +71,17 @@
 		<tbody>
 			<tr ng-repeat="member in teamdetail.members">
 				<td><img src="img/head.jpg" alt="*" class="smallhead">
-					<h3 class="text-primary" ng-bind="member.realname">彭涛</h3></td>
+					<a class="text-primary" ng-bind="member.realname" href="userinfodetail!{{member.id}}">彭涛</a></td>
 				<td>
-					<h4 class="text-primary" ng-bind="member.school.name"></h4>
+					<h5 class="text-primary" ng-bind="member.school.name"></h5>
 				</td>
 
 				<td>
-					<h4 class="text-primary" ng-bind="member.major.name">电子与信息工程学院</h4>
+					<h5 class="text-primary" ng-bind="member.major.name">电子与信息工程学院</h5>
 				</td>
 
 				<td>
-					<a class="btn btn-warning" href="userinfodetail!{{member.id}}">查看资料</a>
+					<a class="text-primary" href="userinfodetail!{{member.id}}">查看资料</a>
 				</td>
 			</tr>
 		</tbody>

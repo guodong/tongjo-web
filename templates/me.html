@@ -62,12 +62,17 @@
 			$scope.created = Project.query({user_id: localStorage.uid, type: 'created'});
 		});
 		app.controller('team-detail', function($scope, $resource, $routeParams) {
-			var Team = $resource(API + 'team/:team_id');
-			$scope.team = Team.get({
+			var Team = $resource(API + 'team/:team_id',{team_id: '@team_id'},{save: {method: 'PUT'}});
+			
+			var team = Team.get({
 				team_id: $routeParams.team_id
+			}, function() {
+				$scope.team = team;
+				$scope.team.created_at = team.created_at.substr(0, 10);
 			});
+			
 			$scope.update = function(){
-				$team.$save(function(){
+				$scope.team.$save(function(){
 					alert("保存成功");
 				});
 			};
