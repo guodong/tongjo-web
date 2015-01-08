@@ -60,6 +60,7 @@
 				type: 'joined'
 			});
 			$scope.created = Project.query({user_id: localStorage.uid, type: 'created'});
+			$scope.user = JSON.parse(localStorage.user);
 		});
 		app.controller('team-detail', function($scope, $resource, $routeParams) {
 			var Team = $resource(API + 'team/:team_id');
@@ -204,7 +205,7 @@
 			</div>
 			<div class="list-group">
 				<a href="#project" class="list-group-item"><span
-					class="glyphicon glyphicon-th-list"></span> 我的项目</a> <a
+					class="glyphicon glyphicon-th-list"></span> 我的项目</a> <a ng-show="user.role=='student'"
 					href="#team" class="list-group-item"><span
 					class="glyphicon glyphicon-tower"></span> 我的团队</a> <a href="#info"
 					class="list-group-item"><span class="glyphicon glyphicon-user"></span>

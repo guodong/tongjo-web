@@ -4,16 +4,16 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>#</th>
 			<th>名称</th>
 			<th>创建时间</th>
+			<th>操作</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="v in teams">
-			<td>{{v.id}}</td>
 			<td>{{v.name}}</td>
-			<td>{{v.created_at}}</td>
+			<td>{{v.created_at|limitTo:10}}</td>
+			<td><a target="_blank" ng-bind="/team!{{v.id}}">查看</a></td>
 		</tr>
 	</tbody>
 </table>
