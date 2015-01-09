@@ -38,20 +38,35 @@
 			var User = $resource(API + 'user/:userId', {userId:'@id'}, {save: {method: 'PUT'}});
 			var user = User.get({
 				userId: localStorage.uid
-			});
-			$scope.user = user;
-			$scope.save = function(){
-				user.$save(function(){
-					localStorage.user = JSON.stringify(user);
-					alert("修改成功");
-					location.reload();
+			},function(){
+				$scope.user = user;
+				var u = JSON.parse(localStorage.user);
+				$scope.save = function(){
+					var u = new User(user);
+					u.$save(function(){
+						localStorage.user = JSON.stringify(user);
+						alert("修改成功");
+						location.reload();
+					});
+					
+				};
+				var School = $resource(API + 'school');
+				$scope.schools = School.query(function(){
+					$scope.getCampuses();
 				});
-				
-			};
-			var School = $resource(API + 'school');
-			$scope.schools = School.query();
-			var Major = $resource(API + 'major');
-			$scope.majors = Major.query();
+				var Major = $resource(API + 'major');
+				$scope.majors = Major.query();
+				$scope.getCampuses = function(){
+					$scope.campuses = [];
+					for(var i in $scope.schools){
+						if($scope.schools[i].id == user.school_id){
+							$scope.campuses = $scope.schools[i].campuses;
+							break;
+						}
+					}
+				}
+			});
+
 		});
 		app.controller('project', function($scope, $resource) {
 			var Project = $resource(API + 'user/:user_id/type/:type/project');
