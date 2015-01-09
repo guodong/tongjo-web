@@ -116,8 +116,8 @@
 
 				<td>
 					<a class="text-primary" ng-show="isshowagree(team.user_id,member.id,member.pivot.status)" ng-click="permit(member.id)">同意</a>
-					<a class="text-primary" ng-show="isshowdeny(team.user_id,member.id,member.pivot.status)" href="userinfodetail!{{member.id}}">拒绝</a>
-					<a class="text-primary" ng-show="isshowremove(team.user_id,member.id,member.pivot.status)" href="userinfodetail!{{member.id}}">剔除</a>
+					<a class="text-primary" ng-show="isshowdeny(team.user_id,member.id,member.pivot.status)"  ng-click="deny(member.id)">拒绝</a>
+					<a class="text-primary" ng-show="isshowremove(team.user_id,member.id,member.pivot.status)"  ng-click="remove(member.id)">剔除</a>
 				</td>
 			</tr>
 		</tbody>

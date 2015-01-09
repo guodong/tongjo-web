@@ -64,13 +64,17 @@
 		app.controller('team-detail', function($scope, $resource, $routeParams) {
 			var Team = $resource(API + 'team/:id',{id: '@id'},{save: {method: 'PUT'}});
 			
-			var team = Team.get({
-				id: $routeParams.team_id
-			}, function() {
-				$scope.team = team;
-				$scope.team.created_at = team.created_at.substr(0, 10);
-				console.log($scope.team);
-			});
+			$scope.getteam=function(){
+				var team = Team.get({
+					id: $routeParams.team_id
+				}, function() {
+					$scope.team = team;
+					$scope.team.created_at = team.created_at.substr(0, 10);
+					console.log($scope.team);
+				});
+			}
+			
+			$scope.getteam();
 			
 			$scope.update = function(){
 				$scope.team.$save(function(team){
@@ -128,34 +132,40 @@
 				}
 			};
 			
-			var Status = $resource(API + 'team/:team_id/user/:user_id/status', {team_id: '@team_id', user_id: '@user_id'}, {save: {method: 'PUT'}});
+			var Status = $resource(API + 'team/:team_id/user/:user_id/status/:status', null, {save: {method: 'PUT'}});
 			$scope.permit = function(user_id){
-				var status = Status.get({
+				var st = new Status();
+				st.$save({
 					team_id: $routeParams.team_id,
-					user_id: user_id
-				});
-				status.status = "permited";
-				status.$save(function(){
+					user_id: user_id,
+					status:"permited"
+				},
+				function(){
+					$scope.getteam();
 					alert("修改成功");
 				})
 			};
 			$scope.deny = function(user_id){
-				var status = Status.get({
+				var st = new Status();
+				st.$save({
 					team_id: $routeParams.team_id,
-					user_id: user_id
-				});
-				status.status = "denied";
-				status.$save(function(){
+					user_id: user_id,
+					status:"denied"
+				},
+				function(){
+					$scope.getteam();
 					alert("修改成功");
 				})
 			};
 			$scope.remove = function(user_id){
-				var status = Status.get({
+				var st = new Status();
+				st.$save({
 					team_id: $routeParams.team_id,
-					user_id: user_id
-				});
-				status.status = "removed";
-				status.$save(function(){
+					user_id: user_id,
+					status:"removed"
+				},
+				function(){
+					$scope.getteam();
 					alert("修改成功");
 				})
 			}
