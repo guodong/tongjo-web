@@ -38,20 +38,35 @@
 			var User = $resource(API + 'user/:userId', {userId:'@id'}, {save: {method: 'PUT'}});
 			var user = User.get({
 				userId: localStorage.uid
-			});
-			$scope.user = user;
-			$scope.save = function(){
-				user.$save(function(){
-					localStorage.user = JSON.stringify(user);
-					alert("修改成功");
-					location.reload();
+			},function(){
+				$scope.user = user;
+				var u = JSON.parse(localStorage.user);
+				$scope.save = function(){
+					var u = new User(user);
+					u.$save(function(){
+						localStorage.user = JSON.stringify(user);
+						alert("修改成功");
+						location.reload();
+					});
+					
+				};
+				var School = $resource(API + 'school');
+				$scope.schools = School.query(function(){
+					$scope.getCampuses();
 				});
-				
-			};
-			var School = $resource(API + 'school');
-			$scope.schools = School.query();
-			var Major = $resource(API + 'major');
-			$scope.majors = Major.query();
+				var Major = $resource(API + 'major');
+				$scope.majors = Major.query();
+				$scope.getCampuses = function(){
+					$scope.campuses = [];
+					for(var i in $scope.schools){
+						if($scope.schools[i].id == user.school_id){
+							$scope.campuses = $scope.schools[i].campuses;
+							break;
+						}
+					}
+				}
+			});
+
 		});
 		app.controller('project', function($scope, $resource) {
 			var Project = $resource(API + 'user/:user_id/type/:type/project');
@@ -60,45 +75,113 @@
 				type: 'joined'
 			});
 			$scope.created = Project.query({user_id: localStorage.uid, type: 'created'});
+			$scope.user = JSON.parse(localStorage.user);
 		});
 		app.controller('team-detail', function($scope, $resource, $routeParams) {
-			var Team = $resource(API + 'team/:team_id');
-			$scope.team = Team.get({
-				team_id: $routeParams.team_id
-			});
+			var Team = $resource(API + 'team/:id',{id: '@id'},{save: {method: 'PUT'}});
+			
+			$scope.getteam=function(){
+				var team = Team.get({
+					id: $routeParams.team_id
+				}, function() {
+					$scope.team = team;
+					$scope.team.created_at = team.created_at.substr(0, 10);
+					console.log($scope.team);
+				});
+			}
+			
+			$scope.getteam();
+			
 			$scope.update = function(){
-				$team.$save(function(){
+				$scope.team.$save(function(team){
+					$scope.team = team;
+					$scope.team.created_at = team.created_at.substr(0, 10);
 					alert("保存成功");
 				});
 			};
-			var Status = $resource(API + 'team/:team_id/user/:user_id/status', {team_id: '@team_id', user_id: '@user_id'}, {save: {method: 'PUT'}});
+			
+			$scope.getstatus = function(status){
+				if(status == "permited"){
+					return "已通过";
+				}else if(status == "denied"){
+					return "已拒绝";
+				}else if(status == "applied"){
+					return "申请中";
+				}else if(status == "removed"){
+					return "已移除";
+				}else{
+					return "未知";
+				}
+			};
+			
+			
+			$scope.isshowagree = function(leaderid,userid,status){
+				if(leaderid == userid){
+					return false;
+				}
+				if(status == "applied"){
+					return true;
+				}else{
+					return false;
+				}
+			};
+			
+			$scope.isshowdeny = function(leaderid,userid,status){
+				if(leaderid == userid){
+					return false;
+				}
+				if(status == "applied"){
+					return true;
+				}else{
+					return false;
+				}
+			};
+			
+			$scope.isshowremove = function(leaderid,userid,status){
+				if(leaderid == userid){
+					return false;
+				}
+				if(status == "permited"){
+					return true;
+				}else{
+					return false;
+				}
+			};
+			
+			var Status = $resource(API + 'team/:team_id/user/:user_id/status/:status', null, {save: {method: 'PUT'}});
 			$scope.permit = function(user_id){
-				var status = Status.get({
+				var st = new Status();
+				st.$save({
 					team_id: $routeParams.team_id,
-					user_id: user_id
-				});
-				status.status = "permited";
-				status.$save(function(){
+					user_id: user_id,
+					status:"permited"
+				},
+				function(){
+					$scope.getteam();
 					alert("修改成功");
 				})
 			};
 			$scope.deny = function(user_id){
-				var status = Status.get({
+				var st = new Status();
+				st.$save({
 					team_id: $routeParams.team_id,
-					user_id: user_id
-				});
-				status.status = "denied";
-				status.$save(function(){
+					user_id: user_id,
+					status:"denied"
+				},
+				function(){
+					$scope.getteam();
 					alert("修改成功");
 				})
 			};
 			$scope.remove = function(user_id){
-				var status = Status.get({
+				var st = new Status();
+				st.$save({
 					team_id: $routeParams.team_id,
-					user_id: user_id
-				});
-				status.status = "removed";
-				status.$save(function(){
+					user_id: user_id,
+					status:"removed"
+				},
+				function(){
+					$scope.getteam();
 					alert("修改成功");
 				})
 			}
@@ -314,7 +397,7 @@
 			</div>
 			<div class="list-group">
 				<a href="#project" class="list-group-item"><span
-					class="glyphicon glyphicon-th-list"></span> 我的项目</a> <a
+					class="glyphicon glyphicon-th-list"></span> 我的项目</a> <a ng-show="user.role=='student'"
 					href="#team" class="list-group-item"><span
 					class="glyphicon glyphicon-tower"></span> 我的团队</a> <a href="#info"
 					class="list-group-item"><span class="glyphicon glyphicon-user"></span>

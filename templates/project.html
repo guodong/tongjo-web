@@ -1,12 +1,12 @@
 {!extends file='layout.html'!} {!block name=main!}
-<div class="project-detail">
+<div class="project-detail" ng-controller="info">
 	<div class="page-header">
-		<h1>网站开发</h1>
-		<button class="btn btn-warning">
+		<h1 ng-bind="project.name"></h1>
+		<a class="btn btn-warning" href="#join">
 			<span class="glyphicon glyphicon-plus"></span> 参加该项目
-		</button>
+		</a>
 	</div>
-	<div class="well clearfix">
+	<!-- <div class="well clearfix">
 		<div class="panel pull-left">
 			<ul>
 				<li class="first">
@@ -18,30 +18,24 @@
 			</ul>
 		</div>
 		<div class="panel pull-right">
-			<p>剩下100天</p>
+			<p>剩下<span>100</span>天</p>
 			<span>开放</span>
 		</div>
-	</div>
+	</div> -->
 	<section>
 		<div class="row">
 			<div class="col-md-8">
 				<h3>项目描述</h3>
-				<div class="detail">Concat works better here because it’s
-					simpler. Angular is handling all of the code loading for us, we
-					just need to assist it with the files. So long as we get that
-					module setter before the getters, we have nothing to worry about.
-					It’s also great because any new files we just add into the
-					directory. No manifest like we would need in browserify. No
-					dependencies like we would need in require.js.</div>
+				<div class="detail" ng-bind-html="project.description|trusted"></div>
 			</div>
 			<div class="col-md-4">
 				<h4>项目发布者</h4>
-				<p>彭涛</p>
+				<p ng-bind="project.creator.realname"></p>
 			</div>
 		</div>
 	</section>
 	<section>
-	<a class="btn btn-primary btn-lg pull-right" style="margin-bottom:20px" href="newteam">组建团队</a>
+	<a class="btn btn-primary pull-right" id="join" style="margin-bottom:20px" href="/newteam/{{project.id}}"><span class="glyphicon glyphicon-star"></span> 组建团队</a>
 	<table class="group">
 		<thead class="bg-primary">
 			<tr>
@@ -51,43 +45,15 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
+			<tr ng-repeat="v in project.teams">
 				<td>
-					<h3 class="text-success">电信六人行</h3> <small><a href="/team!1">查看团队详情</a></small>
+					<h3 class="text-success" ng-bind="v.name"></h3> <small><a target="_blank" href="/team!{{v.id}}">查看团队详情</a></small>
 				</td>
 				<td>
-					<p class="text-primary">已有：4人</p>
-					<p class="text-muted">共需：8人</p>
+					<p class="text-primary">已有：<span ng-bind="v.teammember_current"></span>人</p>
+					<p class="text-muted">共需：<span ng-bind="v.teammember_all"></span>人</p>
 				</td>
-				<td>
-					<button class="btn btn-warning">
-						<span class="glyphicon glyphicon-plus"></span> 参加团队
-					</button>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<h3 class="text-success">电信六人行</h3> <small><a>查看团队详情</a></small>
-				</td>
-				<td>
-					<p class="text-primary">已有：4人</p>
-					<p class="text-muted">共需：8人</p>
-				</td>
-				<td>
-					<button class="btn btn-warning">
-						<span class="glyphicon glyphicon-plus"></span> 参加团队
-					</button>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<h3 class="text-success">电信六人行</h3> <small><a>查看团队详情</a></small>
-				</td>
-				<td>
-					<p class="text-primary">已有：4人</p>
-					<p class="text-muted">共需：8人</p>
-				</td>
-				<td>
+				<td style="text-align: right;">
 					<button class="btn btn-warning">
 						<span class="glyphicon glyphicon-plus"></span> 参加团队
 					</button>
@@ -99,37 +65,28 @@
 	<section class="project-list">
 		<h3>相似项目：</h3>
 		<div class="row">
-			<div class="col-xs-6 col-md-3">
-				<a href="#" class="thumbnail"> <img src="/img/web.png" alt="...">
+			<div class="col-xs-6 col-md-3" ng-repeat="v in projects|limitTo:4">
+				<a href="/project/{{v.id}}" class="thumbnail"> <img src="/img/web.png" alt="...">
 				</a>
 				<h4>
-					<a href="#">网站开发</a>
-				</h4>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<a href="#" class="thumbnail"> <img src="/img/cpt.png" alt="...">
-				</a>
-				<h4>
-					<a href="#">比赛</a>
-				</h4>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<a href="#" class="thumbnail"> <img src="/img/market.png"
-					alt="...">
-				</a>
-				<h4>
-					<a href="#">商业市场</a>
-				</h4>
-			</div>
-			<div class="col-xs-6 col-md-3">
-				<a href="#" class="thumbnail"> <img src="/img/phone.png"
-					alt="...">
-				</a>
-				<h4>
-					<a href="#">移动设备</a>
+					<a href="/project/{{v.id}}" ng-bind="v.name"></a>
 				</h4>
 			</div>
 		</div>
 	</section>
 </div>
+<script>
+var project_id = location.pathname.replace(/\/project\/(\d+)$/, '$1');
+require(['angular', 'angular-resource'], function(angular){
+	var app = angular.module('me', ['ngResource']);
+	app.filter('trusted', ['$sce', function ($sce) { return function (text) { return $sce.trustAsHtml(text); }; }]);
+	app.controller('info', function($scope, $resource, $sce) {
+		var Project = $resource(API + 'project/:project_id');
+		$scope.project = Project.get({project_id: project_id});
+		$scope.project.description = $sce.trustAsHtml($scope.project.description);
+		$scope.projects = Project.query();
+	});
+	angular.bootstrap(document.getElementById("body"), ['me']);
+});
+</script>
 {!/block!}

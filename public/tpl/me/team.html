@@ -1,19 +1,54 @@
 <div class="page-header">
 	<h2>我的团队</h2>
 </div>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>#</th>
-			<th>名称</th>
-			<th>创建时间</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat="v in teams">
-			<td>{{v.id}}</td>
-			<td>{{v.name}}</td>
-			<td>{{v.created_at}}</td>
-		</tr>
-	</tbody>
-</table>
+<ul id="myTab" class="nav nav-tabs" role="tablist">
+	<li role="presentation" class="active"><a role="tab" tabid="t1"
+		data-toggle="tab">我创建的</a></li>
+	<li role="presentation"><a role="tab" tabid="t2" data-toggle="tab">我参加的</a></li>
+</ul>
+<div class="tab-content">
+	<div role="tabpanel" tcid="t1" class="tab-pane active" id="home">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>名称</th>
+					<th>创建时间</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="v in teams">
+					<td ng-bind="v.name">{{v.name}}</td>
+					<td ng-bind="v.created_at|limitTo:10"></td>
+					<td><a href="#team/{{v.id}}">修改</a> <a href="/team!{{v.id}}">查看</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div role="tabpanel" tcid="t2" class="tab-pane" id="profile">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>名称</th>
+					<th>创建时间</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="v in teams">
+					<td ng-bind="v.name">{{v.name}}</td>
+					<td ng-bind="v.created_at|limitTo:10"></td>
+					<td><a href="/team!{{v.id}}">查看</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script>
+	$('#myTab a').click(function(e) {
+		e.preventDefault();
+		var p = $(this).attr("tabid");
+		$("[tcid=" + p + "]").siblings().removeClass("active");
+		$("[tcid=" + p + "]").addClass("active");
+	})
+</script>
