@@ -147,8 +147,11 @@
 				for(var i in categorys){
 					p.categorys.push(categorys[i].id);
 				}
-				p.$save();
-				location.href="/project!"+p.id;
+				p.user_id = localStorage.uid;
+				p.$save(function(){
+					location.href="/project/"+p.id;
+				});
+				
 			};
 			var Cate = $resource(API + 'category');
 			$scope.cates = Cate.query();
