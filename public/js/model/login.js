@@ -24,9 +24,16 @@ define([ 'angular', 'ui-bootstrap' ], function(angular, uibootstrap) {
 				      		   type: "GET",
 				      		   url: "http://api.tongjo.com/accesstoken",
 				      		   data: data,
+				      		   dataType:"json",
 				      		   success: function(msg){
-				      			   var user = JSON.parse(msg);
-				      		       localStorage.user = msg;
+				      			   if(msg.error){
+				          	    	   $scope.$apply(function () {
+				           	    		  $scope.errorMsg = "用户名或密码错误";
+				           	          });
+				          	    	  return;
+				      			   }
+				      			   var user = msg;
+				      		       localStorage.user = JSON.stringify(msg);
 				      		       localStorage.uid = user.id;
 				      		       localStorage.accesstoken = user.accesstoken;
 				      		       if(loginForm.remember.$modelValue){
@@ -37,7 +44,9 @@ define([ 'angular', 'ui-bootstrap' ], function(angular, uibootstrap) {
 				      		       $modalInstance.close(true);
 				      		   },
 				      	       error: function(data) {
-				      		       $modalInstance.close(false); 
+				      	    	   $scope.$apply(function () {
+				       	    		  $scope.errorMsg ="error";
+				       	          });
 				      	       }
 				      	});
 					};

@@ -70,7 +70,7 @@ width:100%;
 <div class="navigation-first">
 	<div class="wrapper">
 			<a ng-class="{current:isActive(1,categoryId)}" href="#category-1/1" ng-click="menuClick(1)">
-				技术
+			    IT互联网
 				<div ng-class="{line:isActive(1,categoryId)}"></div>
 				<div ng-class="{arrow:isActive(1,categoryId)}"></div>
 			</a>
@@ -80,30 +80,20 @@ width:100%;
 				<div ng-class="{arrow:isActive(2,categoryId)}"></div>
 			</a>
 			<a ng-class="{current:isActive(3,categoryId)}" href="#category-3/10" ng-click="menuClick(3)">
-			   商业市场
+			   校园创业
 				<div ng-class="{line:isActive(3,categoryId)}"></div>
 				<div ng-class="{arrow:isActive(3,categoryId)}"></div>
 			</a>
 			<a ng-class="{current:isActive(4,categoryId)}" href="#category-4" ng-click="menuClick(4)">
-			   校园创业
+				校园生活创意
 				<div ng-class="{line:isActive(4,categoryId)}"></div>
 				<div ng-class="{arrow:isActive(4,categoryId)}"></div>
 			</a>
 			<a ng-class="{current:isActive(5,categoryId)}" href="#category-5" ng-click="menuClick(5)">
-			   	创意
+			   	比赛
 				<div ng-class="{line:isActive(5,categoryId)}"></div>
 				<div ng-class="{arrow:isActive(5,categoryId)}"></div>
-			</a>
-			<a ng-class="{current:isActive(6,categoryId)}" href="#category-6" ng-click="menuClick(6)">
-			   	公益
-				<div ng-class="{line:isActive(6,categoryId)}"></div>
-				<div ng-class="{arrow:isActive(6,categoryId)}"></div>
-			</a>	
-			<a ng-class="{current:isActive(7,categoryId)}" href="#category-1/1" ng-click="menuClick(7)">
-			   	比赛
-				<div ng-class="{line:isActive(7,categoryId)}"></div>
-				<div ng-class="{arrow:isActive(7,categoryId)}"></div>
-			</a>						
+			</a>							
 	</div>
 </div>
 <div class="navigation-second">
@@ -185,22 +175,39 @@ width:100%;
 				});
 				var specialTitle = new Array("最热项目","最新项目","推荐项目");
 				var categoryTitle = new Array("技术","设计","商业市场","校园创业","创意","公益","比赛");
-				var subcategoryTitle = new Array(["技术 》计算机","技术 》 通信","技术 》 互联网","技术 》 智能","技术 》自动化"],
-						["设计 》艺术设计","设计 》工业设计","设计 》交互设计","设计 》平面设计","设计 》动画设计"],
-						["商业市场 》营销","商业市场 》管理","商业市场 》策划"]);
 				var subcategoryArrays= new Array(
-						[{subcategoryId:1,name:"通信",href:"#category-1/1"},
-						 {subcategoryId:2,name:"互联网",href:"#category-1/2"},
-						 {subcategoryId:3,name:"智能",href:"#category-1/3"},
-						 {subcategoryId:4,name:"自动化",href:"#category-1/4"}],
-						[{subcategoryId:5,name:"艺术设计",href:"#category-2/5"},
-							 {subcategoryId:6,name:"工业设计",href:"#category-2/6"},
-							 {subcategoryId:7,name:"交互设计",href:"#category-2/7"},
-							 {subcategoryId:8,name:"平面设计",href:"#category-2/8"},
-							 {subcategoryId:9,name:"动画设计",href:"#category-2/9"}],
-								[{subcategoryId:10,name:"营销设计",href:"#category-3/10"},
-								 {subcategoryId:11,name:"管理",href:"#category-3/11"},
-								 {subcategoryId:12,name:"策划",href:"#category-3/12"}]
+						[{subcategoryId:1,name:"数据分析",href:"#category-1/1"},
+						 {subcategoryId:2,name:"信息通信",href:"#category-1/2"},
+						 {subcategoryId:3,name:"移动互联网",href:"#category-1/3"},
+						 {subcategoryId:4,name:"智能硬件",href:"#category-1/4"},
+						 {subcategoryId:5,name:"自动化",href:"#category-1/5"},
+						 {subcategoryId:6,name:"网站开发",href:"#category-1/6"},
+						 {subcategoryId:7,name:"软件开发",href:"#category-1/7"},
+						 {subcategoryId:8,name:"其他",href:"#category-1/8"}],
+						[{subcategoryId:9,name:"艺术设计",href:"#category-2/9"},
+							 {subcategoryId:10,name:"交互设计",href:"#category-2/10"},
+							 {subcategoryId:11,name:"网页设计",href:"#category-2/11"},
+							 {subcategoryId:12,name:"动画设计",href:"#category-2/12"},
+							 {subcategoryId:13,name:"建筑设计",href:"#category-2/13"},
+							 {subcategoryId:14,name:"产品设计",href:"#category-2/14"},
+							 {subcategoryId:15,name:"电子设计",href:"#category-2/15"},
+							 {subcategoryId:16,name:"机械设计",href:"#category-2/16"},
+							 {subcategoryId:17,name:"服装设计",href:"#category-2/17"},
+							 {subcategoryId:18,name:"其他",href:"#category-2/18"}],
+								[{subcategoryId:19,name:"本地生活",href:"#category-3/19"},
+								 {subcategoryId:20,name:"社交类",href:"#category-3/20"},
+								 {subcategoryId:21,name:"技术创新",href:"#category-3/21"},
+								 {subcategoryId:22,name:"服务类",href:"#category-3/22"},
+								 {subcategoryId:23,name:"其他",href:"#category-3/23"}],
+						[{subcategoryId:24,name:"志愿者活动",href:"#category-4/24"},
+						 {subcategoryId:25,name:"爱的基金",href:"#category-4/25"},
+						 {subcategoryId:26,name:"其他",href:"#category-4/26"}],
+							[{subcategoryId:27,name:"创业比赛",href:"#category-5/27"},
+							 {subcategoryId:28,name:"设计比赛",href:"#category-5/28"},
+							 {subcategoryId:29,name:"技能比赛",href:"#category-5/29"},
+							 {subcategoryId:30,name:"学科竞赛",href:"#category-5/30"},
+							 {subcategoryId:31,name:"营销竞赛",href:"#category-5/31"},
+							 {subcategoryId:32,name:"其他",href:"#category-5/32"}]
 						);
 				var projects = new Array(
 					{

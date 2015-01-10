@@ -11,6 +11,7 @@
 		<div ng-controller="loginController" class="container-fluid loginsignupbox">
 			<div class="row">
 				<div class="col-sm-12">
+				 <p ng-bind="errorMsg" style="color:red"></p>
 							<form class="form-horizontal" role="form"
 								name="loginForm" ng-submit="submit(loginForm)">
 								<div class="form-group">
