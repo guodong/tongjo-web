@@ -15,6 +15,9 @@
 					$routeProvider.when('/info', {
 						templateUrl: 'tpl/me/info.html',
 						controller: 'info'
+					}).when('/avatar', {
+						templateUrl: 'tpl/me/avatar-edit.html',
+						controller: 'avatar'
 					}).when('/project', {
 						templateUrl: 'tpl/me/project.html',
 						controller: 'project'
@@ -68,6 +71,17 @@
 			});
 
 		});
+		
+		app.controller('avatar', function($scope, $resource) {
+			/* var Project = $resource(API + 'user/:user_id/type/:type/project');
+			$scope.joined = Project.query({
+				user_id: localStorage.uid,
+				type: 'joined'
+			});
+			$scope.created = Project.query({user_id: localStorage.uid, type: 'created'});
+			$scope.user = JSON.parse(localStorage.user); */
+		});
+		
 		app.controller('project', function($scope, $resource) {
 			var Project = $resource(API + 'user/:user_id/type/:type/project');
 			$scope.joined = Project.query({
