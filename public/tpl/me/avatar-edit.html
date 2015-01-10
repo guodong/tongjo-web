@@ -3,22 +3,22 @@
 		<h2 class="title">个人信息 <small >编辑头像</small></h2>
 	</div>
 
-	<div onload="init();" ginger_software_stylesheet="true" ginger_software_doc="true">
+	<div class="mcontainer" ginger_software_stylesheet="true" ginger_software_doc="true">
 		<div class="container-fluid">
-			<a class="selectBtn" href="javascript:void(0);" ></a>
-			<a class="saveBtn" href="javascript:void(0);" ></a>
-			<input type="file" id="input" size="10" style="visibility:hidden;" onchange="selectImage(this.files)" accept="image/*">
+			<a class="selectBtn" href="javascript:void(0);"  onclick="document.getElementById(&#39;input&#39;).click();" ></a>
+			<a class="saveBtn" href="javascript:void(0);" ng-click="saveImage();"></a>	
+			<input type="file" fileread="uploadme" id="input" size="10" style="visibility:hidden;" accept="image/*"/>
 	
 			<div class="wrapper">
-				<canvas class="cropper" width="300" height="300"></canvas>
+				<canvas id="cropper" class="cropper" width="300" height="300"></canvas>
 				<a class="rotateLeftBtn" href="javascript:void(0);" onclick="rotateImage(event);">LeftRotate</a>
 				<a class="rotateRightBtn" href="javascript:void(0);" onclick="rotateImage(event);">RightRotate</a>
 	
 				<div class="previewContainer">
-					<canvas class="preview160" width="160" height="160" class="preview"></canvas>
+					<canvas class="preview160 preview" id="preview160" width="160" height="160"></canvas>
 					<span style="display:block;width:100%;padding-top:5px;text-align:center;">large:160x160</span>
 	
-					<canvas class="preview50" width="50" height="50" style="position:absolute;left:50px;top:220px;" class="preview"></canvas>
+					<canvas class="preview50 preview" id="preview50" width="50" height="50" style="position:absolute;left:50px;top:220px;"></canvas>
 					<span style="position:absolute;left:45px;top:280px;width:70px;text-align:center;">small:50x50</span>
 				</div>
 			</div>
