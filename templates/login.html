@@ -12,6 +12,7 @@
             </a>
             </div>
 				<div class="col-sm-12">
+				 <p ng-bind="errorMsg" style="color:red"></p>
 							<form class="form-horizontal w5c-form" role="form"
 							w5c-form-validate="vm.validateOptions"
 								name="loginForm" novalidate >
@@ -88,6 +89,7 @@ require(['angular','lib/ycd-validation'], function(angular){
           htmlSource: "",
           showErrorType: 1
       };
+      
       vm.saveEntity = function (form) {
       	// 表单验证完成后调用
       	//TODO 提交数据
@@ -97,14 +99,24 @@ require(['angular','lib/ycd-validation'], function(angular){
       			email:emailVal,
       	        password:passwordVal
       	};
-      	console.log(data);
+      	
+      	
+      	//console.log(data);
       	$.ajax({
       		   type: "GET",
       		   url: "http://api.tongjo.com/accesstoken",
       		   data: data,
+      		   dataType:"json",
       		   success: function(msg){
-      			   var user = JSON.parse(msg);
-      		       localStorage.user = msg;
+      			   console.log(msg);
+      			   if(msg.error){
+          	    	   $scope.$apply(function () {
+           	    		  $scope.errorMsg = "用户名或密码错误";
+           	          });
+          	    	  return;
+      			   }
+      			   var user = msg;
+      		       localStorage.user = JSON.stringify(msg);
       		       localStorage.uid = user.id;
       		       localStorage.accesstoken = user.accesstoken;  		       
       		       if($scope.remember){
@@ -113,9 +125,13 @@ require(['angular','lib/ycd-validation'], function(angular){
       		    	   localStorage.isRemember = true;
       		       }
       		       location.href = "/me";
+      			   
       		   },
       	       error: function(data) {
       	    	   console.log(data);
+      	    	   $scope.$apply(function () {
+        	    		  $scope.errorMsg = "error";
+        	       });
                  }
       	});
       };
