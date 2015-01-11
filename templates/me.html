@@ -125,7 +125,7 @@
 					if(uid > 0){
 						var url = API+"user/"+uid+"/";
 						$.post(url+'avatar',{
-						    	"avatar": file140.toDataURL(),
+						    	"image": file140.toDataURL(),
 						    },
 						    function(data){
 						    	if(data.id){
