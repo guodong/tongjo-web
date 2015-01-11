@@ -35,8 +35,8 @@
 		</div>
 	</section>
 	<section>
-	<a class="btn btn-primary pull-right" id="joinone" style="margin-bottom:20px" ng-click="joinone()"><span class="glyphicon glyphicon-star"></span> 组建团队</a>
-	<a class="btn btn-info pull-right" id="join" style="margin-bottom:20px;margin-right:20px" href="/newteam/{{project.id}}"><span class="glyphicon glyphicon-user"></span> 个人参加</a>
+	<a class="btn btn-primary pull-right" id="joinone" style="margin-bottom:20px" href="/newteam/{{project.id}}"><span class="glyphicon glyphicon-star"></span> 组建团队</a>
+	<a class="btn btn-info pull-right" id="join" style="margin-bottom:20px;margin-right:20px" ng-click="joinone()"><span class="glyphicon glyphicon-user"></span> 个人参加</a>
 	<table class="group">
 		<thead class="bg-primary">
 			<tr>
@@ -86,6 +86,17 @@ require(['angular', 'angular-resource'], function(angular){
 		$scope.project = Project.get({project_id: project_id});
 		$scope.project.description = $sce.trustAsHtml($scope.project.description);
 		$scope.projects = Project.query();
+		$scope.joinone = function(){
+			var Team = $resource(API+'team');
+			var team = new Team({
+				user_id: localStorage.uid,
+				project_id: project_id,
+				is_sole: 1
+			});
+			team.$save(function(){
+				alert("参加成功");
+			});
+		}
 	});
 	angular.bootstrap(document.getElementById("body"), ['me']);
 });
