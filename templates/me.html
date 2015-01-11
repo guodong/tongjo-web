@@ -118,26 +118,26 @@
 			$scope.saveImage = function (){
 				var file140 = document.getElementById("preview140");
 				var file50 = document.getElementById("preview50");
-				/* console.log(file140.toDataURL()); */
 				
-				var uid = localStorage.uid;
-				
-				if(uid > 0){
-					var url = API+"user/"+uid+"/";
-					$.post(url+'avatar',{
-					    	"avatar": file140.toDataURL(),
-					    },
-					    function(data){
-					    	if(data.id){
-					    		alert("修改成功");
-					    	}
-					    },"json"
-					)
+				if(file140.toDataURL() != "undefined"){
+					var uid = localStorage.uid;
+					if(uid > 0){
+						var url = API+"user/"+uid+"/";
+						$.post(url+'avatar',{
+						    	"avatar": file140.toDataURL(),
+						    },
+						    function(data){
+						    	if(data.id){
+						    		alert("修改成功");
+						    	}
+						    },"json"
+						)
+					}else{
+						alert("用户没有登陆");
+					}
 				}else{
-					alert("用户没有登陆");
+					alert("请先设置图片");
 				}
-				
-				
 			};
 
 			$scope.trace = function (){
