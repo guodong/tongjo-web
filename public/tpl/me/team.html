@@ -12,13 +12,15 @@
 			<thead>
 				<tr>
 					<th>名称</th>
+					<th>项目</th>
 					<th>创建时间</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="v in teams">
+				<tr ng-repeat="v in createdteams">
 					<td ng-bind="v.name">{{v.name}}</td>
+					<td><a target="_blank" href="/project/{{v.project.id}}" ng-bind="v.project.name">查看</a></td>
 					<td ng-bind="v.created_at|limitTo:10"></td>
 					<td><a href="#team/{{v.id}}">修改</a> <a href="/team!{{v.id}}">查看</a></td>
 				</tr>
@@ -30,13 +32,15 @@
 			<thead>
 				<tr>
 					<th>名称</th>
+					<th>项目</th>
 					<th>创建时间</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="v in teams">
-					<td ng-bind="v.name">{{v.name}}</td>
+				<tr ng-repeat="v in joinedteams">
+					<td ng-bind="v.name"></td>
+					<td><a target="_blank" href="/project/{{v.project.id}}" ng-bind="v.project.name">查看</a></td>
 					<td ng-bind="v.created_at|limitTo:10"></td>
 					<td><a href="/team!{{v.id}}">查看</a></td>
 				</tr>

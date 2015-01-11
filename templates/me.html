@@ -8,6 +8,7 @@
 
 <script type="text/javascript" src="/js/lib/ImageCropper.js"></script>
 <script type="text/javascript" src="/lib/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" src="/lib/umeditor/umeditor.config.js"></script>
 <script type="text/javascript" src="/lib/umeditor/lang/zh-cn/zh-cn.js"></script>
 <script>
 	require(['angular', 'angular-route', 'angular-resource'], function(angular,
@@ -124,7 +125,7 @@
 					if(uid > 0){
 						var url = API+"user/"+uid+"/";
 						$.post(url+'avatar',{
-						    	"avatar": file140.toDataURL(),
+						    	"image": file140.toDataURL(),
 						    },
 						    function(data){
 						    	if(data.id){
@@ -347,15 +348,33 @@
 				cate.select = checkbox.checked?true:false;
 				getCates();
 			}
+			$scope.$watch('project.type', function(type){
+				switch(type){
+				case '1':
+					$scope.label = "组织机构";
+					break;
+				case '2':
+					$scope.label = "所属学校";
+					break;
+				case '3':
+					$scope.label = "所属企业";
+					break;
+				default:
+					break;
+				}
+			})
 			
 		});
 		app.controller('team', function($scope, $resource) {
-			var Team = $resource(API + 'user/:user_id/team')
-			var teams = Team.query({
-				user_id: localStorage.uid
-			}, function() {
-				$scope.teams = teams;
-			})
+			var Team = $resource(API + 'user/:user_id/type/:type/team')
+			$scope.createdteams = Team.query({
+				user_id: localStorage.uid,
+				type: 'created'
+			});
+			$scope.joinedteams = Team.query({
+				user_id: localStorage.uid,
+				type: 'joined'
+			});
 		});
 		app.controller('sidebar', function($scope, $resource) {
 			var User = $resource(API + 'user/:user_id')
@@ -494,9 +513,9 @@
 		<div class="col-md-2" ng-controller="sidebar">
 			<div class="avatar clearfix">
 				<a href="#avatar">
-					<img class="img-thumbnail" alt="140x140" src="/img/avatar.png"
+					<img class="img-thumbnail" alt="140x140" ng-src="{{user.avatar && 'http://api.tongjo.com/files/'+user.avatar || '/img/avatar.png'}}"
 					data-holder-rendered="true">
-					<h6>修改头像</h6>	
+					<h6>修改头像</h6>	 
 				</a>
 				
 				<div ng-bind="user.realname"></div>
