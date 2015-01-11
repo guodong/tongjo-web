@@ -4,7 +4,9 @@
 	href="/lib/umeditor/themes/default/css/umeditor.css">
 <script src="/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 
-<script type="text/javascript" src="/lib/umeditor/umeditor.config.js"></script>
+<script src="/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript" src="/js/lib/ImageCropper.js"></script>
 <script type="text/javascript" src="/lib/umeditor/umeditor.min.js"></script>
 <script type="text/javascript" src="/lib/umeditor/lang/zh-cn/zh-cn.js"></script>
 <script>
@@ -15,9 +17,18 @@
 					$routeProvider.when('/info', {
 						templateUrl: 'tpl/me/info.html',
 						controller: 'info'
+					}).when('/avatar', {
+						templateUrl: 'tpl/me/avatar-edit.html',
+						controller: 'avatar',
+						resolve: {
+				            cropperid: function(){
+				                return "cropper";
+				            }
+				        }
 					}).when('/project', {
 						templateUrl: 'tpl/me/project.html',
 						controller: 'project'
+						
 					}).when('/project/:project_id', {
 						templateUrl: 'tpl/me/project-edit.html',
 						controller: 'project-edit'
@@ -68,6 +79,93 @@
 			});
 
 		});
+		
+		app.controller('avatar', function($scope, $resource, cropperid) {
+			
+			
+			
+			var cropper;
+			$scope.init = function(){
+				cropper = new ImageCropper(300, 300, 180, 180);
+				cropper.setCanvas("cropper");
+				cropper.addPreview("preview160");
+				cropper.addPreview("preview50");
+
+				if(!cropper.isAvaiable()){
+					alert("Sorry, your browser doesn't support FileReader, please use Firefox3.6+ or Chrome10+ to run it.");
+				}
+			};
+
+			$scope.init();	
+			
+			$scope.$watch('uploadme',
+				function(to, from){
+				/* console.log($scope.uploadme); */
+					cropper.loadImage($scope.uploadme);
+					alert('53');
+				}
+			);
+				
+			/* function selectImage(fileList){
+				cropper.loadImage(fileList[0]);
+				alert('43');
+			}; */
+
+			$scope.rotateImage = function(e){
+				switch(e.target.id){
+					case "rotateLeftBtn":
+						cropper.rotate(-90);
+						break;
+					case "rotateRightBtn":
+						cropper.rotate(90);
+						break;
+				}
+			};
+
+			$scope.saveImage = function (){
+				var file160 = document.getElementById("preview160");
+				var file50 = document.getElementById("preview50");
+				console.log(file160.toDataURL());
+				$.post(API+'image',{
+				    	"image": file160.toDataURL(),
+				    },
+				    function(data){
+				    	alert(data.picUrl);
+				    },"json"
+				)
+			};
+
+			$scope.trace = function (){
+				if(typeof(console) != "undefined") console.log(Array.prototype.slice.apply(arguments).join(" "));
+			};
+		});
+		
+		
+		app.directive("fileread", [function () {
+		    return {
+		        scope: {
+		            fileread: "="
+		        },
+		        
+		        link: function (scope, element, attributes) {
+		            element.bind("change", function (changeEvent) {
+		                var reader = new FileReader();
+		                reader.onload = function (loadEvent) {
+		                	
+		                	scope.$apply(function () {
+		                        scope.fileread = changeEvent.target.files[0];
+		                        // or all selected files:
+		                        // scope.fileread = changeEvent.target.files;
+		                    });
+		                }
+		                reader.readAsDataURL(changeEvent.target.files[0]);
+		            });
+		        }
+		    }
+		}]);
+		
+		
+		
 		app.controller('project', function($scope, $resource) {
 			var Project = $resource(API + 'user/:user_id/type/:type/project');
 			$scope.joined = Project.query({
@@ -390,21 +488,20 @@
 	<div class="row">
 		<div class="col-md-2" ng-controller="sidebar">
 			<div class="avatar clearfix">
-				<img class="img-thumbnail" alt="140x140"
-					src="/img/avatar.png"
+				<img class="img-thumbnail" alt="140x140" src="/img/avatar.png"
 					data-holder-rendered="true">
 				<div ng-bind="user.realname"></div>
 			</div>
 			<div class="list-group">
 				<a href="#project" class="list-group-item"><span
-					class="glyphicon glyphicon-th-list"></span> 我的项目</a> <a ng-show="user.role=='student'"
-					href="#team" class="list-group-item"><span
+					class="glyphicon glyphicon-th-list"></span> 我的项目</a> <a
+					ng-show="user.role=='student'" href="#team" class="list-group-item"><span
 					class="glyphicon glyphicon-tower"></span> 我的团队</a> <a href="#info"
 					class="list-group-item"><span class="glyphicon glyphicon-user"></span>
 					个人信息</a> <a href="#message" class="list-group-item"><span
-					class="glyphicon glyphicon-envelope"></span> 消息通知</a> <a href="#" ng-click="logout()"
-					class="list-group-item"><span class="glyphicon glyphicon-off"></span>
-					退出</a>
+					class="glyphicon glyphicon-envelope"></span> 消息通知</a> <a href="#"
+					ng-click="logout()" class="list-group-item"><span
+					class="glyphicon glyphicon-off"></span> 退出</a>
 			</div>
 		</div>
 		<div class="col-md-10">
