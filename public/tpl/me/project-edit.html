@@ -27,26 +27,18 @@
 
 	<div class="form-group">
 		<label style="display: block">选择项目分类来源</label>
-		<div class="radio-inline">
-			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="0" ng-checked="true"> 个人
-			</label>
-		</div>
-		<div class="radio-inline">
-			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="1"> 赛事 
-			</label>
-		</div>
-		<div class="radio-inline">
-			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="2"> 科研课题
-			</label>
-		</div>
-		<div class="radio-inline">
-			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="3"> 企业研究
-			</label>
-		</div>
+		<label class="radio-inline"> <input type="radio" name="optionsRadios"
+			ng-model="project.type" value="0" ng-checked="true"> 个人
+		</label>
+		<label class="radio-inline"> <input type="radio" name="optionsRadios"
+			ng-model="project.type" value="1"> 赛事 
+		</label>
+		<label class="radio-inline"> <input type="radio" name="optionsRadios"
+			ng-model="project.type" value="2"> 科研课题
+		</label>
+		<label class="radio-inline"> <input type="radio" name="optionsRadios"
+			ng-model="project.type" value="3"> 企业研究
+		</label>
 	</div>
 	<div class="form-group" ng-hide="project.type==0">
 		<label ng-bind="label"></label>
@@ -104,6 +96,19 @@
 		<div class="radio">
 			<label> <input type="radio" name="parttype" value="2" required
 				ng-model="project.parttype"> 个人或团队
+			</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<label>开启报名</label>
+		<div class="radio">
+			<label> <input type="radio" name="parttype" value="1" required
+				ng-model="project.is_open"> 开启
+			</label>
+		</div>
+		<div class="radio">
+			<label> <input type="radio" name="parttype" value="0" required
+				ng-model="project.is_open"> 关闭
 			</label>
 		</div>
 	</div>

@@ -366,12 +366,15 @@
 			
 		});
 		app.controller('team', function($scope, $resource) {
-			var Team = $resource(API + 'user/:user_id/team')
-			var teams = Team.query({
-				user_id: localStorage.uid
-			}, function() {
-				$scope.teams = teams;
-			})
+			var Team = $resource(API + 'user/:user_id/type/:type/team')
+			$scope.createdteams = Team.query({
+				user_id: localStorage.uid,
+				type: 'created'
+			});
+			$scope.joinedteams = Team.query({
+				user_id: localStorage.uid,
+				type: 'joined'
+			});
 		});
 		app.controller('sidebar', function($scope, $resource) {
 			var User = $resource(API + 'user/:user_id')

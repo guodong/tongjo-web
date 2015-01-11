@@ -2,18 +2,8 @@
 <link href="/lib/bootstrap-datepicker/datepicker3.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="/lib/umeditor/themes/default/css/umeditor.css">
-<style>
-.form-group>label {
-	line-height: 2em;
-	font-size: 20px;
-}
-
-.form-group h4 {
-	line-height: 2em;
-}
-</style>
 <div class="page-header">
-	<h2>我的项目 <small ng-bind="project.name"></small></h2>
+	<h2>发布项目</h2>
 </div>
 <form id="createforsm" name="createform" ng-controller="createform">
 
@@ -30,22 +20,18 @@
 	</div>
 	<div class="form-group">
 		<label style="display: block">选择项目分类来源</label>
-			<label class="radio-inline"> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="0" ng-checked="true"> 个人
-			</label>
-			<label class="radio-inline"> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="1"> 赛事 
-			</label>
-		<div class="radio-inline">
-			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="2"> 科研课题
-			</label>
-		</div>
-		<div class="radio-inline">
-			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="3"> 企业研究
-			</label>
-		</div>
+		<label class="radio-inline"> <input type="radio" name="optionsRadios"
+			ng-model="project.type" value="0" ng-checked="true"> 个人
+		</label>
+		<label class="radio-inline"> <input type="radio" name="optionsRadios"
+			ng-model="project.type" value="1"> 赛事 
+		</label>
+		<label class="radio-inline"> <input type="radio" name="optionsRadios"
+			ng-model="project.type" value="2"> 科研课题
+		</label>
+		<label class="radio-inline"> <input type="radio" name="optionsRadios"
+			ng-model="project.type" value="3"> 企业研究
+		</label>
 	</div>
 	<div class="form-group" ng-hide="project.type==0">
 		<label ng-bind="label"></label>
@@ -103,6 +89,19 @@
 		<div class="radio">
 			<label> <input type="radio" name="parttype" value="2" required
 				ng-model="project.parttype"> 个人或团队
+			</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<label>开启报名</label>
+		<div class="radio">
+			<label> <input type="radio" name="parttype" value="1" required
+				ng-model="project.is_open"> 开启
+			</label>
+		</div>
+		<div class="radio">
+			<label> <input type="radio" name="parttype" value="0" required
+				ng-model="project.is_open"> 关闭
 			</label>
 		</div>
 	</div>
