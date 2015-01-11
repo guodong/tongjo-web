@@ -8,6 +8,7 @@
 
 <script type="text/javascript" src="/js/lib/ImageCropper.js"></script>
 <script type="text/javascript" src="/lib/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" src="/lib/umeditor/umeditor.config.js"></script>
 <script type="text/javascript" src="/lib/umeditor/lang/zh-cn/zh-cn.js"></script>
 <script>
 	require(['angular', 'angular-route', 'angular-resource'], function(angular,
@@ -342,6 +343,21 @@
 				cate.select = checkbox.checked?true:false;
 				getCates();
 			}
+			$scope.$watch('project.type', function(type){
+				switch(type){
+				case '1':
+					$scope.label = "组织机构";
+					break;
+				case '2':
+					$scope.label = "所属学校";
+					break;
+				case '3':
+					$scope.label = "所属企业";
+					break;
+				default:
+					break;
+				}
+			})
 			
 		});
 		app.controller('team', function($scope, $resource) {
@@ -488,7 +504,7 @@
 	<div class="row">
 		<div class="col-md-2" ng-controller="sidebar">
 			<div class="avatar clearfix">
-				<img class="img-thumbnail" alt="140x140" src="/img/avatar.png"
+				<img class="img-thumbnail" alt="140x140" ng-src="{{user.avatar && user.avatar || '/img/avatar.png'}}"
 					data-holder-rendered="true">
 				<div ng-bind="user.realname"></div>
 			</div>

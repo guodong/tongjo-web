@@ -29,27 +29,27 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label>选择项目分类来源</label>
-		<div class="radio">
+		<label style="display: block">选择项目分类来源</label>
+			<label class="radio-inline"> <input type="radio" name="optionsRadios"
+				ng-model="project.type" value="0" ng-checked="true"> 个人
+			</label>
+			<label class="radio-inline"> <input type="radio" name="optionsRadios"
+				ng-model="project.type" value="1"> 赛事 
+			</label>
+		<div class="radio-inline">
 			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="idd" checked> 个人
+				ng-model="project.type" value="2"> 科研课题
 			</label>
 		</div>
-		<div class="radio">
+		<div class="radio-inline">
 			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="cmp"> 赛事
+				ng-model="project.type" value="3"> 企业研究
 			</label>
 		</div>
-		<div class="radio">
-			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="rsc"> 科研课题
-			</label>
-		</div>
-		<div class="radio">
-			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="crs"> 企业研究
-			</label>
-		</div>
+	</div>
+	<div class="form-group" ng-hide="project.type==0">
+		<label ng-bind="label"></label>
+		<input type="text" ng-model="project.sponsor" class="form-control" ng-required="project.type!=0">
 	</div>
 	<div class="form-group">
 		<label>选择项目标签</label>
@@ -108,7 +108,7 @@
 	</div>
 
 	<div class="form-group">
-		<a class="btn btn-success btn-lg" ng-click="create(project)"
+		<a class="btn btn-success btn-lg" ng-click="create()"
 			ng-disabled="createform.$invalid">发布项目</a>
 	</div>
 </form>
@@ -139,17 +139,18 @@
 				$scope.selcates = cates;
 				return cates;
 			}
-			$scope.create = function(project) {
-				project.description = um.getContent();
-				p = new Project(project);
+			$scope.project = new Project;
+			$scope.project.type = 0;
+			$scope.create = function() {
+				$scope.project.description = um.getContent();
 				var categorys = getCates();
-				p.categorys = [];
+				$scope.project.categorys = [];
 				for(var i in categorys){
-					p.categorys.push(categorys[i].id);
+					$scope.project.categorys.push(categorys[i].id);
 				}
-				p.user_id = localStorage.uid;
-				p.$save(function(){
-					location.href="/project/"+p.id;
+				$scope.project.user_id = localStorage.uid;
+				$scope.project.$save(function(){
+					location.href="/project/"+$scope.project.id;
 				});
 				
 			};
@@ -160,7 +161,21 @@
 				cate.select = checkbox.checked?true:false;
 				getCates();
 			}
-			
+			$scope.$watch('project.type', function(type){
+				switch(type){
+				case '1':
+					$scope.label = "组织机构";
+					break;
+				case '2':
+					$scope.label = "所属学校";
+					break;
+				case '3':
+					$scope.label = "所属企业";
+					break;
+				default:
+					break;
+				}
+			})
 			
 		});
 		angular.bootstrap(document.getElementById("body"), ['me']);

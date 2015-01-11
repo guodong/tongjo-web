@@ -24,28 +24,33 @@
 				ng-model="project.deadline" required data-date-format="yyyy-mm-dd">
 		</div>
 	</div>
+
 	<div class="form-group">
-		<label>选择项目分类来源</label>
-		<div class="radio">
+		<label style="display: block">选择项目分类来源</label>
+		<div class="radio-inline">
 			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="idd"> 个人
+				ng-model="project.type" value="0" ng-checked="true"> 个人
 			</label>
 		</div>
-		<div class="radio">
+		<div class="radio-inline">
 			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="cmp"> 赛事
+				ng-model="project.type" value="1"> 赛事 
 			</label>
 		</div>
-		<div class="radio">
+		<div class="radio-inline">
 			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="rsc"> 科研课题
+				ng-model="project.type" value="2"> 科研课题
 			</label>
 		</div>
-		<div class="radio">
+		<div class="radio-inline">
 			<label> <input type="radio" name="optionsRadios"
-				ng-model="project.type" value="crs"> 企业研究
+				ng-model="project.type" value="3"> 企业研究
 			</label>
 		</div>
+	</div>
+	<div class="form-group" ng-hide="project.type==0">
+		<label ng-bind="label"></label>
+		<input type="text" ng-model="project.sponsor" class="form-control" ng-required="project.type!=0">
 	</div>
 	<div class="form-group">
 		<label>选择项目标签</label>
