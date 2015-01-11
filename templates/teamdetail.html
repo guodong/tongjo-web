@@ -26,8 +26,8 @@
 		</div>
 
 		<div class="team-time">
-			<span class="team-time-title">成立时间：</span> <span
-				class="team-time-text" ng-bind="teamdetail.created_at"></span>
+			<span class="team-time-title">截止时间：</span> <span
+				class="team-time-text" ng-bind="teamdetail.signup_time"></span>
 		</div>
 	</div>
 
@@ -90,10 +90,9 @@
 
 
 <script>
-	require([ 'angular', 'angular-route', 'angular-resource' ], function(
-			angular) {
-		var app = angular.module('teamdetailApp', [ 'ngRoute', 'ngResource' ]);
-		app.controller('teamdetailControl', function($scope,$resource) {
+	require([ 'angular', 'model/login','angular-route', 'angular-resource' ], function(angular,loginModal) {
+		var app = angular.module('teamdetailApp', [ 'loginModal','ngRoute', 'ngResource' ]);
+		app.controller('teamdetailControl', function($scope,$resource,loginService) {
 			
 			var url = window.location.href;
 			var tid = url.substr(url.indexOf("!") + 1,url.length);
@@ -106,35 +105,50 @@
 				}, function() {
 					$scope.teamdetail = team;
 					$scope.teamdetail.created_at = team.created_at.substr(0, 10);
+					$scope.teamdetail.signup_time = team.signup_time.substr(0, 10);
 					console.log($scope.teamdetail); 
 				});
 			}
 			
 			$scope.getteamdetail();
 			
+			$scope.login = function() {
+				loginService.showModal().then(
+					function(isSuccess) {
+						if(isSuccess)
+							alert("登陆成功:");
+						else 
+							alert("登陆失败:");
+					});
+			}
+			
 			var JTeam = $resource(API + 'team/:teamId/user');
 			$scope.joinTeam = function(){
 				var uid = localStorage.uid;
-				console.log(uid);
+				/* console.log(uid); */
 				
-				var jt = new JTeam();
-				
-				jt.$save({
-					teamId: tid,
-					user_id: uid
-				},function(team){
-		            console.log(team);
-		            if(team.error){
-		            	alert(team.msg);
-		            }else{
-		            	alert("加入成功");
-		            	$scope.getteamdetail();
-		            }
-		            
-		        });
+				if(uid=="undefined" || uid == null){
+					$scope.login();
+				}else if(uid > 0){
+					var jt = new JTeam();
+					
+					jt.$save({
+						teamId: tid,
+						user_id: uid
+					},function(team){
+			            console.log(team);
+			            if(team.error){
+			            	alert(team.msg);
+			            }else{
+			            	alert("加入成功");
+			            	$scope.getteamdetail();
+			            }
+			            
+			        });
+				}else{
+					$scope.login();
+				}
 			};
-			
-			
 		});
 		
 		angular.bootstrap(document.getElementById("body"), [ 'teamdetailApp' ]);

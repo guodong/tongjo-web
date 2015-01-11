@@ -82,14 +82,12 @@
 		});
 		
 		app.controller('avatar', function($scope, $resource, cropperid) {
-			
-			
-			
+
 			var cropper;
 			$scope.init = function(){
 				cropper = new ImageCropper(300, 300, 180, 180);
 				cropper.setCanvas("cropper");
-				cropper.addPreview("preview160");
+				cropper.addPreview("preview140");
 				cropper.addPreview("preview50");
 
 				if(!cropper.isAvaiable()){
@@ -102,15 +100,10 @@
 			$scope.$watch('uploadme',
 				function(to, from){
 				/* console.log($scope.uploadme); */
-					cropper.loadImage($scope.uploadme);
-					alert('53');
+					if($scope.uploadme != "undefined" && $scope.uploadme != null)
+						cropper.loadImage($scope.uploadme);
 				}
 			);
-				
-			/* function selectImage(fileList){
-				cropper.loadImage(fileList[0]);
-				alert('43');
-			}; */
 
 			$scope.rotateImage = function(e){
 				switch(e.target.id){
@@ -124,16 +117,28 @@
 			};
 
 			$scope.saveImage = function (){
-				var file160 = document.getElementById("preview160");
+				var file140 = document.getElementById("preview140");
 				var file50 = document.getElementById("preview50");
-				console.log(file160.toDataURL());
-				$.post(API+'image',{
-				    	"image": file160.toDataURL(),
-				    },
-				    function(data){
-				    	alert(data.picUrl);
-				    },"json"
-				)
+				
+				if(file140.toDataURL() != "undefined"){
+					var uid = localStorage.uid;
+					if(uid > 0){
+						var url = API+"user/"+uid+"/";
+						$.post(url+'avatar',{
+						    	"avatar": file140.toDataURL(),
+						    },
+						    function(data){
+						    	if(data.id){
+						    		alert("修改成功");
+						    	}
+						    },"json"
+						)
+					}else{
+						alert("用户没有登陆");
+					}
+				}else{
+					alert("请先设置图片");
+				}
 			};
 
 			$scope.trace = function (){
