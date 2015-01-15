@@ -91,7 +91,7 @@ require(['angular', 'angular-resource'], function(angular){
 			var team = new Team({
 				user_id: localStorage.uid,
 				project_id: project_id,
-				is_sole: 1
+				is_solo: 1
 			});
 			team.$save(function(){
 				alert("参加成功");
