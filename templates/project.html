@@ -87,13 +87,12 @@ require(['angular', 'angular-resource'], function(angular){
 		$scope.project.description = $sce.trustAsHtml($scope.project.description);
 		$scope.projects = Project.query();
 		$scope.joinone = function(){
-			var Team = $resource(API+'team');
-			var team = new Team({
+			var PU = $resource(API+'project/:project_id/user', {project_id: '@project_id'});
+			var pu = new PU({
 				user_id: localStorage.uid,
-				project_id: project_id,
-				is_solo: 1
+				project_id: project_id
 			});
-			team.$save(function(){
+			pu.$save(function(){
 				alert("参加成功");
 			});
 		}

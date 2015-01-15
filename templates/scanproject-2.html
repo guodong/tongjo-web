@@ -5,7 +5,7 @@
 			<img src="{{project.imgurl|defaultImg}}">
 				<div class="transparent_class" ng-show="hoverEdit">
 					<p ng-bind="project.description|defaultDescription"></p>
-					<a class="small-button red" href="project!{{project.id}}">查看项目详情</a>
+					<a class="small-button red" href="project/{{project.id}}">查看项目详情</a>
 				</div>
 			</span>
 			<h5 ng-bind="project.name"></h5>

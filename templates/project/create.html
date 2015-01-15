@@ -13,35 +13,36 @@
 	</div>
 	<div class="form-group">
 		<label>报名截止时间</label>
-		<div>
-			<input data-provide="datepicker" class="form-control"
-				ng-model="project.deadline" required data-date-format="yyyy-mm-dd">
+		<div style="z-index:999">
+			<input data-provide="datepicker" class="form-control datepicker"
+				ng-model="project.deadline" required data-date-format="yyyy-mm-dd"
+				autoclose="true">
 		</div>
 	</div>
 	<div class="form-group">
-		<label style="display: block">选择项目分类来源</label>
-		<label class="radio-inline"> <input type="radio" name="optionsRadios"
-			ng-model="project.type" value="0" ng-checked="true"> 个人
-		</label>
-		<label class="radio-inline"> <input type="radio" name="optionsRadios"
-			ng-model="project.type" value="1"> 赛事 
-		</label>
-		<label class="radio-inline"> <input type="radio" name="optionsRadios"
-			ng-model="project.type" value="2"> 科研课题
-		</label>
-		<label class="radio-inline"> <input type="radio" name="optionsRadios"
-			ng-model="project.type" value="3"> 企业研究
+		<label style="display: block">选择项目分类来源</label> <label
+			class="radio-inline"> <input type="radio"
+			name="optionsRadios" ng-model="project.type" value="0"
+			ng-checked="true"> 个人
+		</label> <label class="radio-inline"> <input type="radio"
+			name="optionsRadios" ng-model="project.type" value="1"> 赛事
+		</label> <label class="radio-inline"> <input type="radio"
+			name="optionsRadios" ng-model="project.type" value="2"> 科研课题
+		</label> <label class="radio-inline"> <input type="radio"
+			name="optionsRadios" ng-model="project.type" value="3"> 企业研究
 		</label>
 	</div>
 	<div class="form-group" ng-hide="project.type==0">
-		<label ng-bind="label"></label>
-		<input type="text" ng-model="project.sponsor" class="form-control" ng-required="project.type!=0">
+		<label ng-bind="label"></label> <input type="text"
+			ng-model="project.sponsor" class="form-control"
+			ng-required="project.type!=0">
 	</div>
 	<div class="form-group">
 		<label>选择项目标签</label>
 		<div>
-			<span ng-repeat="cate in selcates" style="margin-right: 20px" ng-bind="cate.name"></span>
-			<a class="btn btn-success" data-toggle="modal" data-target="#myModal">添加标签</a>
+			<span ng-repeat="cate in selcates" style="margin-right: 20px"
+				ng-bind="cate.name"></span> <a class="btn btn-success"
+				data-toggle="modal" data-target="#myModal">添加标签</a>
 			<div class="modal fade" id="myModal">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -54,7 +55,10 @@
 						<div class="modal-body">
 							<dl ng-repeat="cate in cates">
 								<dt ng-bind="cate.name"></dt>
-								<dd ng-repeat="c in cate.children"><input type="checkbox" ng-click="select($event, c)"> {{c.name}}</dd>
+								<dd ng-repeat="c in cate.children">
+									<input type="checkbox" ng-click="select($event, c)">
+									{{c.name}}
+								</dd>
 							</dl>
 						</div>
 						<div class="modal-footer">
@@ -74,34 +78,36 @@
 </script>
 
 	</div>
+
+
 	<div class="form-group">
 		<label>报名方式</label>
 		<div class="radio">
-			<label> <input type="radio" name="parttype" value="0" required
-				ng-model="project.parttype"> 个人
+			<label> <input type="radio" name="parttype" value="0"
+				required ng-model="project.parttype"> 个人
 			</label>
 		</div>
 		<div class="radio">
-			<label> <input type="radio" name="parttype" value="1" required
-				ng-model="project.parttype"> 团队
+			<label> <input type="radio" name="parttype" value="1"
+				required ng-model="project.parttype"> 团队
 			</label>
-		</div>		
+		</div>
 		<div class="radio">
-			<label> <input type="radio" name="parttype" value="2" required
-				ng-model="project.parttype"> 个人或团队
+			<label> <input type="radio" name="parttype" value="2"
+				required ng-model="project.parttype"> 个人或团队
 			</label>
 		</div>
 	</div>
 	<div class="form-group">
 		<label>开启报名</label>
 		<div class="radio">
-			<label> <input type="radio" name="parttype" value="1" required
-				ng-model="project.is_open"> 开启
+			<label> <input type="radio" name="parttype" value="1"
+				required ng-model="project.is_open"> 开启
 			</label>
 		</div>
 		<div class="radio">
-			<label> <input type="radio" name="parttype" value="0" required
-				ng-model="project.is_open"> 关闭
+			<label> <input type="radio" name="parttype" value="0"
+				required ng-model="project.is_open"> 关闭
 			</label>
 		</div>
 	</div>
@@ -113,6 +119,7 @@
 </form>
 
 <script src="/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<script src="/lib/bootstrap-datepicker/bootstrap-datepicker.zh-CN.js"></script>
 
 <script type="text/javascript" src="/lib/umeditor/umeditor.config.js"></script>
 <script type="text/javascript" src="/lib/umeditor/umeditor.min.js"></script>
@@ -121,16 +128,21 @@
 	require(['angular', 'angular-resource'], function(angular) {
 		var app = angular.module('me', ['ngResource']);
 		app.controller('createform', function($scope, $resource) {
+			$('.datepicker').datepicker({
+				startDate: '1d',
+				autoclose: true,
+				language: 'zh-CN',
+			});
 			var Project = $resource(API + 'project');
 			var um = UM.getEditor('dsc', {
 				autoFloatEnabled: false
 			});
-			var getCates = function(){
+			var getCates = function() {
 				var cates = [];
-				for(var i in $scope.cates){
+				for ( var i in $scope.cates) {
 					var cate = $scope.cates[i].children;
-					for(var j in cate){
-						if(cate[j].select){
+					for ( var j in cate) {
+						if (cate[j].select) {
 							cates.push(cate[j]);
 						}
 					}
@@ -144,24 +156,24 @@
 				$scope.project.description = um.getContent();
 				var categorys = getCates();
 				$scope.project.categorys = [];
-				for(var i in categorys){
+				for ( var i in categorys) {
 					$scope.project.categorys.push(categorys[i].id);
 				}
 				$scope.project.user_id = localStorage.uid;
-				$scope.project.$save(function(){
-					location.href="/project/"+$scope.project.id;
+				$scope.project.$save(function() {
+					location.href = "/project/" + $scope.project.id;
 				});
-				
+
 			};
 			var Cate = $resource(API + 'category');
 			$scope.cates = Cate.query();
-			$scope.select = function($event, cate){
+			$scope.select = function($event, cate) {
 				var checkbox = $event.target;
-				cate.select = checkbox.checked?true:false;
+				cate.select = checkbox.checked ? true : false;
 				getCates();
 			}
-			$scope.$watch('project.type', function(type){
-				switch(type){
+			$scope.$watch('project.type', function(type) {
+				switch (type) {
 				case '1':
 					$scope.label = "组织机构";
 					break;
@@ -175,7 +187,7 @@
 					break;
 				}
 			})
-			
+
 		});
 		angular.bootstrap(document.getElementById("body"), ['me']);
 	})

@@ -1,13 +1,3 @@
-<style>
-.form-group>label {
-	line-height: 2em;
-	font-size: 20px;
-}
-
-.form-group h4 {
-	line-height: 2em;
-}
-</style>
 <div class="page-header">
 	<h2>我的项目 <small ng-bind="project.name"></small></h2>
 </div>
@@ -20,7 +10,7 @@
 	<div class="form-group">
 		<label>报名截止时间</label>
 		<div>
-			<input data-provide="datepicker" class="form-control"
+			<input data-provide="datepicker" class="form-control datepicker"
 				ng-model="project.deadline" required data-date-format="yyyy-mm-dd">
 		</div>
 	</div>
@@ -102,12 +92,12 @@
 	<div class="form-group">
 		<label>开启报名</label>
 		<div class="radio">
-			<label> <input type="radio" name="parttype" value="1" required
+			<label> <input type="radio" name="is_open" value="1" required
 				ng-model="project.is_open"> 开启
 			</label>
 		</div>
 		<div class="radio">
-			<label> <input type="radio" name="parttype" value="0" required
+			<label> <input type="radio" name="is_open" value="0" required
 				ng-model="project.is_open"> 关闭
 			</label>
 		</div>
