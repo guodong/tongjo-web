@@ -2,8 +2,8 @@
 <div class="project-detail" ng-controller="info">
 	<div class="page-header">
 		<h1 ng-bind="project.name"></h1>
-		<a class="btn btn-warning" href="#join">
-			<span class="glyphicon glyphicon-plus"></span> 参加该项目
+		<a class="btn btn-warning" href="#join"> <span
+			class="glyphicon glyphicon-plus"></span> 参加该项目
 		</a>
 	</div>
 	<!-- <div class="well clearfix">
@@ -35,39 +35,49 @@
 		</div>
 	</section>
 	<section>
-	<a class="btn btn-primary pull-right" id="joinone" style="margin-bottom:20px" href="/newteam/{{project.id}}"><span class="glyphicon glyphicon-star"></span> 组建团队</a>
-	<a class="btn btn-info pull-right" id="join" style="margin-bottom:20px;margin-right:20px" ng-click="joinone()"><span class="glyphicon glyphicon-user"></span> 个人参加</a>
-	<table class="group">
-		<thead class="bg-primary">
-			<tr>
-				<th>参加的团队</th>
-				<th>人数</th>
-				<th width="130px">状态</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="v in project.teams">
-				<td>
-					<h3 class="text-success" ng-bind="v.name"></h3> <small><a target="_blank" href="/team!{{v.id}}">查看团队详情</a></small>
-				</td>
-				<td>
-					<p class="text-primary">已有：<span ng-bind="v.teammember_current"></span>人</p>
-					<p class="text-muted">共需：<span ng-bind="v.teammember_all"></span>人</p>
-				</td>
-				<td style="text-align: right;">
-					<button class="btn btn-warning">
-						<span class="glyphicon glyphicon-plus"></span> 参加团队
-					</button>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+		<a class="btn btn-primary pull-right" id="joinone"
+			style="margin-bottom: 20px" href="/newteam/{{project.id}}"><span
+			class="glyphicon glyphicon-star"></span> 组建团队</a> <a
+			class="btn btn-info pull-right" id="join"
+			style="margin-bottom: 20px; margin-right: 20px" ng-click="joinone()"><span
+			class="glyphicon glyphicon-user"></span> 个人参加</a>
+		<table class="group">
+			<thead class="bg-primary">
+				<tr>
+					<th>参加的团队</th>
+					<th>人数</th>
+					<th width="130px">状态</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="v in project.teams">
+					<td>
+						<h3 class="text-success" ng-bind="v.name"></h3> <small><a
+							target="_blank" href="/team!{{v.id}}">查看团队详情</a></small>
+					</td>
+					<td>
+						<p class="text-primary">
+							已有：<span ng-bind="v.teammember_current"></span>人
+						</p>
+						<p class="text-muted">
+							共需：<span ng-bind="v.teammember_all"></span>人
+						</p>
+					</td>
+					<td style="text-align: right;">
+						<button class="btn btn-warning">
+							<span class="glyphicon glyphicon-plus"></span> 参加团队
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</section>
 	<section class="project-list">
 		<h3>相似项目：</h3>
 		<div class="row">
 			<div class="col-xs-6 col-md-3" ng-repeat="v in projects|limitTo:4">
-				<a href="/project/{{v.id}}" class="thumbnail"> <img src="/img/web.png" alt="...">
+				<a href="/project/{{v.id}}" class="thumbnail"> <img
+					src="/img/web.png" alt="...">
 				</a>
 				<h4>
 					<a href="/project/{{v.id}}" ng-bind="v.name"></a>
@@ -75,29 +85,117 @@
 			</div>
 		</div>
 	</section>
+	<section class="projectdiscuss">
+		<h3>讨论区：</h3>
+		<hr>
+		<div class="discussbox">
+		    <div class="commentbox">
+			<div class="avatarbox pull-left">
+				<img alt="{{user.name}}" class="avatar" data-user="219689"
+					height="48" src="{{user.avatarlink}}" width="48">
+			</div>
+			<div class="inputcommentbox">
+
+				<form role="form" name="commentForm"
+					ng-submit="submit(commentForm,projectId)">
+					<div class="form-group">
+						<textarea name="comment" ng-model="comment" placeholder="请留言"
+							rows="3" required></textarea>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary">发表评论</button>
+					</div>
+				</form>
+			</div>
+			</div>
+			<hr>
+			<div class="comments">
+				<div class="commentbox" ng-repeat="comment in comments">
+					<div class="avatarbox pull-left">
+						<img alt="{{username}}" class="avatar" data-user="219689"
+							height="48" src="{{comment.owner.avatarlink}}" width="48">
+					</div>
+					<div class="comment">
+						<div class="comment-header">
+							<strong> <a href="/user:{{comment.owner}}"
+								class="author">lexrus</a>
+							</strong> 发表于 <span ng-bind="comment.timestamp"></span>
+						</div>
+						<div class="comment-content">
+							<p class="text-muted" ng-bind="comment.content">No
+								description provided.</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
 </div>
 <script>
-var project_id = location.pathname.replace(/\/project\/(\d+)$/, '$1');
-require(['angular', 'angular-resource'], function(angular){
-	var app = angular.module('me', ['ngResource']);
-	app.filter('trusted', ['$sce', function ($sce) { return function (text) { return $sce.trustAsHtml(text); }; }]);
-	app.controller('info', function($scope, $resource, $sce) {
-		var Project = $resource(API + 'project/:project_id');
-		$scope.project = Project.get({project_id: project_id});
-		$scope.project.description = $sce.trustAsHtml($scope.project.description);
-		$scope.projects = Project.query();
-		$scope.joinone = function(){
-			var PU = $resource(API+'project/:project_id/user', {project_id: '@project_id'});
-			var pu = new PU({
-				user_id: localStorage.uid,
-				project_id: project_id
+	var project_id = location.pathname.replace(/\/project\/(\d+)$/, '$1');
+	require([ 'angular', 'angular-resource' ], function(angular) {
+		var app = angular.module('me', [ 'ngResource' ]);
+		app.filter('trusted', [ '$sce', function($sce) {
+			return function(text) {
+				return $sce.trustAsHtml(text);
+			};
+		} ]);
+		app.controller('info', function($scope, $resource, $sce) {
+			var Project = $resource(API + 'project/:project_id');
+			$scope.project = Project.get({
+				project_id : project_id
 			});
-			pu.$save(function(){
-				alert("参加成功");
-			});
-		}
+			$scope.project.description = $sce
+					.trustAsHtml($scope.project.description);
+			$scope.projects = Project.query();
+			$scope.joinone = function() {
+				var PU = $resource(API + 'project/:project_id/user', {
+					project_id : '@project_id'
+				});
+				var pu = new PU({
+					user_id : localStorage.uid,
+					project_id : project_id
+				});
+				pu.$save(function() {
+					alert("参加成功");
+				});
+			};
+			$scope.comments = [{
+				owner: {
+					userId: 1,
+					avatarlink: "https://avatars0.githubusercontent.com/u/219689?v=3&amp;s=96"
+				},
+				timestamp: "2015-2-1",
+				content: "11111111111111111111"
+			},
+			{
+				owner: {
+					userId: 1,
+					avatarlink: "https://avatars0.githubusercontent.com/u/219689?v=3&amp;s=96"
+				},
+				timestamp: "2015-2-1",
+				content: "11111111111111111111"
+			},
+			{
+				owner: {
+					userId: 1,
+					avatarlink: "https://avatars0.githubusercontent.com/u/219689?v=3&amp;s=96"
+				},
+				timestamp: "2015-2-1",
+				content: "11111111111111111111"
+			}];
+			$scope.submit = function(commentForm, projectId) {
+				var commentVal = commentForm.comment.$modelValue;
+				var data = {
+					projectId: projectId,
+					userId: localStorage.uid,
+					comment: commentVal
+				};
+				console.log(data);
+			};
+		});
+		angular.bootstrap(document.getElementById("body"), [ 'me' ]);
 	});
-	angular.bootstrap(document.getElementById("body"), ['me']);
-});
 </script>
 {!/block!}

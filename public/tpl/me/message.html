@@ -29,59 +29,66 @@
 				</tr>
 			</tbody>
 		</table> -->
-		<!--  ng-repeat="submsg in submessages"> -->
+		<!--  ng-repeat="msg in messages"> -->
 		<div>
 			<div class="message" ng-repeat="msg in messages">
 				<div class="submessage">
 					<div class="commentbox">
 						<div class="avatarbox pull-left">
-							<img alt="{{msg.comments[0].owener.username}}" class="avatar" data-user="219689" height="48"
-								src="{{msg.comments[0].owner.avatarlink}}"
-								width="48">
+							<img alt="{{msg.comments[0].owener.username}}" class="avatar"
+								data-user="219689" height="48"
+								src="{{msg.comments[0].owner.avatarlink}}" width="48">
 						</div>
 						<div class="comment">
 							<div class="comment-header">
-								<strong> <a href="/user:{{msg.comments[0].owner.id}}" class="author" ng-bind="msg.comments[0].owener.username"></a>
-								</strong> 发表于 <span ng-bind="msg.comments[0].timestamp"></span>
-						        <a class="pull-right" ng-click="slidemsg($event)">显示全部</a>
+								<strong> <a href="/user:{{msg.comments[0].owner.id}}"
+									class="author" ng-bind="msg.comments[0].owener.username"></a>
+								</strong> 发表于 <span ng-bind="msg.comments[0].timestamp"></span> <a
+									class="pull-right" ng-click="slidemsg($event)">显示全部</a>
 							</div>
 							<div class="comment-content">
-								<p class="text-muted" ng-bind ="msg.comments[0].content">No description provided.</p>
+								<p class="text-muted" ng-bind="msg.comments[0].content">No
+									description provided.</p>
 							</div>
 						</div>
 					</div>
-					<div   class ="moreMsg" style="display:none">
-					<div class="commentbox" ng-repeat="comment in msg.comments">
+					<div class="moreMsg" style="display: none">
+						<div class="commentbox" ng-repeat="comment in msg.comments">
+							<div class="avatarbox pull-left">
+								<img alt="{{username}}" class="avatar" data-user="219689"
+									height="48" src="{{comment.owner.avatarlink}}" width="48">
+							</div>
+							<div class="comment">
+								<div class="comment-header">
+									<strong> <a href="/user:{{comment.owner}}"
+										class="author">lexrus</a>
+									</strong> 发表于 <span ng-bind="comment.timestamp"></span>
+								</div>
+								<div class="comment-content">
+									<p class="text-muted" ng-bind="comment.content">No
+										description provided.</p>
+								</div>
+							</div>
+						</div>
+						<div class="commentbox">
 						<div class="avatarbox pull-left">
-							<img alt="{{username}}" class="avatar" data-user="219689" height="48"
-								src="{{comment.owner.avatarlink}}"
-								width="48">
+							<img alt="{{user.name}}" class="avatar" data-user="219689"
+								height="48" src="{{user.avatarlink}}" width="48">
 						</div>
-						<div class="comment">
-							<div class="comment-header">
-								<strong> <a href="/user:{{comment.owner}}" class="author">lexrus</a>
-								</strong> commented <span ng-bind="comment.timestamp"></span>
-							</div>
-							<div class="comment-content">
-								<p class="text-muted" ng-bind ="comment.content">No description provided.</p>
-							</div>
-						</div>
-					</div>	
-					<div class="avatarbox pull-left">
-							<img alt="{{user.name}}" class="avatar" data-user="219689" height="48"
-								src="{{user.avatarlink}}"
-								width="48">
-				    </div>			
-					<div class="inputcommentbox">
-					
-						<form role="form" name="commentForm" ng-submit="submit(commentForm,msg.id)">
-						<div class="form-group">
-						<textarea name="comment" ng-model="comment" placeholder="请留言" rows="3" required></textarea></div>
-						<div class="form-group">
-						<button type="submit" class="btn btn-primary">发表评论</button></div>
-						</form>
+						<div class="inputcommentbox">
+							<form role="form" name="commentForm"
+								ng-submit="submit(commentForm,msg.id)">
+								<div class="form-group">
+									<textarea name="comment" ng-model="comment" placeholder="请留言"
+										rows="3" required></textarea>
+								</div>
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary">发表评论</button>
+								</div>
+							</form>
 						</div>
 						</div>
+					</div>
 				</div>
 				<hr>
 			</div>
@@ -109,13 +116,15 @@
 		<div class="container－fluid ">
 			<div class="message" ng-repeat="notification in notifications">
 				<div class="row">
-				    <div class="messagebox">
-				    <div class="col-md-3" ng-bind="notification.created_at"></div>
-					<div class="col-md-9"><a ng-bind="notification.title" ng-click="slidedetail($event)"></a></div>
+					<div class="messagebox">
+						<div class="col-md-3" ng-bind="notification.created_at"></div>
+						<div class="col-md-9">
+							<a ng-bind="notification.title" ng-click="slidedetail($event)"></a>
+						</div>
 
 					</div>
 				</div>
-			    <div class="moreDetail" style="display:none">
+				<div class="moreDetail" style="display: none">
 					<p ng-bind="notification.content"></p>
 				</div>
 			</div>
