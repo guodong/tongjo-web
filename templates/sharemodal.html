@@ -1,0 +1,59 @@
+<div class="sharemodal">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			ng-click="close()">
+			<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
+		</button>
+		<h3>分享给好友</h3>
+	</div>
+	<div class="modal-body">
+		<!-- 主体 -->
+		<div class="container-fluid">
+
+			<div class="col-md-12">
+
+				<label class="col-md-2 small-header control-label">邀请好友：</label>
+
+				<div class="col-sm-8">
+					<input type="text" class="form-control" id="tt"
+						value="小伙伴们，快来参加我的团队吧！www.tongjo.com/team">
+				</div>
+
+				<div class="col-sm-2">
+					<button  class="btn btn-info" id="button" ng-click="copy()">复制链接</button>
+				</div>
+
+			</div>
+
+			<div class="col-md-12" style="margin-top: 22px; margin-left: 40px">
+				<label class="control-label share">分享：</label>
+				<div class="bshare-custom">
+					<div class="bsPromo bsPromo2"></div>
+					<a title="分享到新浪微博" class="bshare-sinaminiblog" onclick="javascript:bShare.share(event,'sinaminiblog');return false;"></a>
+					<a title="分享到微信" class="bshare-weixin" onclick="javascript:bShare.share(event,'weixin');return false;"></a>
+					<a title="分享到QQ空间" class="bshare-qzone" onclick="javascript:bShare.share(event,'qzone');return false;"></a>
+					<a title="分享到人人网" class="bshare-renren" onclick="javascript:bShare.share(event,'renren');return false;"></a>
+					<a title="分享到QQ好友" class="bshare-qqim" onclick="javascript:bShare.share(event,'qqim');return false;"></a>
+					<a title="分享到飞信" class="bshare-feixin" onclick="javascript:bShare.share(event,'feixin');return false;"></a>
+					<a title="分享到豆瓣" class="bshare-douban" onclick="javascript:bShare.share(event,'douban');return false;"></a>
+					<!-- <a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a> -->
+				</div>
+			</div> 
+
+			<div class="col-md-12"
+				style="margin-top: 10px; margin-left: 40px; margin-bottom: 30px">
+				<p class="col-md-12" style="color: red; text-align: center">已经复制到剪贴板</p>
+			</div>
+
+
+		</div>
+	</div>
+
+<!-- <script type="text/javascript">
+
+var button = document.getE
+
+$('#button').focus();
+
+</script> -->
+</div>

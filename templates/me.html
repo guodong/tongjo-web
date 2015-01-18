@@ -33,6 +33,9 @@ require(['angular', 'angular-route', 'angular-resource'],
 				}).when('/project/:project_id', {
 					templateUrl: 'tpl/me/project-edit.html',
 					controller: 'project-edit'
+				}).when('/projectmanager/:project_id', {
+					templateUrl: 'tpl/me/project-manager.html',
+					controller: 'project-manager'
 				}).when('/team', {
 					templateUrl: 'tpl/me/team.html',
 					controller: 'team'
@@ -193,6 +196,13 @@ require(['angular', 'angular-route', 'angular-resource'],
 			});
 			app.controller('team-detail',
 			function($scope, $resource, $routeParams) {
+				
+				$('.datepicker').datepicker({
+					startDate: '1d',
+					autoclose: true,
+					language: 'zh-CN', 
+				});
+				
 				var Team = $resource(API + 'team/:id', {
 					id: '@id'
 				},
@@ -207,8 +217,8 @@ require(['angular', 'angular-route', 'angular-resource'],
 						id: $routeParams.team_id
 					},
 					function() {
-						$scope.team = team;
-						$scope.team.created_at = team.created_at.substr(0, 10);
+						$scope.team = team;  
+						$scope.team.signup_time = team.signup_time.substr(0, 10); 
 						console.log($scope.team);
 					});
 				}
@@ -218,7 +228,8 @@ require(['angular', 'angular-route', 'angular-resource'],
 				$scope.update = function() {
 					$scope.team.$save(function(team) {
 						$scope.team = team;
-						$scope.team.created_at = team.created_at.substr(0, 10);
+						$scope.team.signup_time = team.signup_time.substr(0, 10);
+						
 						alert("保存成功");
 					});
 				};
@@ -312,6 +323,83 @@ require(['angular', 'angular-route', 'angular-resource'],
 					})
 				}
 			});
+			
+			
+			app.controller('project-manager',
+					function($scope, $resource, $routeParams) {
+						var ProjectTs = $resource(API + 'project/:project_id/team', {
+							project_id: '@id'
+						},
+						{
+							save: {
+								method: 'PUT'
+							}
+						});
+
+						$scope.getprojectTs = function() {
+							var team = ProjectTs.query({
+								project_id: $routeParams.project_id
+							},
+							function() {
+								$scope.teams = team;  
+								console.log($scope.teams);
+							});
+						}
+
+						$scope.getprojectTs();
+
+						/* $scope.update = function() {
+							$scope.team.$save(function(team) {
+								$scope.team = team;
+								$scope.team.signup_time = team.signup_time.substr(0, 10);
+								
+								alert("保存成功");
+							});
+						};
+
+						var Status = $resource(API + 'team/:team_id/user/:user_id/status/:status', null, {
+							save: {
+								method: 'PUT'
+							}
+						});
+						$scope.permit = function(user_id) {
+							var st = new Status();
+							st.$save({
+								team_id: $routeParams.team_id,
+								user_id: user_id,
+								status: "permited"
+							},
+							function() {
+								$scope.getteam();
+								alert("修改成功");
+							})
+						};
+						$scope.deny = function(user_id) {
+							var st = new Status();
+							st.$save({
+								team_id: $routeParams.team_id,
+								user_id: user_id,
+								status: "denied"
+							},
+							function() {
+								$scope.getteam();
+								alert("修改成功");
+							})
+						};
+						$scope.remove = function(user_id) {
+							var st = new Status();
+							st.$save({
+								team_id: $routeParams.team_id,
+								user_id: user_id,
+								status: "removed"
+							},
+							function() {
+								$scope.getteam();
+								alert("修改成功");
+							})
+						} */
+					});
+			
 			app.controller('project-edit',
 			function($scope, $resource, $routeParams) {
 				$('.datepicker').datepicker({
