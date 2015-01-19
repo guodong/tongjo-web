@@ -21,10 +21,10 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="v in created">
-					<td ng-bind="v.name"></td>
+					<td><a href="/project/{{v.id}}" target="_blank" ng-bind="v.name"></a></td>
 					<td ng-bind="v.created_at"></td>
 					<td><span class="label label-success" ng-if="v.is_open==1">报名中</span><span class="label label-danger" ng-if="v.is_open==0">报名关闭</span></td>
-					<td><a href="#project/{{v.id}}">管理</a> | <a href="/project/{{v.id}}" target="_blank">查看</a></td>
+					<td><a href="#project/{{v.id}}">修改</a> | <a href="#projectmanager/{{v.id}}">查看参加者</td>
 				</tr>
 			</tbody>
 		</table>
@@ -40,8 +40,8 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="v in joined">
-					<td>{{v.name}}</td>
-					<td>{{v.created_at}}</td>
+					<td ng-bind="v.name"></td>
+					<td ng-bind="v.created_at"></td>
 					<td><a href="/project/{{v.id}}" target="_blank">查看</a></td>
 				</tr>
 			</tbody>
