@@ -199,7 +199,7 @@
 			this.isMoving ? this._move() : this.isResizing ? this._resize()
 					: null;
 		} else if (e.type == "mousedown") {
-			alert("mousedown");
+			/*alert("mousedown");*/
 			this.mouseStartX = this.mouseX;
 			this.mouseStartY = this.mouseY;
 			this.cropStartLeft = this.cropLeft;
@@ -209,7 +209,7 @@
 			this.inCropper ? this.isMoving = true
 					: this.inDragger ? this.isResizing = true : null;
 		} else if (e.type == "mouseup") {
-			alert("mouseup");
+			/*alert("mouseup");*/
 			this.isMoving = this.isResizing = false;
 		}
 	}
@@ -227,7 +227,7 @@
 
 		this.inCropper = this.inCropper && !this.inDragger;
 	}
-
+ 
 	ImageCropper.prototype._move = function() {
 		var deltaX = this.mouseX - this.mouseStartX;
 		var deltaY = this.mouseY - this.mouseStartY;
