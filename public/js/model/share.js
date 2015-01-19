@@ -31,7 +31,7 @@ define([ 'angular', 'ui-bootstrap' ], function(angular, uibootstrap) {
 					backdropClick : true,
 					windowClass : 'share-dialog',
 					controller: mController,
-					templateUrl : 'sharemodal'
+					templateUrl : '/sharemodal'
 				};
 				this.showModal = function(customModalDefaults) {
 					if (!customModalDefaults)

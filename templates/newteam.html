@@ -109,19 +109,24 @@
 				language: 'zh-CN', 
 			});
 			
+			var pid = window.location.pathname.replace(/\/newteam\/(\d+)$/, '$1');
+			
+			/* console.log(pid);  */
+			
+			
 			var Team = $resource(API + 'team');
-			console.log(localStorage.uid);
+			/* console.log(localStorage.uid); */
 			$scope.team = {};
 			
 			$scope.processForm = function(){
 				$scope.team.is_signup = $("input[type='radio']:checked").val();
 				$scope.team.user_id = localStorage.uid;
-				console.log(localStorage.uid);
+				$scope.team.project_id = pid;
 				t = new Team($scope.team);
 				t.$save(null,function(team){ 
 		            console.log(team);
 		            if(team.id > 0){
-		            	location.href = "/team!"+team.id;
+		            	/* location.href = "/team/"+team.id; */
 		            }
 		        });
 				/* location.href = "/team";  */
