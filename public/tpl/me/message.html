@@ -114,18 +114,25 @@
 			</tbody>
 		</table>-->
 		<div class="container－fluid ">
-			<div class="message" ng-repeat="notification in notifications">
+		<div class="message" ng-repeat="notification in notifications">
 				<div class="row">
 					<div class="messagebox">
-						<div class="col-md-3" ng-bind="notification.created_at"></div>
-						<div class="col-md-9">
+						<div class="col-md-8">
 							<a ng-bind="notification.title" ng-click="slidedetail($event)"></a>
+						</div>
+						<div class="col-md-3" ng-bind="notification.created_at"></div>
+						<div class="col-md-1">		
+						<div>		
+						<a tooltip="标记为已读!" tooltip-placement="top" tooltip-trigger="mouseenter" tooltip-append-to-body="true" ng-show = "!notification.isRead" ng-click="checkNotification(notification,notification.id)"><span class="glyphicon glyphicon-ok"></span></a>
+						</div>
 						</div>
 
 					</div>
 				</div>
 				<div class="moreDetail" style="display: none">
+				<div class="detailbox">
 					<p ng-bind="notification.content"></p>
+				</div>
 				</div>
 			</div>
 		</div>
