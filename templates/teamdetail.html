@@ -41,8 +41,8 @@
 
 		<div class="col-md-4 team-leader">
 			<h3 class="team-leader-title">关于队长：</h3>
-			<h6 class="team-leader-name">彭涛</h6>
-			<div class="team-leader-comments">
+			<h6 class="team-leader-name" ng-bind = "teamdetail.creator.realname" style="margin-left:6px"></h6> 
+			<!-- <div class="team-leader-comments">
 				<ul class="team-leader-star">
 					<li>★</li>
 					<li>★</li>
@@ -52,7 +52,7 @@
 				</ul>
 				<h6 class="team-leader-starcount">5.0</h6>
 				<h6 class="team-leader-commentscount">26条评论</h6>
-			</div>
+			</div> -->
 
 		</div>
 	</div>
@@ -76,8 +76,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="member in teamdetail.members">
-					<td><img src="img/head.jpg" alt="*" class="smallhead"> <a
+				<tr ng-repeat="member in teamdetail.members" ng-if="member.pivot.status=='permited'">
+					<td><img src="/img/head.jpg" alt="*" class="smallhead"> <a
 						class="text-primary" ng-bind="member.realname"
 						href="userinfodetail!{{member.id}}">彭涛</a></td>
 					<td>
@@ -90,6 +90,7 @@
 
 					<td><a class="text-primary"
 						href="userinfodetail!{{member.id}}">查看资料</a></td>
+					</div>
 				</tr>
 			</tbody>
 		</table>
@@ -101,25 +102,8 @@
 <script type="text/javascript" charset="utf-8"
 	src="http://static.bshare.cn/b/bshareC0.js"></script>
 	
-<script type="text/javascript" src="js/lib/jquery.zclip.js"></script>
+<script type="text/javascript" src="/js/lib/jquery.zclip.js"></script>
 
-
-<!-- <script type="text/javascript">
-$(function(){
-	$('#button').onclick(function{
-		$(this).zclip({
-			path: 'swf/ZeroClipboard.swf',
-			copy: function(){
-				return "454325";
-			},
-			afterCopy: function(){
-				alert("成功");
-			}
-		});
-	});
-	
-});
-</script> -->
 
 <script>
 	require([ 'angular', 'model/login', 'model/share', 'angular-route',
@@ -130,8 +114,11 @@ $(function(){
 				app.controller('teamdetailControl', function($scope, $resource,
 						loginService, shareService) {
 
-					var url = window.location.href;
-					var tid = url.substr(url.indexOf("!") + 1, url.length);
+					/* var url = window.location.href;
+					var tid = url.substr(url.indexOf("!") + 1, url.length); */
+					
+					var tid = window.location.pathname.replace(/\/team\/(\d+)$/, '$1');
+					
 					console.log(tid);
 
 					$scope.getteamdetail = function() {

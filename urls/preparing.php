@@ -1,7 +1,7 @@
 <?php
 return array(
-        '#^/team!#' => 'teamdetail',
-        '#^/newteam$#' => 'newteam',
+        '#^/team/\d+#' => 'teamdetail',
+        '#^/newteam/\d#' => 'newteam',
 		'#^/userinfodetail!#' => 'userinfo-detail',
 		'#^/sharemodal$#' => 'sharemodal'
 );
