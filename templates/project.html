@@ -1,12 +1,17 @@
 {!extends file='layout.html'!} {!block name=main!}
 <div class="project-detail" ng-controller="info">
-	<div class="page-header">
-		<h1 ng-bind="project.name"></h1>
+	<div class="container-fluid page-header">
+		<img ng-src="{{'http://api.tongjo.com/files/'+project.image}}" class="image">
+		<div class="projectname">
+			<h3 >项目名称：</h3>
+			<h1 ng-bind="project.name" ></h1>
+		</div>
+		
 		<a class="btn btn-warning" href="#join"> <span
 			class="glyphicon glyphicon-plus"></span> 参加该项目
 		</a>
 	</div>
-	<!-- <div class="well clearfix">
+<!-- 	<div class="well clearfix">
 		<div class="panel pull-left">
 			<ul>
 				<li class="first">
@@ -22,6 +27,9 @@
 			<span>开放</span>
 		</div>
 	</div> -->
+	
+	<div style="clear:both"></div>
+	
 	<section>
 		<div class="row">
 			<div class="col-md-8">
