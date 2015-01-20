@@ -41,8 +41,8 @@
 
 		<div class="col-md-4 team-leader">
 			<h3 class="team-leader-title">关于队长：</h3>
-			<h6 class="team-leader-name">彭涛</h6>
-			<div class="team-leader-comments">
+			<h6 class="team-leader-name" ng-bind = "teamdetail.creator.realname" style="margin-left:6px"></h6> 
+			<!-- <div class="team-leader-comments">
 				<ul class="team-leader-star">
 					<li>★</li>
 					<li>★</li>
@@ -52,107 +52,137 @@
 				</ul>
 				<h6 class="team-leader-starcount">5.0</h6>
 				<h6 class="team-leader-commentscount">26条评论</h6>
-			</div>
+			</div> -->
 
 		</div>
 	</div>
 
 	<div class="clear"></div>
 
-	<table class="team-teamer">
-		<thead class="bg-primary">
-			<tr>
-				<th>团队成员介绍</th>
-				<th>大学</th>
-				<th>专业</th>
-				<th width="130px"></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="member in teamdetail.members">
-				<td><img src="img/head.jpg" alt="*" class="smallhead">
-					<a class="text-primary" ng-bind="member.realname" href="userinfodetail!{{member.id}}">彭涛</a></td>
-				<td>
-					<h5 class="text-primary" ng-bind="member.school.name"></h5>
-				</td>
+	<div class="team-teamer">
 
-				<td>
-					<h5 class="text-primary" ng-bind="member.major.name">电子与信息工程学院</h5>
-				</td>
+		<div class="team-share">
+			<button class="btn btn-primary" ng-click="shareTeam()">
+				分享给好友</button>
+		</div>
+		<div class="clear"></div>
+		<table class="team-table">
+			<thead class="bg-primary">
+				<tr>
+					<th>团队成员介绍</th>
+					<th>大学</th>
+					<th>专业</th>
+					<th width="130px"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="member in teamdetail.members" ng-if="member.pivot.status=='permited'">
+					<td><img src="/img/head.jpg" alt="*" class="smallhead"> <a
+						class="text-primary" ng-bind="member.realname"
+						href="userinfodetail!{{member.id}}">彭涛</a></td>
+					<td>
+						<h5 class="text-primary" ng-bind="member.school.name"></h5>
+					</td>
 
-				<td>
-					<a class="text-primary" href="userinfodetail!{{member.id}}">查看资料</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+					<td>
+						<h5 class="text-primary" ng-bind="member.major.name">电子与信息工程学院</h5>
+					</td>
+
+					<td><a class="text-primary"
+						href="userinfodetail!{{member.id}}">查看资料</a></td>
+					</div>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
+
+<script type="text/javascript" charset="utf-8"
+	src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=3&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8"
+	src="http://static.bshare.cn/b/bshareC0.js"></script>
+	
+<script type="text/javascript" src="/js/lib/jquery.zclip.js"></script>
 
 
 <script>
-	require([ 'angular', 'model/login','angular-route', 'angular-resource' ], function(angular,loginModal) {
-		var app = angular.module('teamdetailApp', [ 'loginModal','ngRoute', 'ngResource' ]);
-		app.controller('teamdetailControl', function($scope,$resource,loginService) {
-			
-			var url = window.location.href;
-			var tid = url.substr(url.indexOf("!") + 1,url.length);
-			console.log(tid);
-			
-			$scope.getteamdetail = function(){
-				var Team = $resource(API + 'team/:teamId');
-				var team = Team.get({
-					teamId: tid
-				}, function() {
-					$scope.teamdetail = team;
-					$scope.teamdetail.created_at = team.created_at.substr(0, 10);
-					$scope.teamdetail.signup_time = team.signup_time.substr(0, 10);
-					console.log($scope.teamdetail); 
-				});
-			}
-			
-			$scope.getteamdetail();
-			
-			$scope.login = function() {
-				loginService.showModal().then(
-					function(isSuccess) {
-						if(isSuccess)
-							alert("登陆成功:");
-						else 
-							alert("登陆失败:");
-					});
-			}
-			
-			var JTeam = $resource(API + 'team/:teamId/user');
-			$scope.joinTeam = function(){
-				var uid = localStorage.uid;
-				/* console.log(uid); */
-				
-				if(uid=="undefined" || uid == null){
-					$scope.login();
-				}else if(uid > 0){
-					var jt = new JTeam();
+	require([ 'angular', 'model/login', 'model/share', 'angular-route',
+			'angular-resource' ],
+			function(angular) {
+				var app = angular.module('teamdetailApp', [ 'loginModal',
+						'shareModal', 'ngRoute', 'ngResource' ]);
+				app.controller('teamdetailControl', function($scope, $resource,
+						loginService, shareService) {
+
+					/* var url = window.location.href;
+					var tid = url.substr(url.indexOf("!") + 1, url.length); */
 					
-					jt.$save({
-						teamId: tid,
-						user_id: uid
-					},function(team){
-			            console.log(team);
-			            if(team.error){
-			            	alert(team.msg);
-			            }else{
-			            	alert("加入成功");
-			            	$scope.getteamdetail();
-			            }
-			            
-			        });
-				}else{
-					$scope.login();
-				}
-			};
-		});
-		
-		angular.bootstrap(document.getElementById("body"), [ 'teamdetailApp' ]);
-	});
+					var tid = window.location.pathname.replace(/\/team\/(\d+)$/, '$1');
+					
+					console.log(tid);
+
+					$scope.getteamdetail = function() {
+						var Team = $resource(API + 'team/:teamId');
+						var team = Team.get({
+							teamId : tid
+						}, function() {
+							$scope.teamdetail = team;
+							$scope.teamdetail.created_at = team.created_at
+									.substr(0, 10);
+							$scope.teamdetail.signup_time = team.signup_time
+									.substr(0, 10);
+							console.log($scope.teamdetail);
+						});
+					}
+
+					$scope.getteamdetail();
+
+					$scope.login = function() {
+						loginService.showModal().then(function(isSuccess) {
+							if (isSuccess)
+								alert("登陆成功:");
+							else
+								alert("登陆失败:");
+						});
+					}
+
+					var JTeam = $resource(API + 'team/:teamId/user');
+					$scope.joinTeam = function() {
+						var uid = localStorage.uid;
+						/* console.log(uid); */
+
+						if (uid == "undefined" || uid == null) {
+							$scope.login();
+						} else if (uid > 0) {
+							var jt = new JTeam();
+
+							jt.$save({
+								teamId : tid,
+								user_id : uid
+							}, function(team) {
+								console.log(team);
+								if (team.error) {
+									alert(team.msg);
+								} else {
+									alert("加入成功");
+									$scope.getteamdetail();
+								}
+
+							});
+						} else {
+							$scope.login();
+						}
+					};
+
+					$scope.shareTeam = function() {
+						shareService.showModal();
+					}
+
+				});
+
+				angular.bootstrap(document.getElementById("body"),
+						[ 'teamdetailApp' ]);
+			});
 </script>
 
 

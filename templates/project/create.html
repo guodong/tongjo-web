@@ -13,7 +13,7 @@
 	</div>
 	<div class="form-group">
 		<label>报名截止时间</label>
-		<div style="z-index:999">
+		<div style="z-index: 999">
 			<input data-provide="datepicker" class="form-control datepicker"
 				ng-model="project.deadline" required data-date-format="yyyy-mm-dd"
 				autoclose="true">
@@ -79,7 +79,6 @@
 
 	</div>
 
-
 	<div class="form-group">
 		<label>报名方式</label>
 		<div class="radio">
@@ -113,6 +112,44 @@
 	</div>
 
 	<div class="form-group">
+		<div class="me-avataredit ">
+			<label>项目图片</label>
+			<div class="mcontainer" ginger_software_stylesheet="true"
+				ginger_software_doc="true">
+				<div class="container-fluid">
+					<a class="selectBtn" href="javascript:void(0);"
+						onclick="document.getElementById(&#39;input&#39;).click();"></a> <a
+						class="saveBtn" href="javascript:void(0);" ng-click="saveImage();"></a>
+					<input type="file" fileread="uploadme" id="input" size="10"
+						style="visibility: hidden;" accept="image/*" />
+
+					<div class="wrapper">
+						<canvas id="cropper" class="cropper" width="300" height="300"></canvas>
+						<a class="rotateLeftBtn" href="javascript:void(0);"
+							onclick="rotateImage(event);">LeftRotate</a> <a
+							class="rotateRightBtn" href="javascript:void(0);"
+							onclick="rotateImage(event);">RightRotate</a>
+
+						<div class="previewContainer">
+							<canvas class="preview140 preview" id="preview140" width="140"
+								height="140"></canvas>
+							<span
+								style="display: block; width: 100%; padding-top: 5px; text-align: center;">large:140x140</span>
+
+							<canvas class="preview50 preview" id="preview50" width="50"
+								height="50" style="position: absolute; left: 50px; top: 220px;"></canvas>
+							<span
+								style="position: absolute; left: 45px; top: 280px; width: 70px; text-align: center;">small:50x50</span>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
 		<a class="btn btn-success btn-lg" ng-click="create()"
 			ng-disabled="createform.$invalid">发布项目</a>
 	</div>
@@ -121,12 +158,13 @@
 <script src="/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 <script src="/lib/bootstrap-datepicker/bootstrap-datepicker.zh-CN.js"></script>
 
+<script type="text/javascript" src="/js/lib/ImageCropper.js"></script>
 <script type="text/javascript" src="/lib/umeditor/umeditor.config.js"></script>
 <script type="text/javascript" src="/lib/umeditor/umeditor.min.js"></script>
 <script type="text/javascript" src="/lib/umeditor/lang/zh-cn/zh-cn.js"></script>
 <script>
 	require(['angular', 'angular-resource'], function(angular) {
-		var app = angular.module('me', ['ngResource']);
+		var app = angular.module('mec', ['ngResource']);
 		app.controller('createform', function($scope, $resource) {
 			$('.datepicker').datepicker({
 				startDate: '1d',
@@ -186,10 +224,100 @@
 				default:
 					break;
 				}
-			})
+			});
+			
+			var cropper;
+			$scope.init = function() {
+				cropper = new ImageCropper(300, 300, 180, 180);
+				cropper.setCanvas("cropper");
+				cropper.addPreview("preview140");
+				cropper.addPreview("preview50");
+
+				if (!cropper.isAvaiable()) {
+					alert("Sorry, your browser doesn't support FileReader, please use Firefox3.6+ or Chrome10+ to run it.");
+				}
+			};
+
+			$scope.init();
+
+			$scope.$watch('uploadme',
+			function(to, from) {
+				console.log($scope.uploadme);
+				if ($scope.uploadme != "undefined" && $scope.uploadme != null) cropper.loadImage($scope.uploadme);
+			});
+
+			$scope.rotateImage = function(e) {
+				switch (e.target.id) {
+				case "rotateLeftBtn":
+					cropper.rotate( - 90);
+					break;
+				case "rotateRightBtn":
+					cropper.rotate(90);
+					break;
+				}
+			};
+
+			$scope.saveImage = function() {
+				var file140 = document.getElementById("preview140");
+				var file50 = document.getElementById("preview50");
+
+				if (file140.toDataURL() != "undefined") {
+					var uid = localStorage.uid;
+					if (uid > 0) {
+						var url = API + "image";
+						$.post(url, {
+							"image": file140.toDataURL(),
+						},
+						function(data) {
+							
+							if (data.file) {
+								$scope.project.image=data.file;
+								console.log($scope.project);
+							}else{
+								alert("图片上传失败");
+							}
+						},
+						"json")
+					} else {
+						alert("用户没有登陆");
+					}
+				} else {
+					alert("请先设置图片");
+				}
+			};
+
+			$scope.trace = function() {
+				if (typeof(console) != "undefined") console.log(Array.prototype.slice.apply(arguments).join(" "));
+			};
+			
 
 		});
-		angular.bootstrap(document.getElementById("body"), ['me']);
+		
+		app.directive("fileread", [function() {
+			return {
+				scope: {
+					fileread: "="
+				},
+
+				link: function(scope, element, attributes) {
+					element.bind("change",
+					function(changeEvent) {
+						var reader = new FileReader();
+						reader.onload = function(loadEvent) {
+
+							scope.$apply(function() {
+								scope.fileread = changeEvent.target.files[0];
+								// or all selected files:
+								// scope.fileread = changeEvent.target.files;
+							});
+						}
+						reader.readAsDataURL(changeEvent.target.files[0]);
+					});
+				}
+			}
+		}]);
+		
+		angular.bootstrap(document.getElementById("body"), ['mec']);
 	})
 </script>
 
