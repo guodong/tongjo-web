@@ -11,9 +11,9 @@
 <script type="text/javascript" src="/lib/umeditor/umeditor.config.js"></script>
 <script type="text/javascript" src="/lib/umeditor/lang/zh-cn/zh-cn.js"></script>
 <script>
-require(['angular', 'angular-route', 'angular-resource'],
-		function(angular, angular_route, $resource) {
-			var app = angular.module('me', ['ngRoute', 'ngResource']).config(['$routeProvider',
+require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
+		function(angular, angular_route, $resource,bootstrap) {
+			var app = angular.module('me', ['ngRoute', 'ngResource','ui.bootstrap']).config(['$routeProvider',
 			function($routeProvider) {
 				$routeProvider.when('/info', {
 					templateUrl: 'tpl/me/info.html',
@@ -525,7 +525,7 @@ require(['angular', 'angular-route', 'angular-resource'],
 					comments: [{
 						owner: {
 							userId: 1,
-							avatarlink: "https://avatars0.githubusercontent.com/u/219689?v=3&amp;s=96"
+							avatarlink: "/img/avatar.png"
 						},
 						timestamp: "2015-2-1",
 						content: "11111111111111111111"
@@ -533,7 +533,7 @@ require(['angular', 'angular-route', 'angular-resource'],
 					{
 						owner: {
 							userId: 1,
-							avatarlink: "https://avatars0.githubusercontent.com/u/219689?v=3&amp;s=96"
+							avatarlink: "/img/avatar.png"
 						},
 						timestamp: "2015-2-1",
 						content: "11111111111111111111"
@@ -541,7 +541,7 @@ require(['angular', 'angular-route', 'angular-resource'],
 					{
 						owner: {
 							userId: 1,
-							avatarlink: "https://avatars0.githubusercontent.com/u/219689?v=3&amp;s=96"
+							avatarlink: "/img/avatar.png"
 						},
 						timestamp: "2015-2-1",
 						content: "11111111111111111111"
@@ -551,7 +551,7 @@ require(['angular', 'angular-route', 'angular-resource'],
 					comments: [{
 						owner: {
 							userId: 1,
-							avatarlink: "https://avatars0.githubusercontent.com/u/219689?v=3&amp;s=96"
+							avatarlink: "/img/avatar.png"
 						},
 						timestamp: "2015-2-1",
 						content: "11111111111111111111"
@@ -559,7 +559,7 @@ require(['angular', 'angular-route', 'angular-resource'],
 					{
 						owner: {
 							userId: 1,
-							avatarlink: "https://avatars0.githubusercontent.com/u/219689?v=3&amp;s=96"
+							avatarlink: "/img/avatar.png"
 						},
 						timestamp: "2015-2-1",
 						content: "11111111111111111111"
@@ -567,7 +567,7 @@ require(['angular', 'angular-route', 'angular-resource'],
 					{
 						owner: {
 							userId: 1,
-							avatarlink: "https://avatars0.githubusercontent.com/u/219689?v=3&amp;s=96"
+							avatarlink: "/img/avatar.png"
 						},
 						timestamp: "2015-2-1",
 						content: "11111111111111111111"
@@ -577,7 +577,7 @@ require(['angular', 'angular-route', 'angular-resource'],
 					comments: [{
 						owner: {
 							userId: 1,
-							avatarlink: "https://avatars0.githubusercontent.com/u/219689?v=3&amp;s=96"
+							avatarlink: "/img/avatar.png"
 						},
 						timestamp: "2015-2-1",
 						content: "11111111111111111111"
@@ -585,7 +585,7 @@ require(['angular', 'angular-route', 'angular-resource'],
 					{
 						owner: {
 							userId: 1,
-							avatarlink: "https://avatars0.githubusercontent.com/u/219689?v=3&amp;s=96"
+							avatarlink: "/img/avatar.png"
 						},
 						timestamp: "2015-2-1",
 						content: "11111111111111111111"
@@ -593,7 +593,7 @@ require(['angular', 'angular-route', 'angular-resource'],
 					{
 						owner: {
 							userId: 1,
-							avatarlink: "https://avatars0.githubusercontent.com/u/219689?v=3&amp;s=96"
+							avatarlink: "/img/avatar.png"
 						},
 						timestamp: "2015-2-1",
 						content: "11111111111111111111"
@@ -603,18 +603,21 @@ require(['angular', 'angular-route', 'angular-resource'],
 					id: 1,
 					title: "notification-title",
 					content: "notification-content",
+					isRead:false,
 					created_at: "2015-1-1",
 				},
 				{
 					id: 2,
 					title: "notification-title",
 					content: "notification-content",
+					isRead:true,
 					created_at: "2015-1-1",
 				},
 				{
 					id: 3,
 					title: "notification-title",
 					content: "notification-content",
+					isRead:false,
 					created_at: "2015-1-1",
 				}];
 
@@ -628,6 +631,9 @@ require(['angular', 'angular-route', 'angular-resource'],
 				$scope.slidedetail = function($event) {
 					jQuery($event.target).parent().parent().parent().parent().find(".moreDetail").slideToggle();
 				};
+				$scope.checkNotification =function(notification,notificationId){
+					notification.isRead = true;
+				}
 				$scope.submit = function(commentForm, msgId) {
 					var commentVal = commentForm.comment.$modelValue;
 					var data = {

@@ -19,7 +19,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="v in createdteams">
-					<td><a ng-bind="v.name" href="/team!{{v.id}}" target="_blank"></a></td>
+					<td><a ng-bind="v.name" href="/team/{{v.id}}" target="_blank"></a></td>
 					<td><a target="_blank" href="/project/{{v.project.id}}" ng-bind="v.project.name">查看</a></td>
 					<td ng-bind="v.created_at|limitTo:10"></td>
 					<td><a href="#team/{{v.id}}">管理</a></td>
@@ -42,7 +42,7 @@
 					<td ng-bind="v.name"></td>
 					<td><a target="_blank" href="/project/{{v.project.id}}" ng-bind="v.project.name">查看</a></td>
 					<td ng-bind="v.created_at|limitTo:10"></td>
-					<td><a href="/team!{{v.id}}">查看</a></td>
+					<td><a href="/team/{{v.id}}">查看</a></td>
 				</tr>
 			</tbody>
 		</table>
