@@ -7,8 +7,7 @@ return array(
 		'#^/personjoinsuccess$#' => 'personjoinsuccess',
 		'#^/jointeamsuccess$#' => 'jointeamsuccess',
 		'#^/scanproject$#' => 'scanproject',
-		'#^/scanproject-1$#' => 'scanproject-1',
-		'#^/scanproject-2$#' => 'scanproject-2',
+		'#^/scanproject-tpl$#' => 'scanproject-tpl',
 		'#^/recomproject$#' => 'recomproject',
 		'#^/choseskill$#' => 'choseskill',
 		'#^/loginmodal$#' => 'loginmodal'

@@ -14,10 +14,11 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" href="/css/site.css" />
 <script src="/lib/jquery/jquery.js"></script>
+<script src="/lib/angular/angular.js"></script>
+<script src="/lib/angular-resource/angular-resource.js"></script>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 </head>
-
 <body>
 	<section class="header home">
 		<div class="clear">
@@ -35,8 +36,8 @@
 				<form name="login" method="post" id="signupForm" class="clear"
 					action="https://www.getclouder.com/signup">
 					<input type="hidden" name="830f4cb4bd998fbc4d4e50193f7d6209"
-						value="1" /> <a href="" class="big-button home btn"
-						id="signupSubmit">发 布</a> <a href="" class="big-button home btn"
+						value="1" /> <a href="project/create" class="big-button home btn"
+						id="signupSubmit">发 布</a> <a href="scanproject" class="big-button home btn"
 						id="signupSubmit">参 加</a>
 				</form>
 				<p></p>
@@ -89,54 +90,21 @@
 	</section>
 	<main class="home">
 
-	<section class="tech">
+	<section class="tech" ng-app="projectApp" ng-controller="projectController">
 		<div class="clear">
 			<h2 class="title">典型项目</h2>
-			<article>
-				<span>
-				<img src="/img/web.png">
-					<div class="transparent_class">
-						<p>已报名团队：2</p>
-						<p>个人报名：3</p>
-						<a class="small-button red" href="#">我要参加</a>
-					</div>
-				</span>
-				<h3>网站开发</h3>
+			<article ng-repeat="project in projects track by $index">
+			<span ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+			 <img ng-src="{{project.image|defaultImg}}">
+				<div class="transparent_class" ng-show="hoverEdit">
+					<p>已报名团队：{{project.teams_count}}</p>
+					<p>个人报名：{{project.users_count}}</p>
+					<a class="small-button red" href="{{project.link}}">我要参加</a>
+				</div>
+				<h5 class="transparent_class" ng-bind="project.title"></h5>
+			</span>			
 			</article>
-			<article>
-				<span>
-				<img src="/img/cpt.png">
-					<div class="transparent_class">
-						<p>已报名团队：2</p>
-						<p>个人报名：3</p>
-						<a class="small-button red" href="#">我要参加</a>
-					</div>
-				</span>
-				<h3>比赛</h3>
-			</article>
-			<article>
-				<span>
-				<img src="/img/market.png">
-					<div class="transparent_class">
-						<p>已报名团队：2</p>
-						<p>个人报名：3</p>
-						<a class="small-button red" href="#">我要参加</a>
-					</div>
-				</span>
-				<h3>商业市场</h3>
-			</article>
-			<article>
-				<span>
-				<img src="/img/phone.png">
-					<div class="transparent_class">
-						<p>已报名团队：2</p>
-						<p>个人报名：3</p>
-						<a class="small-button red" href="#">我要参加</a>
-					</div>
-				</span>
-				<h3>移动设备</h3>
-			</article>
-		</div>
+	   </div>
 	</section>
 <script>
 $(function(){
@@ -186,7 +154,7 @@ $(function(){
 
 	<section class="beta">
 		<div>
-			<h2 class="title medium">马上开启你的旅程吧.</h2>
+			<h2 class="title medium">马上开启你的旅程吧</h2>
 			<a href="/scanproject" class="big-button grlue">Go</a>
 		</div>
 	</section>
@@ -196,29 +164,30 @@ $(function(){
 		<div class="clear">
 			<div class="lists clear">
 				<div>
-					<strong>关于同舟</strong>
 					<ul>
+					<li><a href="#">关于同舟</a></li>
 						<li><a href="https://www.getclouder.com/">意见反馈</a></li>
 						<li><a href="https://www.getclouder.com/technology">联系我们</a></li>
 						<li><a href="https://www.getclouder.com/features">联系我们</a></li>
 					</ul>
 				</div>
 				<div>
-					<strong>隐私条款</strong>
 					<ul>
+					<li><a href="#">隐私条款</a></li>
+						<li><a href="#">服务范围</a></li>
 						<li><a href="https://tutorials.getclouder.com/">免费申请</a></li>
 					</ul>
 				</div>
 				<div>
-					<strong>服务范围</strong>
 					<ul>
+					    <li><a href="#">服务范围</a></li>
 						<li><a href="https://www.facebook.com/getclouder" target="_blank">友情链接</a></li>
 						<li><a href="https://twitter.com/GetClouder" target="_blank">移动应用</a></li>
 					</ul>
 				</div>
 				<div>
-					<strong>帮助手册</strong>
 					<ul>
+					<li><a href="#">帮助手册</a></li>
 						<li><a href="https://www.getclouder.com/terms">招聘及广告服务</a></li>
 					</ul>
 				</div>
@@ -236,4 +205,39 @@ $(function(){
 				</p>
 </section>
 </body>
+<script type="text/javascript">
+var API = 'http://api.tongjo.com/';
+  var projectApp = angular.module('projectApp', ['ngResource']);
+  projectApp.controller("projectController", ["$scope", "$resource",function ($scope, $resource) {
+		//get recommendation projects					
+		var RecomProject = $resource(API + 'project');
+		var recomProjects = RecomProject.query(function() {
+				$scope.projects = recomProjects.slice(0,4);;
+		});
+		
+		$scope.hoverIn = function(){
+			$scope.hoverEdit = true;
+		};
+
+		$scope.hoverOut = function(){
+			$scope.hoverEdit = false;
+		};
+  }]);			   
+  projectApp.filter('defaultImg',function(){
+	   return function(item){
+		   if(item==null || item =="")
+			   return "/img/market.png";
+		   else return "http://api.tongjo.com/files/"+item;
+	   }
+   });
+  projectApp.filter('defaultDescription',function(){
+	   return function(item){
+		   console.log("item:"+item);
+		   if(item==null || item =="")
+			   return "项目是指一系列独特的、复杂的并相互关联的活动，这些活动有着一个明确的目标或目的，必须在特定的时间、预算、资源限定内，依据规范完成";
+		   else  return item;
+		   
+	   }
+  });
+</script>
 </html>

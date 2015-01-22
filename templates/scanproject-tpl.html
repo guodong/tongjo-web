@@ -2,7 +2,7 @@
 	<div class="clear clearfix">
 		<article ng-repeat="project in projects|paging:page.index:page.size track by $index">
 			<span ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()"> 
-			<img src="{{project.imgurl|defaultImg}}">
+			<img src="{{project.image|defaultImg}}">
 				<div class="transparent_class" ng-show="hoverEdit">
 					<p ng-bind="project.description|defaultDescription"></p>
 					<a class="small-button red" href="project/{{project.id}}">查看项目详情</a>
