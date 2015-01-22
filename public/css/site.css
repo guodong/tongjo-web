@@ -176,7 +176,7 @@ header,nav,section,main,article,aside,figure,footer,time,iframe,object,video
 }
 
 .big-button.grlue {
-	background: #1abc9c;
+	background: #83c257;
 	color: #fff
 }
 
@@ -280,8 +280,9 @@ header,nav,section,main,article,aside,figure,footer,time,iframe,object,video
 }
 
 .title {
-	font: 900 40px/44px 'Source Sans Pro', sans-serif;
-	text-align: center
+	font: 500 30px/40px 'Source Sans Pro', sans-serif;
+	text-align: center;
+	color:#83c257;
 }
 
 .title.small {
@@ -472,7 +473,7 @@ main>section>div {
 .header header nav a.signup{
 	
 	height: 25px;
-	padding: 0 20px;	
+	padding: 0 10px;	
 	font-size: 16px;
 	font-weight: 700;
 	line-height: 23px;	
@@ -480,8 +481,7 @@ main>section>div {
 
 .header header nav a.signup:hover {
 	border-bottom: 0;
-	border-radius: 20px;
-	background: #fa6f57;
+	color:#83c257;
 	text-transform: uppercase;
 	text-align: center	
 }
@@ -676,7 +676,7 @@ main>section>div {
 }
 
 .header.home .short-list-features ul li strong {
-	font: 700 18px 'Source Sans Pro', sans-serif;
+	font: 500 18px 'Source Sans Pro', sans-serif;
 	text-transform: uppercase
 }
 
@@ -816,7 +816,8 @@ color: #fff;
 .home>section.flexibility article h3 {
 	margin: 0 0 15px;
 	font-size: 24px;
-	font-weight: 600
+	font-weight: 400;
+	color: #83c257;
 }
 
 .home>section.flexibility article p {
@@ -846,6 +847,10 @@ color: #fff;
 	display: block;
 	position: relative;
 	border: 6px solid #fff;
+	height: 0;
+	overflow: hidden;
+	padding-bottom: 75%;
+	
 }
 .home>section.tech article span div{
 	position: absolute;
@@ -854,8 +859,13 @@ color: #fff;
 	background: #000;
 	width: 100%;
 	height: 100%;
-	display: none;
 	color: #fff;
+}
+.home>section.tech article img {
+	width: 100%;
+	display: block;
+	border: 0;
+	vertical-align:middle;
 }
 .home>section.tech article span div p{
 	line-height: 2em;
@@ -1076,7 +1086,8 @@ color: #fff;
 		padding: 60px 30px
 	}
 	.title {
-		font: 900 32px/36px "Source Sans Pro", sans-serif
+		font: 500 32px/36px "Source Sans Pro", sans-serif;
+		color:#83c257;
 	}
 	.home>section.flexibility h2 {
 		margin: 0 0 50px
@@ -1444,7 +1455,8 @@ color: #fff;
 		padding: 40px 10px
 	}
 	.title {
-		font: 900 26px/30px "Source Sans Pro", sans-serif
+		font: 500 26px/30px "Source Sans Pro", sans-serif;
+		color:#83c257;
 	}
 	.header.home {
 		padding: 110px 10px 50px

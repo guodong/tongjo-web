@@ -99,13 +99,13 @@
 		<div class="discussbox">
 		    <div class="commentbox">
 			<div class="avatarbox pull-left">
-				<img alt="{{user.name}}" class="avatar" data-user="219689"
-					height="48" src="{{user.avatarlink}}" width="48">
+						<img alt="{{user.realname}}" class="avatar" data-user="219689"
+							height="48" src="http://api.tongjo.com/files/{{user.avatar}}" width="48">
 			</div>
 			<div class="inputcommentbox">
 
 				<form role="form" name="commentForm"
-					ng-submit="submit(commentForm,projectId)">
+					ng-submit="submit(commentForm)">
 					<div class="form-group">
 						<textarea name="comment" ng-model="comment" placeholder="请留言"
 							rows="3" required></textarea>
@@ -118,16 +118,16 @@
 			</div>
 			<hr>
 			<div class="comments">
-				<div class="commentbox" ng-repeat="comment in comments">
+				<div class="commentbox" ng-repeat="comment in project.comments | reverse">
 					<div class="avatarbox pull-left">
-						<img alt="{{username}}" class="avatar" data-user="219689"
-							height="48" src="{{comment.owner.avatarlink}}" width="48">
+						<img alt="{{comment.user.realname}}" class="avatar" data-user="219689"
+							height="48" src="http://api.tongjo.com/files/{{comment.user.avatar}}" width="48">
 					</div>
 					<div class="comment">
 						<div class="comment-header">
-							<strong> <a href="/user:{{comment.owner}}"
-								class="author">lexrus</a>
-							</strong> 发表于 <span ng-bind="comment.timestamp"></span>
+							<strong> <a href="/userinfodetail!{{comment.user.id}}"
+								class="author" ng-bind="comment.user.realname"></a>
+							</strong> 发表于 <span ng-bind="comment.updated_at"></span>
 						</div>
 						<div class="comment-content">
 							<p class="text-muted" ng-bind="comment.content">No
@@ -149,10 +149,15 @@
 				return $sce.trustAsHtml(text);
 			};
 		} ]);
+		app.filter('reverse', function() {
+					 return function (items) {
+					    return items.slice().reverse();
+					 }
+		});
 		app.controller('info', function($scope, $resource, $sce) {
 			var Project = $resource(API + 'project/:project_id');
 			$scope.project = Project.get({
-				project_id : project_id
+				project_id : project_id	
 			});
 			$scope.project.description = $sce
 					.trustAsHtml($scope.project.description);
@@ -169,38 +174,23 @@
 					alert("参加成功");
 				});
 			};
-			$scope.comments = [{
-				owner: {
-					userId: 1,
-					avatarlink: "/img/avatar.png"
-				},
-				timestamp: "2015-2-1",
-				content: "11111111111111111111"
-			},
-			{
-				owner: {
-					userId: 1,
-					avatarlink: "/img/avatar.png"
-				},
-				timestamp: "2015-2-1",
-				content: "11111111111111111111"
-			},
-			{
-				owner: {
-					userId: 1,
-					avatarlink: "/img/avatar.png"
-				},
-				timestamp: "2015-2-1",
-				content: "11111111111111111111"
-			}];
+			$scope.user = JSON.parse(localStorage.user);
 			$scope.submit = function(commentForm, projectId) {
 				var commentVal = commentForm.comment.$modelValue;
 				var data = {
-					projectId: projectId,
-					userId: localStorage.uid,
-					comment: commentVal
+					project_id: project_id,
+					user_id: localStorage.uid,
+					content: commentVal
 				};
 				console.log(data);
+				var PU = $resource(API + 'comment');
+				var pu = new PU(data);
+				pu.$save(function() {
+					alert("评论成功");
+					$scope.project = Project.get({
+						project_id : project_id	
+					});
+				});
 			};
 		});
 		angular.bootstrap(document.getElementById("body"), [ 'me' ]);
