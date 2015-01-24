@@ -327,6 +327,7 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 			
 			app.controller('project-manager',
 					function($scope, $resource, $routeParams) {
+						$scope.project = $resource(API+'project/:project_id').get({project_id: $routeParams.project_id});
 						var ProjectTs = $resource(API + 'project/:project_id/team', {
 							project_id: '@id'
 						},
@@ -347,6 +348,15 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 						}
 
 						$scope.getprojectTs();
+						var Team = $resource(API + 'team/:team_id', {team_id: '@team_id'}, {save:{method: 'PUT'}});
+						$scope.handle = function(team, status) {
+							var t = Team.get({team_id: team.id});
+							t.team_id = team.id;
+							t.status = status;
+							t.$save(function(){
+								team.status = status;
+							})
+						};
 
 						/* $scope.update = function() {
 							$scope.team.$save(function(team) {

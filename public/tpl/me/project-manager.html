@@ -1,6 +1,6 @@
 <div class="page-header">
 	<h2>
-		我的项目<small>管理项目</small>
+		我的项目<small ng-bind="project.name"></small>
 	</h2>
 </div>
 
@@ -35,15 +35,15 @@
 		<tbody>
 			<tr ng-repeat="team in teams">
 				<td><a ng-bind="team.name" href="/team!{{team.id}}"></a></td>
-				<td><span ng-bind="team.teammember_current"></span><span
+				<td><span ng-bind="team.members_count"></span><span
 					style="padding-right: 10px; padding-left: 10px">|</span><span
 					ng-bind="team.teammember_all"></span></td>
 				<td><span class="label label-default" ng-if="team.status==0">不可报名</span><span
 					class="label label-info" ng-if="team.status==1">报名审核中</span> <span
 					class="label label-success" ng-if="team.status==2">报名通过</span> <span
 					class="label label-danger" ng-if="team.status==3">报名失败</span></td>
-				<td><a class="text-primary" ng-if="team.status==1">通过</a> <a
-					class="text-primary" ng-if="team.status==1">拒绝</a> <a
+				<td><a class="text-primary" ng-if="team.status==1" ng-click="handle(team, 2)">通过</a> <a
+					class="text-primary" ng-if="team.status==1" ng-click="handle(team, 3)">拒绝</a> <a
 					class="text-primary" ng-if="team.status==2">评价</a></td>
 			</tr>
 		</tbody>
