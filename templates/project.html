@@ -3,13 +3,13 @@
 	<div class="container-fluid page-header">
 		<img ng-src="{{'http://api.tongjo.com/files/'+project.image}}" class="image">
 		<div class="projectname">
-			<h3 >项目名称：</h3>
+			<!-- <h3 >项目名称：</h3> -->
 			<h1 ng-bind="project.name" ></h1>
 		</div>
 		
-		<a class="btn btn-warning" href="#join"> <span
+		<!-- <a class="btn btn-warning" href="#join"> <span
 			class="glyphicon glyphicon-plus"></span> 参加该项目
-		</a>
+		</a> -->
 	</div>
 <!-- 	<div class="well clearfix">
 		<div class="panel pull-left">
@@ -37,8 +37,8 @@
 				<div class="detail" ng-bind-html="project.description|trusted"></div>
 			</div>
 			<div class="col-md-4">
-				<h4>项目发布者</h4>
-				<p ng-bind="project.creator.realname"></p>
+				<h4 style="margin-bottom: 20px">项目发布者</h4>
+				<a ng-bind="project.creator.realname" target="_blank" href="/userinfodetail/{{project.creator.id}}"></a>
 			</div>
 		</div>
 	</section>
@@ -100,7 +100,7 @@
 		    <div class="commentbox">
 			<div class="avatarbox pull-left">
 						<img alt="{{user.realname}}" class="avatar" data-user="219689"
-							height="48" src="http://api.tongjo.com/files/{{user.avatar}}" width="48">
+							height="48" ng-src="http://api.tongjo.com/files/{{user.avatar}}" width="48">
 			</div>
 			<div class="inputcommentbox">
 
@@ -121,7 +121,7 @@
 				<div class="commentbox" ng-repeat="comment in project.comments | reverse">
 					<div class="avatarbox pull-left">
 						<img alt="{{comment.user.realname}}" class="avatar" data-user="219689"
-							height="48" src="http://api.tongjo.com/files/{{comment.user.avatar}}" width="48">
+							height="48" ng-src="http://api.tongjo.com/files/{{comment.user.avatar}}" width="48">
 					</div>
 					<div class="comment">
 						<div class="comment-header">
@@ -151,6 +151,7 @@
 		} ]);
 		app.filter('reverse', function() {
 					 return function (items) {
+						 if(items)
 					    return items.slice().reverse();
 					 }
 		});

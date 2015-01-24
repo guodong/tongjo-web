@@ -11,7 +11,7 @@
 	<div class="col-md-4">
 		<div class="leftbar">
 			<div class="userhead">
-				<img alt="240x160" src="img/head.jpg" class="headImage">
+				<img alt="240x160" src="/img/head.jpg" class="headImage">
 				<div class="isOnline">
 					<p class="text">在 线</p>
 				</div>
@@ -57,7 +57,7 @@
 			<div class="userdetail-line">
 				<h6>姓名：</h6>
 				<h6 ng-bind="userinfo.realname"></h6>
-				<img alt=".." ng-src="{{getseximg(userinfo.gender)}}" class="sex">
+				<img alt=".." ng-src="/{{getseximg(userinfo.gender)}}" class="sex">
 			</div>
 			<div class="userdetail-line">
 				<h6>LV：</h6>
@@ -107,9 +107,9 @@
 						<h6 class="time deadtime" ng-bind="project.deadline">结束-6天12小时</h6>
 					</div>
 					<div class="projectitem-content">
-						<img alt="100*100" src="img/head.jpg" class="headimg">
+						<img alt="100*100" src="/img/head.jpg" class="headimg">
 						<div class="detail">
-							<img src="img/dialog.png" class="background">
+							<img src="/img/dialog.png" class="background">
 							<p class="detailtext" ng-bind="project.description"></p>
 						</div>
 					</div>
@@ -122,9 +122,9 @@
 						<h6 class="time deadtime" ng-bind="project.deadline">结束-6天12小时</h6>
 					</div>
 					<div class="projectitem-content">
-						<img alt="100*100" src="img/head.jpg" class="headimg">
+						<img alt="100*100" src="/img/head.jpg" class="headimg">
 						<div class="detail">
-							<img src="img/dialog.png" class="background">
+							<img src="/img/dialog.png" class="background">
 							<p class="detailtext" ng-bind="project.description"></p>
 						</div>
 					</div>
@@ -139,12 +139,11 @@
 <script>
 	require([ 'angular', 'angular-route', 'angular-resource' ], function(
 			angular) {
+		var uid = location.pathname.replace(/\/.*\/(\d+)$/, '$1');
 		var app = angular.module('userinfoApp', [ 'ngRoute', 'ngResource' ]);
 		app.controller('userdetailControl', function($scope,$resource) {
 			
 			var url = window.location.href;
-			var uid = url.substr(url.indexOf("!") + 1,url.length);
-			console.log(uid);
 			
 			var User = $resource(API + 'user/:userId');
 			$scope.userinfo = User.get({
@@ -179,7 +178,6 @@
 		
 		app.controller('userprojectControl', function($scope,$resource) {
 			var url = window.location.href;
-			var uid = url.substr(url.indexOf("!") + 1,url.length);
 			
 			var Project = $resource(API + 'user/:user_id/type/:type/project');
 			var projects = Project.query({

@@ -2,6 +2,6 @@
 return array(
         '#^/team/\d+#' => 'teamdetail',
         '#^/newteam/\d#' => 'newteam',
-		'#^/userinfodetail!#' => 'userinfo-detail',
+		'#^/userinfodetail/\d#' => 'userinfo-detail',
 		'#^/sharemodal$#' => 'sharemodal'
 );

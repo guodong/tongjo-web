@@ -34,7 +34,7 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="team in teams">
-				<td><a ng-bind="team.name" href="/team!{{team.id}}"></a></td>
+				<td><a ng-bind="team.name" href="/team/{{team.id}}"></a></td>
 				<td><span ng-bind="team.members_count"></span><span
 					style="padding-right: 10px; padding-left: 10px">|</span><span
 					ng-bind="team.teammember_all"></span></td>
