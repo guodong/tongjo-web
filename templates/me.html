@@ -327,6 +327,7 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 			
 			app.controller('project-manager',
 					function($scope, $resource, $routeParams) {
+						$scope.project = $resource(API+'project/:project_id').get({project_id: $routeParams.project_id});
 						var ProjectTs = $resource(API + 'project/:project_id/team', {
 							project_id: '@id'
 						},
@@ -347,6 +348,15 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 						}
 
 						$scope.getprojectTs();
+						var Team = $resource(API + 'team/:team_id', {team_id: '@team_id'}, {save:{method: 'PUT'}});
+						$scope.handle = function(team, status) {
+							var t = Team.get({team_id: team.id});
+							t.team_id = team.id;
+							t.status = status;
+							t.$save(function(){
+								team.status = status;
+							})
+						};
 
 						/* $scope.update = function() {
 							$scope.team.$save(function(team) {
@@ -603,9 +613,7 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 			</div>
 			<div class="list-group">
 				<a href="#project" class="list-group-item"><span
-					class="glyphicon glyphicon-th-list"></span> 我创建的项目</a> <a
-					href="#project" class="list-group-item"><span
-					class="glyphicon glyphicon-log-in"></span> 我参加的项目</a> <a
+					class="glyphicon glyphicon-th-list"></span> 我的项目</a>  <a
 					ng-show="user.role=='student'" href="#team" class="list-group-item"><span
 					class="glyphicon glyphicon-tower"></span> 我的团队</a> <a href="#info"
 					class="list-group-item"><span class="glyphicon glyphicon-user"></span>
