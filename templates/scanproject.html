@@ -49,6 +49,7 @@ width:100%;
 	<section class="tech">
 	<div class="clear clearfix">
 		<h2 class="title">推荐项目</h2>
+		<p ng-show="!recomProLoaded">加载中...</p>
 		<article ng-repeat="project in projects track by $index">
 			<span ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
 			 <img ng-src="{{project.image|defaultImg}}">
@@ -103,7 +104,7 @@ width:100%;
 </div>
 <div class="navigation-second">
  	<div class="wrapper">	 	
-			<ul>
+		<ul>
 		<li ng-repeat = "subcategory in subcategorys">
 		<a ng-class="{current:isActive(subcategory.subcategoryId,subcategoryId)}" href="{{subcategory.href}}" ng-click="submenuClick(subcategory.subcategoryId)" ng-bind="subcategory.name">
 		</a>
@@ -158,17 +159,21 @@ width:100%;
 				scanApp.controller('defaultCtl',function($scope,$routeParams, $resource){
 					//TODO 获得数据
 					//$scope.projects = projects;
+					$scope.projectLoaded = false;
 				    var Project = $resource(API + 'project');
 					var projects = Project.query(function() {
-						$scope.projects = projects;
+							$scope.projects = projects;
+							$scope.projectLoaded = true;
 					});
 				});
 				
 				scanApp.controller('categoryCtl',function($scope,$routeParams, $resource){
 					//TODO 获得数据
+					$scope.projectLoaded = false;
 				    var Project = $resource(API + 'category/:categoryId/project');
 					var projects = Project.query({categoryId: 2}, function() {
-						$scope.projects = projects;
+							$scope.projects = projects;
+							$scope.projectLoaded = true;
 					});
 					$scope.page.index = 1;
 				});
@@ -213,10 +218,12 @@ width:100%;
 							 {subcategoryId:36,name:"其他",href:"#category-6/36"}]
 						);
 				scanApp.controller("recomController",["$scope",'$resource',function($scope,$resource){
-					//get recommendation projects					
+					//get recommendation projects
+					$scope.recomProLoaded = false;
 					var RecomProject = $resource(API + 'project');
 					var recomProjects = RecomProject.query(function() {
-							$scope.projects = recomProjects.slice($scope.recomdBatchStart,$scope.recomdBatchStart + 4);;
+							$scope.projects = recomProjects.slice($scope.recomdBatchStart,$scope.recomdBatchStart + 4);
+							$scope.recomProLoaded = true;
 					});
 					
 					$scope.recomdBatchStart = 1;
@@ -307,7 +314,7 @@ width:100%;
 					   console.log("item:"+item);
 					   if(item==null || item =="")
 						   return "项目是指一系列独特的、复杂的并相互关联的活动，这些活动有着一个明确的目标或目的，必须在特定的时间、预算、资源限定内，依据规范完成";
-					   else  return item;
+					   else  return $($.parseHTML(item)).text();
 					   
 				   }
 			   });

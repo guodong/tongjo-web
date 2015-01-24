@@ -1,5 +1,6 @@
 <section class="tech">
 	<div class="clear clearfix">
+	<div ng-show="!projectLoaded" style="width:100%;text-align: center;padding-top:20px;padding-top:20px;"><p>加载中...</p></div>
 		<article ng-repeat="project in projects|paging:page.index:page.size track by $index">
 			<span ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()"> 
 			<img src="{{project.image|defaultImg}}">
