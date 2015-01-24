@@ -184,9 +184,9 @@
 					content: commentVal
 				};
 				console.log(data);
-				var PU = $resource(API + 'comment');
-				var pu = new PU(data);
-				pu.$save(function() {
+				var PC = $resource(API + 'comment');
+				var pc = new PC(data);
+				pc.$save(function() {
 					alert("评论成功");
 					$scope.project = Project.get({
 						project_id : project_id	
