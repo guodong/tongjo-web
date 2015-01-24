@@ -521,84 +521,12 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 				$scope.user = User.get({
 					user_id: localStorage.uid
 				});
-				$scope.messages = [{
-					comments: [{
-						owner: {
-							userId: 1,
-							avatarlink: "/img/avatar.png"
-						},
-						timestamp: "2015-2-1",
-						content: "11111111111111111111"
-					},
-					{
-						owner: {
-							userId: 1,
-							avatarlink: "/img/avatar.png"
-						},
-						timestamp: "2015-2-1",
-						content: "11111111111111111111"
-					},
-					{
-						owner: {
-							userId: 1,
-							avatarlink: "/img/avatar.png"
-						},
-						timestamp: "2015-2-1",
-						content: "11111111111111111111"
-					}]
-				},
-				{
-					comments: [{
-						owner: {
-							userId: 1,
-							avatarlink: "/img/avatar.png"
-						},
-						timestamp: "2015-2-1",
-						content: "11111111111111111111"
-					},
-					{
-						owner: {
-							userId: 1,
-							avatarlink: "/img/avatar.png"
-						},
-						timestamp: "2015-2-1",
-						content: "11111111111111111111"
-					},
-					{
-						owner: {
-							userId: 1,
-							avatarlink: "/img/avatar.png"
-						},
-						timestamp: "2015-2-1",
-						content: "11111111111111111111"
-					}]
-				},
-				{
-					comments: [{
-						owner: {
-							userId: 1,
-							avatarlink: "/img/avatar.png"
-						},
-						timestamp: "2015-2-1",
-						content: "11111111111111111111"
-					},
-					{
-						owner: {
-							userId: 1,
-							avatarlink: "/img/avatar.png"
-						},
-						timestamp: "2015-2-1",
-						content: "11111111111111111111"
-					},
-					{
-						owner: {
-							userId: 1,
-							avatarlink: "/img/avatar.png"
-						},
-						timestamp: "2015-2-1",
-						content: "11111111111111111111"
-					}]
-				}];
+				var Message = $resource(API + 'user/:user_id/message');
+				var messages = Message.query({
+					user_id: localStorage.uid
+				},function() {
+					$scope.messages = messages;
+				});				
 				$scope.notifications = [{
 					id: 1,
 					title: "notification-title",
@@ -621,12 +549,8 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 					created_at: "2015-1-1",
 				}];
 
-				$scope.slidemsg = function($event) {
-					//alert("test");
-					//console.log(jQuery($event.target).html());
-					//console.log(jQuery($event.target).parent().parent().siblings(".submessage").html());
-					jQuery($event.target).parent().parent().parent().hide();
-					jQuery($event.target).parent().parent().parent().parent().find(".moreMsg").slideToggle();
+				$scope.slideReplies = function($event) {
+					jQuery($event.target).parent().parent().parent().parent().find(".moreReplies").slideToggle();
 				};
 				$scope.slidedetail = function($event) {
 					jQuery($event.target).parent().parent().parent().parent().find(".moreDetail").slideToggle();
@@ -634,17 +558,33 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 				$scope.checkNotification =function(notification,notificationId){
 					notification.isRead = true;
 				}
-				$scope.submit = function(commentForm, msgId) {
+				$scope.reply = function(commentForm, msg) {
 					var commentVal = commentForm.comment.$modelValue;
 					var data = {
-						msgId: msgId,
-						userId: localStorage.uid,
-						comment: commentVal
+						message_id: msg.id,
+						user_id: localStorage.uid,
+						content: commentVal
 					};
 					console.log(data);
+					var MP = $resource(API + 'reply');
+					var mp = new MP(data);
+					mp.$save(function() {
+						alert("回复成功");
+						console.log(mp);
+						mp.user = $scope.user;
+						msg.replies.push(mp);
+					});
 				};
 			});
-
+			app.filter('defaultTitle',function(){
+				   return function(item){
+					   console.log("item:"+item);
+					   if(item==null || item =="")
+						   return "无标题";
+					   else  return $($.parseHTML(item)).text();
+					   
+				   }
+			});
 			angular.bootstrap(document.getElementById("body"), ['me']);
 		});
 </script>

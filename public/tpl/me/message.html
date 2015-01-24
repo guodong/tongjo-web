@@ -32,65 +32,55 @@
 		<!--  ng-repeat="msg in messages"> -->
 		<div>
 			<div class="message" ng-repeat="msg in messages">
-				<div class="submessage">
-					<div class="commentbox">
-						<div class="avatarbox pull-left">
-							<img alt="{{msg.comments[0].owener.username}}" class="avatar"
-								data-user="219689" height="48"
-								src="{{msg.comments[0].owner.avatarlink}}" width="48">
+				<div class="row">
+					<div class="messagebox">
+						<div class="col-md-1">	
+						<img alt="{{msg.comments[0].owener.username}}" class="avatar" height="48"
+								src="http://api.tongjo.com/files/{{msg.from.avatar}}" width="48">	
 						</div>
-						<div class="comment">
-							<div class="comment-header">
-								<strong> <a href="/user:{{msg.comments[0].owner.id}}"
-									class="author" ng-bind="msg.comments[0].owener.username"></a>
-								</strong> 发表于 <span ng-bind="msg.comments[0].timestamp"></span> <a
-									class="pull-right" ng-click="slidemsg($event)">显示全部</a>
-							</div>
-							<div class="comment-content">
-								<p class="text-muted" ng-bind="msg.comments[0].content">No
-									description provided.</p>
-							</div>
+						<div class="col-md-8">
+							<a ng-bind="msg.title|defaultTitle" ng-click="slideReplies($event)">无标题</a>
 						</div>
+						<div class="col-md-3" ng-bind="msg.created_at"></div>
 					</div>
-					<div class="moreMsg" style="display: none">
-						<div class="commentbox" ng-repeat="comment in msg.comments">
+				</div>
+				<div class="moreReplies" style="display: none">
+						<div class="commentbox" ng-repeat="reply in msg.replies">
 							<div class="avatarbox pull-left">
-								<img alt="{{username}}" class="avatar" data-user="219689"
-									height="48" src="{{comment.owner.avatarlink}}" width="48">
+								<img alt="{{reply.user.avatar}}" class="avatar"
+									height="48" src="http://api.tongjo.com/files/{{reply.user.avatar}}" width="48">
 							</div>
 							<div class="comment">
 								<div class="comment-header">
-									<strong> <a href="/user:{{comment.owner}}"
-										class="author">lexrus</a>
-									</strong> 发表于 <span ng-bind="comment.timestamp"></span>
+									<strong> <a href="/userinfodetail!{{reply.user.id}}"
+										class="author" ng-bind="reply.user.realname"></a>
+									</strong> 发表于 <span ng-bind="reply.updated_at"></span>
 								</div>
 								<div class="comment-content">
-									<p class="text-muted" ng-bind="comment.content">No
+									<p class="text-muted" ng-bind="reply.content">No
 										description provided.</p>
 								</div>
 							</div>
 						</div>
 						<div class="commentbox">
 						<div class="avatarbox pull-left">
-							<img alt="{{user.name}}" class="avatar" data-user="219689"
-								height="48" src="{{user.avatarlink}}" width="48">
+							<img alt="{{user.realname}}" class="avatar"
+								height="48" src="http://api.tongjo.com/files/{{user.avatar}}" width="48">
 						</div>
 						<div class="inputcommentbox">
 							<form role="form" name="commentForm"
-								ng-submit="submit(commentForm,msg.id)">
+								ng-submit="reply(commentForm,msg)">
 								<div class="form-group">
-									<textarea name="comment" ng-model="comment" placeholder="请留言"
+									<textarea name="comment" ng-model="comment" placeholder="回复消息"
 										rows="3" required></textarea>
 								</div>
 								<div class="form-group">
-									<button type="submit" class="btn btn-primary">发表评论</button>
+									<button type="submit" class="btn btn-primary">回复</button>
 								</div>
 							</form>
 						</div>
 						</div>
 					</div>
-				</div>
-				<hr>
 			</div>
 		</div>
 	</div>
@@ -114,7 +104,7 @@
 			</tbody>
 		</table>-->
 		<div class="container－fluid ">
-		<div class="message" ng-repeat="notification in notifications">
+		<div class="notify" ng-repeat="notification in notifications">
 				<div class="row">
 					<div class="messagebox">
 						<div class="col-md-8">
