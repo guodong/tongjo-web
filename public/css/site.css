@@ -862,10 +862,14 @@ color: #fff;
 	color: #fff;
 }
 .home>section.tech article img {
-	width: 100%;
-	display: block;
-	border: 0;
-	vertical-align:middle;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: auto;
+  width: 100%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
 }
 .home>section.tech article span div p{
 	line-height: 2em;
