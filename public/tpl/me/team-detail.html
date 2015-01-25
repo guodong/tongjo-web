@@ -101,7 +101,7 @@
 		<tbody>
 			<tr ng-repeat="member in team.members">
 				<td><img src="img/head.jpg" alt="*" class="smallhead">
-					<a class="text-primary" ng-bind="member.realname" href="userinfodetail!{{member.id}}"></a></td>
+					<a class="text-primary" ng-bind="member.realname" href="userinfodetail/{{member.id}}"></a></td>
 				<td>
 					<h5 class="text-primary" ng-bind="member.school.name"></h5>
 				</td>
@@ -122,5 +122,5 @@
 			</tr>
 		</tbody>
 	</table>
-	
+	<button class="btn btn-lg center-block btn-success" ng-click="complete()" ng-show="team.status==0">完成团队建设</button>
 </div>

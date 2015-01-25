@@ -57,25 +57,25 @@
 	</section>
 	<hr>
 	<section>
-		<a class="btn btn-primary pull-right" id="joinone"
-			style="margin-bottom: 20px" href="/newteam/{{project.id}}"><span
+		<a class="btn btn-primary pull-right" id="joinone" ng-show="project.parttype==1||project.parttype==2"
+			style="margin-bottom: 20px; margin-left: 20px" href="/newteam/{{project.id}}"><span
 			class="glyphicon glyphicon-star"></span> 组建团队</a> <a
-			class="btn btn-info pull-right" id="join"
-			style="margin-bottom: 20px; margin-right: 20px" ng-click="joinone()"><span
+			class="btn btn-info pull-right" id="join" ng-show="project.parttype==0||project.parttype==2"
+			style="margin-bottom: 20px;" ng-click="joinone()"><span
 			class="glyphicon glyphicon-user"></span> 个人参加</a>
 		<table class="group">
 			<thead class="bg-primary">
 				<tr>
-					<th>参加的团队</th>
+					<th>参加的团队和个人</th>
 					<th>人数</th>
-					<th width="130px">状态</th>
+					<th width="130px">操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="v in project.teams">
 					<td>
 						<h3 class="text-success" ng-bind="v.name"></h3> <small><a
-							target="_blank" href="/team!{{v.id}}">查看团队详情</a></small>
+							target="_blank" href="/team/{{v.id}}">查看团队详情</a></small>
 					</td>
 					<td>
 						<p class="text-primary">
@@ -91,9 +91,9 @@
 						</button>
 					</td>
 				</tr>
-				<tr ng-repeat="v in project.members">
+				<tr ng-repeat="v in project.users">
 					<td>
-						<h3 class="text-success" ng-bind="v.name"></h3> <small><a
+						<h3 class="text-success" ng-bind="v.realname"></h3> <small><a
 							target="_blank" href="/userinfodetail/{{v.id}}">查看个人详情</a></small>
 					</td>
 					<td>-</td>
@@ -190,8 +190,9 @@
 					.trustAsHtml($scope.project.description);
 			$scope.projects = Project.query();
 			$scope.joinone = function() {
-				var PU = $resource(API + 'project/:project_id/user', {
-					project_id: '@project_id'
+				var PU = $resource(API + 'project/:project_id/user/:user_id/pivot', {
+					project_id: '@project_id',
+					user_id: '@user_id'
 				});
 				var pu = new PU({
 					user_id: localStorage.uid,

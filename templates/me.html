@@ -321,6 +321,16 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 						$scope.getteam();
 						alert("修改成功");
 					})
+				};
+				// 完成组建，status从0变1
+				$scope.complete = function(){
+					if(confirm("确定要完成团队组建吗？")){
+						var t = Team.get({id: $scope.team.id});
+						t.id = $scope.team.id;
+						t.status = 1;
+						t.$save();
+						$scope.team.status = 1;
+					}
 				}
 			});
 			
