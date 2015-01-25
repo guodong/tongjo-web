@@ -522,6 +522,23 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 					user_id: localStorage.uid,
 					type: 'joined'
 				});
+				$scope.quit = function(team){
+					var TU = $resource(API + "team/:team_id/user/:user_id/pivot/1", {
+						team_id: '@team_id',
+						user_id: '@user_id'
+					});
+					var tu = new TU({
+						team_id: team.id,
+						user_id: localStorage.uid
+					});
+					tu.$remove(function(){
+						alert("退出成功");
+						$scope.joinedteams = Team.query({
+							user_id: localStorage.uid,
+							type: 'joined'
+						});
+					});
+				}
 			});
 			app.controller('sidebar',
 			function($scope, $resource) {

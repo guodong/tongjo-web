@@ -12,7 +12,7 @@
 			class="glyphicon glyphicon-plus"></span> 参加该项目
 		</a> -->
 	</div>
-	<!-- 	<div class="well clearfix">
+	<div class="well clearfix">
 		<div class="panel pull-left">
 			<ul>
 				<li class="first">
@@ -27,7 +27,7 @@
 			<p>剩下<span>100</span>天</p>
 			<span>开放</span>
 		</div>
-	</div> -->
+	</div>
 
 	<div style="clear: both"></div>
 
@@ -86,7 +86,7 @@
 						</p>
 					</td>
 					<td style="text-align: right;">
-						<button class="btn btn-warning">
+						<button class="btn btn-warning" ng-click="jointeam(v)">
 							<span class="glyphicon glyphicon-plus"></span> 参加团队
 						</button>
 					</td>
@@ -198,8 +198,30 @@
 					user_id: localStorage.uid,
 					project_id: project_id
 				});
-				pu.$save(function() {
+				pu.$save(function(d) {
+					if(d.error){
+						alert("你已经申请过了");
+						return;
+					}
 					alert("参加成功");
+				});
+			};
+			$scope.jointeam = function(team){
+				var TU = $resource(API + 'team/:team_id/user/:user_id/pivot', {
+					team_id: '@team_id',
+					user_id: '@user_id'
+				});
+				var tu = new TU({
+					team_id: team.id,
+					user_id: localStorage.uid,
+				});
+				tu.$save(function(d){
+					if(d.error){
+						alert("你已经申请过了");
+						return;
+					}
+					alert("参加成功");
+					team.members_count++;
 				});
 			};
 			$scope.user = JSON.parse(localStorage.user);
