@@ -4,7 +4,42 @@
 width:100%;
 }
 </style>
-<div class="scanproject">
+<div class="scanprojecttwo">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+        <div class="leftMenu">
+           <div class="title">
+           <h1>所有项目</h1>
+           </div>
+           <hr>
+           <div class="special">
+           <ul>
+           <li>推荐</li>
+           <li>最新</li>
+           <li>最热</li>
+           <li>同校</li>
+           </ul>
+           </div>
+           <div class="category">
+            <div><span>项目分类</span></div>
+            <div><button></button></div>
+           </div>
+           <div class="feature">
+           <div><span>需求</span></div>
+           </div>
+           <div class="rank">
+           <div><span>排序</span></div>
+           </div>
+        </div>
+        </div>
+        <div class="col-sm-9 col-md-9">
+            <div class="well" ng-controller="scanController">
+            <div ng-view></div>
+            </div>
+        </div>
+    </div>
+</div>
 	<!-- 广告 -->
 	<div style="margin-bottom: 20px;">
 		<div id="carousel-example-generic" class="carousel slide"
@@ -57,7 +92,7 @@ width:100%;
 					<p ng-bind="project.description|defaultDescription"></p>
 					<a class="small-button red" href="{{project.link}}">查看项目详情</a>
 				</div>
-				<h5 class="transparent_class" ng-bind="project.name"></h5>
+				<h5 class="transparent_class" ng-bind="project.title"></h5>
 			</span>			
 		</article>
 	</div>
@@ -274,7 +309,7 @@ width:100%;
 				}]);
 				scanApp.controller("scanController", ["$scope", function ($scope) {
 					$scope.page = {
-						    size: 9,
+						    size: 8,
 						    index: 1
 				    };
 					$scope.hoverIn = function(){
