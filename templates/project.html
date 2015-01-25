@@ -236,7 +236,7 @@
 				var PC = $resource(API + 'comment');
 				var pc = new PC(data);
 				pc.$save(function() {
-					alert("评论成功");
+					//alert("评论成功");
 					$scope.project = Project.get({
 						project_id: project_id
 					});

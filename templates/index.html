@@ -93,16 +93,17 @@
 	<section class="tech" ng-app="projectApp" ng-controller="projectController">
 		<div class="clear">
 			<h2 class="title">典型项目</h2>
+			<p ng-show="!projectLoaded">图片加载中...</p>
 			<article ng-repeat="project in projects track by $index">
 			<span ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
 			 <img ng-src="{{project.image|defaultImg}}">
 				<div class="transparent_class" ng-show="hoverEdit">
 					<p>已报名团队：{{project.teams_count}}</p>
 					<p>个人报名：{{project.users_count}}</p>
-					<a class="small-button red" href="{{project.link}}">我要参加</a>
+					<a class="small-button red" href="project/{{project.id}}">我要参加</a>
 				</div>
-				<h5 class="transparent_class" ng-bind="project.title"></h5>
-			</span>			
+			   </span>		
+				<h3 ng-bind="project.name"></h3>
 			</article>
 	   </div>
 	</section>
@@ -209,10 +210,12 @@ $(function(){
 var API = 'http://api.tongjo.com/';
   var projectApp = angular.module('projectApp', ['ngResource']);
   projectApp.controller("projectController", ["$scope", "$resource",function ($scope, $resource) {
-		//get recommendation projects					
+		//get recommendation projects	
+		$scope.projectLoaded = false;
 		var RecomProject = $resource(API + 'project');
 		var recomProjects = RecomProject.query(function() {
-				$scope.projects = recomProjects.slice(0,4);;
+				$scope.projects = recomProjects.slice(0,4);
+				$scope.projectLoaded = true;
 		});
 		
 		$scope.hoverIn = function(){

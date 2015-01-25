@@ -7,19 +7,6 @@ define([ 'angular', 'ui-bootstrap' ], function(angular, uibootstrap) {
 			function($modal) {
 				var mController = function($scope,$modalInstance){
 					
-					$scope.copy = function() { 
-						/*$('#button').zclip({
-							path: 'swf/ZeroClipboard.swf',
-							copy: function(){
-								return "454325";
-							},
-							afterCopy: function(){
-								alert("成功");
-							}
-						});*/
-							
-					};
-					
 					$scope.close = function(result) {
 						$modalInstance.dismiss('cancel');
 					};
