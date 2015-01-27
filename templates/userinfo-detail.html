@@ -1,17 +1,20 @@
 {!extends file='layout.html'!} {!block name=main!}
 
 <style>
-	.active{
-	 	display: block;
-		visibility: visible;
-	}
+.active {
+	display: block;
+	visibility: visible;
+}
 </style>
 
-<div class="userinfodetail container-fluid">
+<div class="userinfodetail container-fluid"
+	ng-controller="userdetailControl">
 	<div class="col-md-4">
 		<div class="leftbar">
 			<div class="userhead">
-				<img alt="240x160" src="/img/head.jpg" class="headImage">
+				<img alt="240x160"
+					ng-src="{{userinfo.avatar && 'http://api.tongjo.com/files/'+userinfo.avatar || '/img/avatar.png'}}"
+					class="headImage">
 				<div class="isOnline">
 					<p class="text">在 线</p>
 				</div>
@@ -19,8 +22,57 @@
 
 			<div class="contract">
 				<div class="btn btn-info mbtn">
-					<div class="innerbutton">联系我吧</div>
+					<div class="innerbutton" data-toggle="modal"
+						data-target="#contractModal">联系我吧</div>
 				</div>
+
+				<div class="modal fade" id="contractModal">
+					<div class="modal-dialog contract-dialog">
+						<div class="modal-content">
+							<div class="modal-header"
+								style="padding-top: 8px; padding-bottom: 8px;">
+								<button type="button" class="close" data-dismiss="modal"
+									ng-click="close()">
+									<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
+								</button>
+								<h4>
+									给<span ng-bind="userinfo.realname"></span>的一个私信
+								</h4>
+							</div>
+
+							<div class="modal-body">
+								<!-- 主体 -->
+								<div class="container-fluid">
+									<form class="form-horizontal" role="form" ng-submit="">
+										<div class="form-group">
+											<label class="col-md-2 control-label">标题：</label>
+											<div class="col-md-10 inputline">
+												<input type="text" class="form-control inputtext"
+													id="inputteamname" placeholder="留言的主题" name="name"
+													ng-model="message.title" required>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-2 control-label">详情：</label>
+											<div class="input-group col-md-10">
+												<textarea cols="3" type="text"
+													class="form-control mutilinput" placeholder="详细信息"
+													name="description" ng-model="message.content" required></textarea>
+											</div>
+										</div>
+									</form>
+
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default btn-sm" ng-click="message()"
+									data-dismiss="modal">发送</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 			</div>
 
 			<!-- <div class="friend-comments-title">
@@ -48,7 +100,7 @@
 	</div>
 	<div class="col-md-8">
 
-		<div class="userdetail" ng-controller="userdetailControl">
+		<div class="userdetail">
 
 			<div class="userdetail-title">
 				<h1 ng-bind="userinfo.realname"></h1>
@@ -100,35 +152,41 @@
 			</ul>
 
 			<div class="tab-content">
-				<div role="tabpanel" tcid="t1" class="tab-pane projectitem active" ng-repeat="project in projects">
+				<div role="tabpanel" tcid="t1" class="tab-pane projectitem active"
+					ng-repeat="project in projects">
 					<div class="projectitem-title">
 						<h4 ng-bind="project.name"></h4>
 						<h6 class="time" ng-bind="project.created_at">2015年01月01日</h6>
 						<h6 class="time deadtime" ng-bind="project.deadline">结束-6天12小时</h6>
 					</div>
 					<div class="projectitem-content">
-						<img alt="100*100" src="/img/head.jpg" class="headimg">
+						<img alt="100*100"
+							ng-src="{{project.image && 'http://api.tongjo.com/files/'+project.image}}"
+							class="headimg">
 						<div class="detail">
 							<img src="/img/dialog.png" class="background">
 							<p class="detailtext" ng-bind="project.description"></p>
 						</div>
 					</div>
 				</div>
-				
-				<div role="tabpanel" tcid="t2" class="tab-pane projectitem" ng-repeat="project in jprojects">
+
+				<div role="tabpanel" tcid="t2" class="tab-pane projectitem"
+					ng-repeat="project in jprojects">
 					<div class="projectitem-title">
 						<h4 ng-bind="project.name"></h4>
 						<h6 class="time" ng-bind="project.created_at">2015年01月01日</h6>
 						<h6 class="time deadtime" ng-bind="project.deadline">结束-6天12小时</h6>
 					</div>
 					<div class="projectitem-content">
-						<img alt="100*100" src="/img/head.jpg" class="headimg">
+						<img alt="100*100"
+							ng-src="{{project.image && 'http://api.tongjo.com/files/'+project.image ||  '/img/head.jpg'}}"
+							class="headimg">
 						<div class="detail">
 							<img src="/img/dialog.png" class="background">
 							<p class="detailtext" ng-bind="project.description"></p>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
@@ -141,71 +199,90 @@
 			angular) {
 		var uid = location.pathname.replace(/\/.*\/(\d+)$/, '$1');
 		var app = angular.module('userinfoApp', [ 'ngRoute', 'ngResource' ]);
-		app.controller('userdetailControl', function($scope,$resource) {
-			
+		app.controller('userdetailControl', function($scope, $resource) {
+
 			var url = window.location.href;
-			
+
 			var User = $resource(API + 'user/:userId');
 			$scope.userinfo = User.get({
-				userId: uid
+				userId : uid
 			}, function() {
 				console.log($scope.userinfo);
-				
-				$scope.userinfo.userlabels=["吃货","学习","平面设计","网站设计","Photoshop"];
-				$scope.userinfo.commonlabels = ["吃货","学习","平面设计","网站设计","Photoshop"];
-				
-				if($scope.userinfo.degree<10){
+
+				$scope.userinfo.userlabels = [ "吃货", "学习", "平面设计", "网站设计",
+						"Photoshop" ];
+				$scope.userinfo.commonlabels = [ "吃货", "学习", "平面设计", "网站设计",
+						"Photoshop" ];
+
+				if ($scope.userinfo.degree < 10) {
 					$scope.userinfo.honor = "菜鸟";
-				}else if($scope.userinfo.degree < 40){
-					$scope.userinfo.honor="中级";
-				}else{
-					$scope.userinfo.honor="大神";
+				} else if ($scope.userinfo.degree < 40) {
+					$scope.userinfo.honor = "中级";
+				} else {
+					$scope.userinfo.honor = "大神";
 				}
 			});
 
-			
-			$scope.getseximg = function($sex){
-				 if($sex==0){
-					 return "img/sex-femail.png";
-				 }else if($sex==1){
-					 return "img/sex-man.png";
-				 }else{
-					 return "img/sex-man.png";
-				 }
+			$scope.getseximg = function($sex) {
+				if ($sex == 0) {
+					return "img/sex-femail.png";
+				} else if ($sex == 1) {
+					return "img/sex-man.png";
+				} else {
+					return "img/sex-man.png";
+				}
 			};
-		});
-		
-		
-		app.controller('userprojectControl', function($scope,$resource) {
-			var url = window.location.href;
 			
+			$scope.message = {};
+			var Mes = $resource(API + 'message');
+			$scope.message = function(){
+				var m = new Mes();
+				m.$save({
+					title:$scope.message.title, 
+					from_id: localStorage.uid,
+					to_id:uid,
+					content:$scope.message.content
+				},function(mes){
+					if(mes && mes.id && mes.id>0){
+						alert("发送成功");
+					}
+				});
+			}
+			
+		});
+
+		app.controller('userprojectControl', function($scope, $resource) {
+			var url = window.location.href;
+
 			var Project = $resource(API + 'user/:user_id/type/:type/project');
 			var projects = Project.query({
-				user_id: uid,
-				type: 'created'
+				user_id : uid,
+				type : 'created'
 			}, function() {
-				for(var i=0; i<projects.length; i++){
-					projects[i].created_at = projects[i].created_at.substr(0, 10);
+				for ( var i = 0; i < projects.length; i++) {
+					projects[i].created_at = projects[i].created_at.substr(0,
+							10);
 					projects[i].deadline = projects[i].created_at;
 				}
 				$scope.projects = projects;
 				console.log(projects);
 			});
-			
+
 			var jprojects = Project.query({
-				user_id: uid,
-				type: 'joined'
+				user_id : uid,
+				type : 'joined'
 			}, function() {
-				for(var i=0; i<projects.length; i++){
-					projects[i].created_at = projects[i].created_at.substr(0, 10);
+				for ( var i = 0; i < projects.length; i++) {
+					projects[i].created_at = projects[i].created_at.substr(0,
+							10);
 					projects[i].deadline = projects[i].created_at;
 				}
 				$scope.jprojects = jprojects;
 				console.log(jprojects);
 			});
-			
-		}); 
-		
+
+		});
+
 		angular.bootstrap(document.getElementById("body"), [ 'userinfoApp' ]);
 	});
 </script>

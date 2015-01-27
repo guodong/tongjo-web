@@ -1,238 +1,267 @@
 <div class="page-header">
 	<h2>个人信息</h2>
 </div>
-<div class="row info">
-	<div class="col-md-12">
-		<form role="form" class="form-horizontal">
-			<div class="form-group">
-				<label class="col-sm-2 control-label">姓名</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" ng-model="user.realname"
-						required="required">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label">性别</label>
-				<div class="col-sm-10">
-					<label class="radio-inline"> <input type="radio"
-						ng-model="user.gender" name="gender" value="1"> 男
-					</label> <label class="radio-inline"> <input type="radio"
-						ng-model="user.gender" name="gender" value="0"> 女
-					</label>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label">身份</label>
-				<div class="col-sm-10">
-					<label class="radio-inline"> <input type="radio"
-						ng-model="user.role" value="student"> 学生
-					</label> <label class="radio-inline"> <input type="radio"
-						ng-model="user.role" value="other"> 非学生
-					</label>
-				</div>
-			</div>
-			<div class="form-group" ng-show="user.role=='student'">
-				<label class="col-sm-2 control-label">学校</label>
-				<div class="col-sm-10">
-					<select class="form-control" ng-model="user.school_id"
-						ng-change="getCampuses()">
-						<option ng-repeat="v in schools" ng-bind="v.name" value="{{v.id}}"
-							ng-selected="v.id==user.school_id"></option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group" ng-show="user.role=='student'">
-				<label class="col-sm-2 control-label">校区</label>
-				<div class="col-sm-10">
-					<select class="form-control" ng-model="user.campus_id" id="campus">
-						<option ng-repeat="v in campuses" ng-bind="v.name"
-							value="{{v.id}}" ng-selected="v.id==user.campus_id"></option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group" ng-show="user.role=='student'">
-				<label class="col-sm-2 control-label">专业</label>
-				<div class="col-sm-10">
-					<select class="form-control" ng-model="user.major_id">
-						<option ng-repeat="v in majors" ng-bind="v.name" value="{{v.id}}"></option>
-					</select>
-				</div>
-			</div>
 
-
-			<div class="form-group">
-				<div class="col-sm-10 col-sm-offset-2">
-					<div class="secondtitle">
-						<h4>
-							<span class="glyphicon glyphicon-th-list"></span> 个人专长
-						</h4>
-						<div class="editbtn">
-							<button class="btn btn-sm" data-toggle="modal"
-								data-target="#myModal">
-								<span class="glyphicon glyphicon-plus"></span> 添加专长
-							</button>
+<ul id="myTab" class="nav nav-tabs" role="tablist">
+	<li role="presentation" class="active"><a role="tab" tabid="t1"
+		data-toggle="tab">基本信息</a></li>
+	<li role="presentation"><a role="tab" tabid="t2" data-toggle="tab">详细信息</a></li>
+</ul>
+<div class="tab-content  info">
+	<div role="tabpanel" tcid="t1" class="tab-pane active" id="home">
+		<div class="row">
+			<div class="col-md-12">
+				<form role="form" class="form-horizontal">
+					<div class="form-group">
+						<label class="col-sm-1 control-label">姓名</label>
+						<div class="col-sm-11">
+							<input type="text" class="form-control" ng-model="user.realname"
+								required="required">
 						</div>
 					</div>
-					<div style="clear: both"></div>
-					<div style="margin-top: 10px">
-						<ul class="nav nav-pills selecttag">
-							<li ng-repeat="tag in selecttag">
-								<div class="rectangle" ng-bind="tag.name"></div>
-								<div class="ex-toleft"></div>
-								<button type="button" class="close delete"
-									ng-click="del($index)">
-									<span aria-hidden="true"
-										style="color: #ff0000; font-size: 16px">×</span>
-								</button>
-							</li>
-						</ul>
-					</div>
-
-
-					<!-- 弹出框 -->
-					<div class="modal fade" id="myModal">
-						<div class="modal-dialog">
-							<div class="modal-content tagmodal">
-								<div class="modal-header"
-									style="padding-top: 8px; padding-bottom: 8px; border-bottom: 0px;">
-									<button type="button" class="close" data-dismiss="modal"
-										>
-										<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
-									</button>
-									<h5 class="title">已选择标签：</h5>
-									<ul class="nav nav-pills selecttag">
-										<li ng-repeat="tag in selecttag">
-											<div class="rectangle" ng-bind="tag.name"></div>
-											<div class="ex-toleft"></div>
-											<button type="button" class="close delete"
-												ng-click="del($index)">
-												<span aria-hidden="true"
-													style="color: #ff0000; font-size: 16px">×</span>
-											</button>
-										</li>
-									</ul>
-								</div>
-
-								<div class="modal-body">
-									<!-- 主体 -->
-									<div class="container-fluid tagbody">
-										<div class="col-md-3">
-											<ul class="nav nav-pills nav-stacked lefttree">
-												<li ng-repeat="tag in tags"><a ng-bind="tag.name"
-													ng-click="setid(tag.id)"></a></li>
-											</ul>
-										</div>
-
-										<div class="col-md-9">
-											<ul class="nav nav-pills nav-stacked righttree"
-												ng-repeat="tag in tags" ng-if="tag.id==curid">
-												<li class="outerli" ng-repeat="tag2 in tag.children">
-													<h5 ng-bind="tag2.name"></h5>
-													<ul class="nav nav-pills">
-														<li ng-repeat="tag3 in tag2.children"
-															ng-click="select(tag3)"><a ng-bind="tag3.name"></a></li>
-													</ul>
-												</li>
-											</ul>
-										</div>
-
-									</div>
-								</div>
-							</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label">性别</label>
+						<div class="col-sm-11">
+							<label class="radio-inline"> <input type="radio"
+								ng-model="user.gender" name="gender" value="1"> 男
+							</label> <label class="radio-inline"> <input type="radio"
+								ng-model="user.gender" name="gender" value="0"> 女
+							</label>
 						</div>
 					</div>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<div class="col-sm-10 col-sm-offset-2">
-					<div class="secondtitle">
-						<h4>
-							<span class="glyphicon glyphicon-th-list"></span> 项目经历
-						</h4>
-						<div class="editbtn">
-							<button class="btn btn-sm" data-toggle="modal"
-								data-target="#projectModal">
-								<span class="glyphicon glyphicon-plus"></span> 添加经历
-							</button>
+					<div class="form-group">
+						<label class="col-sm-1 control-label">身份</label>
+						<div class="col-sm-11">
+							<label class="radio-inline"> <input type="radio"
+								ng-model="user.role" value="student"> 学生
+							</label> <label class="radio-inline"> <input type="radio"
+								ng-model="user.role" value="other"> 非学生
+							</label>
+						</div>
+					</div>
+					<div class="form-group" ng-show="user.role=='student'">
+						<label class="col-sm-1 control-label">学校</label>
+						<div class="col-sm-11">
+							<select class="form-control" ng-model="user.school_id"
+								ng-change="getCampuses()">
+								<option ng-repeat="v in schools" ng-bind="v.name"
+									value="{{v.id}}" ng-selected="v.id==user.school_id"></option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" ng-show="user.role=='student'">
+						<label class="col-sm-1 control-label">校区</label>
+						<div class="col-sm-11">
+							<select class="form-control" ng-model="user.campus_id"
+								id="campus">
+								<option ng-repeat="v in campuses" ng-bind="v.name"
+									value="{{v.id}}" ng-selected="v.id==user.campus_id"></option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" ng-show="user.role=='student'">
+						<label class="col-sm-1 control-label">专业</label>
+						<div class="col-sm-11">
+							<select class="form-control" ng-model="user.major_id">
+								<option ng-repeat="v in majors" ng-bind="v.name"
+									value="{{v.id}}"></option>
+							</select>
 						</div>
 					</div>
 
-					<div style="clear: both"></div>
-					<table class="project-table">
-						<tbody>
-							<tr ng-repeat="project in projects">
-								<td><h5 class="text-primary" ng-bind="project.startTime"></h5></td>
-								<td>
-									<h5 class="text-primary" ng-bind="project.endTime"></h5>
-								</td>
-								
-								<td>
-									<h5 class="text-primary" ng-bind="project.dec"></h5>
-								</td>
-
-								<td style="text-align: right; padding-right: 14px"><a
-									href="#">编辑</a> | <a href="#">删除</a></td>
-							</tr>
-						</tbody>
-					</table>
 
 
-					<!-- 弹出框 -->
-					<div class="modal fade" id="projectModal">
-						<div class="modal-dialog project-dialog">
-							<div class="modal-content">
-								<div class="modal-header"
-									style="padding-top: 8px; padding-bottom: 8px;">
-									<button type="button" class="close" data-dismiss="modal"
-										ng-click="close()">
-										<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
-									</button>
-									<h4>添加项目经历</h4>
-								</div>
 
-								<div class="modal-body">
-									<!-- 主体 -->
-									<div class="container-fluid">
-										<table class="">
-											<thead>
-												<tr>
-													<th style="width:150px"><label>开始日期</label></th>
-													<th style="width:150px"><label>结束日期</label></th>
-													<th><label>简述</label></th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr >
-													<td ><input class="form-control" placeholder="参加项目的日期" ng-model="curproject.startTime"></input></td>
-													<td ><input class="form-control" placeholder="项目结束日期" ng-model="curproject.endTime"></input></td>
-													<td><input class="form-control" placeholder="项目简述" ng-model="curproject.dec"></input></td>
-												</tr>
-											</tbody>
-										</table>
-
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default btn-sm" ng-click="addproject()"
-										data-dismiss="modal">完成</button>
-								</div>
-							</div>
+					<div class="form-group">
+						<div class="col-sm-11 col-sm-offset-1">
+							<a class="btn btn-success" ng-click="save()"
+								ng-disabled="createform.$invalid">保存</a>
 						</div>
 					</div>
 
-				</div>
+
+				</form>
 			</div>
-
-			<div class="form-group">
-				<div class="col-sm-10 col-sm-offset-2">
-					<a class="btn btn-success" ng-click="save()"
-						ng-disabled="createform.$invalid">保存</a>
-				</div>
-			</div>
-
-
-		</form>
+		</div>
 	</div>
+
+	<div role="tabpanel" tcid="t2" class="tab-pane" id="profile">
+		<div class="form-group">
+			<div class="col-sm-12" style="margin-left:2px">
+				<div class="secondtitle">
+					<h4>
+						<span class="glyphicon glyphicon-th-list"></span> 个人专长
+					</h4>
+					<div class="editbtn">
+						<button class="btn btn-sm" data-toggle="modal"
+							data-target="#myModal">
+							<span class="glyphicon glyphicon-plus"></span> 添加专长
+						</button>
+					</div>
+				</div>
+				<div style="clear: both"></div>
+				<div style="margin-top: 10px">
+					<ul class="nav nav-pills selecttag">
+						<li ng-repeat="tag in usertag">
+							<div class="rectangle" ng-bind="tag.name"></div>
+							<div class="ex-toleft"></div>
+							<button type="button" class="close delete" ng-click="deltags(tag.id)">
+								<span aria-hidden="true" style="color: #ff0000; font-size: 16px">×</span>
+							</button>
+						</li>
+					</ul>
+				</div>
+
+
+				<!-- 弹出框 -->
+				<div class="modal fade" id="myModal">
+					<div class="modal-dialog">
+						<div class="modal-content tagmodal">
+							<div class="modal-header"
+								style="padding-top: 8px; padding-bottom: 8px; border-bottom: 0px;">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
+								</button>
+								<h5 class="title">已选择标签：</h5>
+								<ul class="nav nav-pills selecttag">
+									<li ng-repeat="tag in selecttag">
+										<div class="rectangle" ng-bind="tag.name"></div>
+										<div class="ex-toleft"></div>
+										<button type="button" class="close delete"
+											ng-click="del($index)">
+											<span aria-hidden="true"
+												style="color: #ff0000; font-size: 16px">×</span>
+										</button>
+									</li>
+								</ul>
+							</div>
+
+							<div class="modal-body">
+								<!-- 主体 -->
+								<div class="container-fluid tagbody">
+									<div class="col-md-3">
+										<ul class="nav nav-pills nav-stacked lefttree">
+											<li ng-repeat="tag in tags"><a ng-bind="tag.name"
+												ng-click="setid(tag.id)"></a></li>
+										</ul>
+									</div>
+
+									<div class="col-md-9">
+										<ul class="nav nav-pills nav-stacked righttree"
+											ng-repeat="tag in tags" ng-if="tag.id==curid">
+											<li class="outerli" ng-repeat="tag2 in tag.children">
+												<h5 ng-bind="tag2.name"></h5>
+												<ul class="nav nav-pills">
+													<li ng-repeat="tag3 in tag2.children"
+														ng-click="select(tag3)"><a ng-bind="tag3.name"></a></li>
+												</ul>
+											</li>
+										</ul>
+									</div>
+
+								</div>
+							</div>
+							
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default btn-sm"
+									ng-click="addtags()" data-dismiss="modal">完成</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-12" style="margin-left:2px;margin-top:20px">
+				<div class="secondtitle">
+					<h4>
+						<span class="glyphicon glyphicon-th-list"></span> 项目经历
+					</h4>
+					<div class="editbtn">
+						<button class="btn btn-sm" data-toggle="modal"
+							data-target="#projectModal">
+							<span class="glyphicon glyphicon-plus"></span> 添加经历
+						</button>
+					</div>
+				</div>
+
+				<div style="clear: both"></div>
+				<table class="project-table">
+					<tbody>
+						<tr ng-repeat="project in projects">
+							<td><h5 class="text-primary" ng-bind="project.startTime"></h5></td>
+							<td>
+								<h5 class="text-primary" ng-bind="project.endTime"></h5>
+							</td>
+
+							<td>
+								<h5 class="text-primary" ng-bind="project.dec"></h5>
+							</td>
+
+							<td style="text-align: right; padding-right: 14px"><a
+								href="#">编辑</a> | <a href="#">删除</a></td>
+						</tr>
+					</tbody>
+				</table>
+
+
+				<!-- 弹出框 -->
+				<div class="modal fade" id="projectModal">
+					<div class="modal-dialog project-dialog">
+						<div class="modal-content">
+							<div class="modal-header"
+								style="padding-top: 8px; padding-bottom: 8px;">
+								<button type="button" class="close" data-dismiss="modal"
+									ng-click="close()">
+									<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
+								</button>
+								<h4>添加项目经历</h4>
+							</div>
+
+							<div class="modal-body">
+								<!-- 主体 -->
+								<div class="container-fluid">
+									<table class="">
+										<thead>
+											<tr>
+												<th style="width: 150px"><label>开始日期</label></th>
+												<th style="width: 150px"><label>结束日期</label></th>
+												<th><label>简述</label></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td><input class="form-control" placeholder="参加项目的日期"
+													ng-model="curproject.startTime"></input></td>
+												<td><input class="form-control" placeholder="项目结束日期"
+													ng-model="curproject.endTime"></input></td>
+												<td><input class="form-control" placeholder="项目简述"
+													ng-model="curproject.dec"></input></td>
+											</tr>
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default btn-sm"
+									ng-click="addproject()" data-dismiss="modal">完成</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
 </div>
-<hr>
+<script>
+	$('#myTab a').click(function(e) {
+		e.preventDefault();
+		var p = $(this).attr("tabid");
+		$("[tcid=" + p + "]").siblings().removeClass("active");
+		$("[tcid=" + p + "]").addClass("active");
+	});
+</script>
