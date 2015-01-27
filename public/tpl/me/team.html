@@ -14,19 +14,31 @@
 					<th>名称</th>
 					<th>所在项目</th>
 					<th>创建时间</th>
-					<th>状态</th>
+					<th class="dropdown">
+					<button class="btn-transparent dropdown-toggle btn-dropdown" type="button"
+						data-toggle="dropdown">
+						状态 <span class="caret"></span> 
+					</button>
+					<ul class="dropdown-menu">
+						<li><a ng-click="filter('created','all')">全部</a></li>
+						<li><a ng-click="filter('created','building')">组建中</a></li>
+						<li><a ng-click="filter('created','applying')">报名审核中</a></li>
+						<li><a ng-click="filter('created','passed')">报名通过</a></li>
+						<li><a ng-click="filter('created','failed')">报名失败</a></li>
+					</ul>
+					</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="v in createdteams">
+				<tr ng-repeat="v in createdteams_filtered">
 					<td><a ng-bind="v.name" href="/team/{{v.id}}" target="_blank"></a></td>
 					<td><a target="_blank" href="/project/{{v.project.id}}" ng-bind="v.project.name">查看</a></td>
 					<td ng-bind="v.created_at|limitTo:10"></td>
 					<td><span class="label label-default" ng-if="v.status==0">组建中</span>
-					<span class="label label-warning" ng-if="v.status==1">申请中</span>
-					<span class="label label-success" ng-if="v.status==2">参加成功</span>
-					<span class="label label-danger" ng-if="v.status==3">参加失败</span></td>
+					<span class="label label-warning" ng-if="v.status==1">报名审核中</span>
+					<span class="label label-success" ng-if="v.status==2">报名通过</span>
+					<span class="label label-danger" ng-if="v.status==3">报名失败</span></td>
 					<td><a href="#team/{{v.id}}">管理</a></td>
 				</tr>
 			</tbody>
@@ -39,12 +51,23 @@
 					<th>名称</th>
 					<th>项目</th>
 					<th>创建时间</th>
-					<th>状态</th>
+					<th class="dropdown">
+					<button class="btn-transparent dropdown-toggle btn-dropdown" type="button"
+						data-toggle="dropdown">
+						加入状态 <span class="caret"></span> 
+					</button>
+					<ul class="dropdown-menu">
+						<li><a ng-click="filter('jointeam','all')">全部</a></li>
+						<li><a ng-click="filter('jointeam','applied')">申请加入中</a></li>
+						<li><a ng-click="filter('jointeam','permited')">加入成功</a></li>
+						<li><a ng-click="filter('jointeam','denied')">加入失败</a></li>
+					</ul>
+					</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="v in joinedteams">
+				<tr ng-repeat="v in joinedteams_filtered">
 					<td ng-bind="v.name"></td>
 					<td><a target="_blank" href="/project/{{v.project.id}}" ng-bind="v.project.name">查看</a></td>
 					<td ng-bind="v.created_at|limitTo:10"></td>

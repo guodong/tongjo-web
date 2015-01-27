@@ -184,15 +184,51 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 			app.controller('project',
 			function($scope, $resource) {
 				var Project = $resource(API + 'user/:user_id/type/:type/project');
-				$scope.joined = Project.query({
+				$scope.joined = $scope.joined_filtered = Project.query({
 					user_id: localStorage.uid,
 					type: 'joined'
 				});
-				$scope.created = Project.query({
+				$scope.created = $scope.created_filtered = Project.query({
 					user_id: localStorage.uid,
 					type: 'created'
 				});
 				$scope.user = JSON.parse(localStorage.user);
+				$scope.created_filter = function(type){
+					$scope.created_filtered = [];
+					switch(type){
+					case 'all':
+						$scope.created_filtered = $scope.created;
+						break;
+					case 'open':
+						$scope.created.forEach(function(t){
+							t.is_open == 1?$scope.created_filtered.push(t):0;
+						});
+						break;
+					case 'close':
+						$scope.created.forEach(function(t){
+							t.is_open == 0?$scope.created_filtered.push(t):0;
+						});
+						break;
+					}
+				}
+				$scope.joined_filter = function(type){
+					$scope.joined_filtered = [];
+					switch(type){
+					case 'all':
+						$scope.joined_filtered = $scope.joined;
+						break;
+					case 'open':
+						$scope.joined.forEach(function(t){
+							t.is_open == 1?$scope.joined_filtered.push(t):0;
+						});
+						break;
+					case 'close':
+						$scope.joined.forEach(function(t){
+							t.is_open == 0?$scope.joined_filtered.push(t):0;
+						});
+						break;
+					}
+				}
 			});
 			app.controller('team-detail',
 			function($scope, $resource, $routeParams) {
@@ -347,17 +383,12 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 							}
 						});
 
-						$scope.getprojectTs = function() {
-							var team = ProjectTs.query({
-								project_id: $routeParams.project_id
-							},
-							function() {
-								$scope.teams = team;  
-								console.log($scope.teams);
-							});
-						}
+						$scope.teams = $scope.teams_filtered = ProjectTs.query({
+							project_id: $routeParams.project_id
+						});
+						
 
-						$scope.getprojectTs();
+						//$scope.getprojectTs();
 						var Team = $resource(API + 'team/:team_id', {team_id: '@team_id'}, {save:{method: 'PUT'}});
 						$scope.handle = function(team, status) {
 							var t = Team.get({team_id: team.id});
@@ -367,57 +398,36 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 								team.status = status;
 							})
 						};
-
-						/* $scope.update = function() {
-							$scope.team.$save(function(team) {
-								$scope.team = team;
-								$scope.team.signup_time = team.signup_time.substr(0, 10);
-								
-								alert("保存成功");
-							});
-						};
-
-						var Status = $resource(API + 'team/:team_id/user/:user_id/status/:status', null, {
-							save: {
-								method: 'PUT'
+						$scope.filter = function(type){
+							$scope.teams_filtered = [];
+							switch(type){
+							case 'all':
+								$scope.teams_filtered = $scope.teams;
+								break;
+							case 'building':
+								$scope.teams.forEach(function(t){
+									t.status == 0?$scope.teams_filtered.push(t):0;
+								});
+								break;
+							case 'applying':
+								$scope.teams.forEach(function(t){
+									t.status == 1?$scope.teams_filtered.push(t):0;
+								});
+								break;
+							case 'passed':
+								$scope.teams.forEach(function(t){
+									t.status == 2?$scope.teams_filtered.push(t):0;
+								});
+								break;
+							case 'failed':
+								$scope.teams.forEach(function(t){
+									t.status == 3?$scope.teams_filtered.push(t):0;
+								});
+								break;
 							}
-						});
-						$scope.permit = function(user_id) {
-							var st = new Status();
-							st.$save({
-								team_id: $routeParams.team_id,
-								user_id: user_id,
-								status: "permited"
-							},
-							function() {
-								$scope.getteam();
-								alert("修改成功");
-							})
-						};
-						$scope.deny = function(user_id) {
-							var st = new Status();
-							st.$save({
-								team_id: $routeParams.team_id,
-								user_id: user_id,
-								status: "denied"
-							},
-							function() {
-								$scope.getteam();
-								alert("修改成功");
-							})
-						};
-						$scope.remove = function(user_id) {
-							var st = new Status();
-							st.$save({
-								team_id: $routeParams.team_id,
-								user_id: user_id,
-								status: "removed"
-							},
-							function() {
-								$scope.getteam();
-								alert("修改成功");
-							})
-						} */
+						}
+
+						
 					});
 			
 			app.controller('project-edit',
@@ -514,11 +524,11 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 			app.controller('team',
 			function($scope, $resource) {
 				var Team = $resource(API + 'user/:user_id/type/:type/team');
-				$scope.createdteams = Team.query({
+				$scope.createdteams = $scope.createdteams_filtered = Team.query({
 					user_id: localStorage.uid,
 					type: 'created'
 				});
-				$scope.joinedteams = Team.query({
+				$scope.joinedteams = $scope.joinedteams_filtered = Team.query({
 					user_id: localStorage.uid,
 					type: 'joined'
 				});
@@ -538,6 +548,65 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 							type: 'joined'
 						});
 					});
+				};
+				$scope.filter = function(type, filter){
+					if(type == 'jointeam'){
+						var teams = $scope.joinedteams;
+						$scope.joinedteams_filtered = [];
+						switch(filter){
+						case 'all':
+							$scope.joinedteams_filtered = $scope.joinedteams;
+							break;
+						case 'applied':
+							$scope.joinedteams.forEach(function(t){
+								t.pivot.status == 'applied'?$scope.joinedteams_filtered.push(t):0;
+							});
+							break;
+						case 'permited':
+							$scope.joinedteams.forEach(function(t){
+								t.pivot.status == 'permited'?$scope.joinedteams_filtered.push(t):0;
+							});
+							break;
+						case 'denied':
+							$scope.joinedteams.forEach(function(t){
+								t.pivot.status == 'denied'?$scope.joinedteams_filtered.push(t):0;
+							});
+							break;
+						}
+						return;
+					}
+					var teams = type == 'created'?$scope.createdteams:$scope.joinedteams;
+					var tmp = [];
+					switch(filter){
+					case 'all':
+						tmp = teams;
+						break;
+					case 'building':
+						teams.forEach(function(t){
+							t.status == 0?tmp.push(t):0;
+						});
+						break;
+					case 'applying':
+						teams.forEach(function(t){
+							t.status == 1?tmp.push(t):0;
+						});
+						break;
+					case 'passed':
+						teams.forEach(function(t){
+							t.status == 2?tmp.push(t):0;
+						});
+						break;
+					case 'failed':
+						teams.forEach(function(t){
+							t.status == 3?tmp.push(t):0;
+						});
+						break;
+					}
+					if(type == 'created'){
+						$scope.createdteams_filtered = tmp;
+					}else{
+						$scope.joinedteams_filtered = tmp;
+					}
 				}
 			});
 			app.controller('sidebar',

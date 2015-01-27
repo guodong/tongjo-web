@@ -14,31 +14,27 @@
 				<th>人数</th>
 				<th class="dropdown">
 					<button class="btn-transparent dropdown-toggle" type="button"
-						id="dropdownMenu1" data-toggle="dropdown">
+						data-toggle="dropdown">
 						状态 <span class="caret"></span> 
 					</button>
-					<ul class="dropdown-menu" role="menu"
-						aria-labelledby="dropdownMenu1">
-						<li role="presentation" ><a role="menuitem" tabindex="-1" 
-							href="">不可报名</a></li>
-						<li role="presentation"><a role="menuitem" tabindex="-1"
-							href="">报名审核中</a></li>
-						<li role="presentation"><a role="menuitem" tabindex="-1"
-							href="">报名通过</a></li>
-						<li role="presentation"><a role="menuitem" tabindex="-1"
-							href="">报名失败</a></li>
+					<ul class="dropdown-menu">
+						<li><a ng-click="filter('all')">全部</a></li>
+						<li><a ng-click="filter('building')">组建中</a></li>
+						<li><a ng-click="filter('applying')">报名审核中</a></li>
+						<li><a ng-click="filter('passed')">报名通过</a></li>
+						<li><a ng-click="filter('failed')">报名失败</a></li>
 					</ul>
 				</th>
 				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="team in teams">
+			<tr ng-repeat="team in teams_filtered">
 				<td><a ng-bind="team.name" href="/team/{{team.id}}"></a></td>
 				<td><span ng-bind="team.members_count"></span><span
 					style="padding-right: 10px; padding-left: 10px">|</span><span
 					ng-bind="team.teammember_all"></span></td>
-				<td><span class="label label-default" ng-if="team.status==0">不可报名</span><span
+				<td><span class="label label-default" ng-if="team.status==0">组建中</span><span
 					class="label label-info" ng-if="team.status==1">报名审核中</span> <span
 					class="label label-success" ng-if="team.status==2">报名通过</span> <span
 					class="label label-danger" ng-if="team.status==3">报名失败</span></td>
