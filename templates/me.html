@@ -11,7 +11,7 @@
 <script type="text/javascript" src="/lib/umeditor/umeditor.config.js"></script>
 <script type="text/javascript" src="/lib/umeditor/lang/zh-cn/zh-cn.js"></script>
 <script>
-require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
+require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 		function(angular, angular_route, $resource,bootstrap) {
 			var app = angular.module('me', ['ngRoute', 'ngResource','ui.bootstrap']).config(['$routeProvider',
 			function($routeProvider) {
@@ -90,7 +90,104 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 						}
 					}
 				});
+				
+				/** 获取用户标签*/
+				$scope.usertag =  new Array();
+				var UserTag = $resource(API + 'user/:userId/tag');
+				$scope.getUsertags = function(){
+					var tags = UserTag.query({
+						userId: localStorage.uid
+					}, function() {
+						$scope.usertag = tags;
+					});
+				}
+				
+				$scope.getUsertags(); 
+				
+				var TagPivotDel = $resource(API + 'user/:user_id/tag/:tag_id/pivot/1');
+				
+				$scope.deltags = function(id) {
+					var t = new TagPivotDel();
+					t.$delete({
+						user_id: localStorage.uid,
+						tag_id:id
+					},function(tag){ 
+			            console.log(tag);
+			            $scope.getUsertags(); 
+			        });
+					
+				
+				};
+				
+				
+				var TagPivotAdd = $resource(API + 'user/:user_id/tag/:tag_id/pivot');
+				
+				$scope.addtags = function() {
+					for(var i=0;i < $scope.selecttag.length;i++){
+						/* alert(i); */
+						var t = new TagPivotAdd();
+						t.$save({
+							user_id: localStorage.uid,
+							tag_id: $scope.selecttag[i].id
+						},function(tag){ 
+				            console.log(tag);
+				            $scope.getUsertags(); 
+				        });
+					}
+				};
+				
+				
+				/* 以下为弹出框部分 */
+				$scope.selecttag =  new Array();
+				
+				var Tag = $resource(API + 'tag?tree=1');
+				$scope.gettags = function(){
+					var tags = Tag.query(null, function() {
+						$scope.tags = tags;
+						$scope.curid = tags[0].id;
+						console.log(tags);
+					});
+				}
+				
+				$scope.gettags();
+				
+				$scope.curid = 0;
+				$scope.setid = function(id){
+					$scope.curid = id;
+				} 
 
+				$scope.del = function(index) {
+					$scope.selecttag.remove(index);
+				};
+				
+				$scope.select = function(tag3) {
+					$scope.selecttag.push(tag3);
+				};
+				
+				
+				
+				/**项目弹出框的一些操作*/
+				$scope.projects =  new Array();
+				$scope.curproject = {"id":1,"startTime":"2013年6月","endTime":"2014年8月","dec":"参加全国信息安全比赛"};
+				$scope.addproject = function(){
+					
+					$scope.projects.push($scope.curproject);
+				}
+				
+				
+				Array.prototype.remove=function(dx) 
+				{ 
+				    if(isNaN(dx)||dx>this.length){return false;} 
+				    for(var i=0,n=0;i<this.length;i++) 
+				    { 
+				        if(this[i]!=this[dx]) 
+				        { 
+				            this[n++]=this[i] 
+				        } 
+				    } 
+				    this.length-=1 
+				}
+				
 			});
 
 			app.controller('avatar',
@@ -388,7 +485,12 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 						});
 						
 
+<<<<<<< Updated upstream
 						//$scope.getprojectTs();
+=======
+						$scope.getprojectTs();
+						
+>>>>>>> Stashed changes
 						var Team = $resource(API + 'team/:team_id', {team_id: '@team_id'}, {save:{method: 'PUT'}});
 						$scope.handle = function(team, status) {
 							var t = Team.get({team_id: team.id});
@@ -398,6 +500,7 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 								team.status = status;
 							})
 						};
+<<<<<<< Updated upstream
 						$scope.filter = function(type){
 							$scope.teams_filtered = [];
 							switch(type){
@@ -428,6 +531,8 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 						}
 
 						
+=======
+>>>>>>> Stashed changes
 					});
 			
 			app.controller('project-edit',
@@ -709,7 +814,7 @@ require(['angular', 'angular-route', 'angular-resource','ui-bootstrap'],
 			</div>
 			<div class="list-group">
 				<a href="#project" class="list-group-item"><span
-					class="glyphicon glyphicon-th-list"></span> 我的项目</a>  <a
+					class="glyphicon glyphicon-th-list"></span> 我的项目</a> <a
 					ng-show="user.role=='student'" href="#team" class="list-group-item"><span
 					class="glyphicon glyphicon-tower"></span> 我的团队</a> <a href="#info"
 					class="list-group-item"><span class="glyphicon glyphicon-user"></span>
