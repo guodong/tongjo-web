@@ -76,20 +76,20 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="member in teamdetail.members" ng-if="member.pivot.status=='permited'">
-					<td><img src="/img/head.jpg" alt="*" class="smallhead"> <a
+				<tr ng-repeat="member in teamdetail.members" ng-show="member.pivot.status=='permited'">
+					<td><img src="/img/head.jpg" ng-src="//api.tongjo.com/files/{{member.avatar}}" alt="*" class="smallhead"> <a
 						class="text-primary" ng-bind="member.realname"
-						href="userinfodetail/{{member.id}}">彭涛</a></td>
+						href="/userinfodetail/{{member.id}}"></a></td>
 					<td>
 						<h5 class="text-primary" ng-bind="member.school.name"></h5>
 					</td>
 
 					<td>
-						<h5 class="text-primary" ng-bind="member.major.name">电子与信息工程学院</h5>
+						<h5 class="text-primary" ng-bind="member.major.name"></h5>
 					</td>
 
 					<td><a class="text-primary"
-						href="userinfodetail!{{member.id}}">查看资料</a></td>
+						href="/userinfodetail/{{member.id}}">查看资料</a></td>
 					</div>
 				</tr>
 			</tbody>
@@ -121,7 +121,7 @@
 					
 					console.log(tid);
 
-					$scope.getteamdetail = function() {
+					$scope.getteamdetail = function() { 
 						var Team = $resource(API + 'team/:teamId');
 						var team = Team.get({
 							teamId : tid
