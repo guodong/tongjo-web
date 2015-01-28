@@ -10,5 +10,6 @@ return array(
 		'#^/scanproject-tpl$#' => 'scanproject-tpl',
 		'#^/recomproject$#' => 'recomproject',
 		'#^/choseskill$#' => 'choseskill',
-		'#^/loginmodal$#' => 'loginmodal'
+		'#^/loginmodal$#' => 'loginmodal',
+		'#^/scanproject2$#' => 'scanproject2',
 );
