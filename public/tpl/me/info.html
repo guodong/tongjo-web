@@ -139,11 +139,11 @@
 							<div class="modal-body">
 								<!-- 主体 -->
 								<div class="container-fluid tagbody">
-									<div class="col-md-3">
-										<ul class="nav nav-pills nav-stacked lefttree">
-											<li ng-repeat="tag in tags"><a ng-bind="tag.name"
+									<div class="col-md-3" style="padding-left:0px">
+										<ul class="nav nav-stacked lefttree">
+											<li ng-repeat="tag in tags" ng-class="{'active': isActive(tag.id)}"><a ng-bind="tag.name"
 												ng-click="setid(tag.id)"></a></li>
-										</ul>
+										</ul> 
 									</div>
 
 									<div class="col-md-9">
