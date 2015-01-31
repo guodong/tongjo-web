@@ -1,0 +1,91 @@
+<div class="page-header">
+	<h2>账户信息</h2>
+</div>
+
+<ul id="myTab" class="nav nav-tabs" role="tablist">
+	<li class="active"><a role="tab" tabid="t1" data-toggle="tab">邮箱认证</a></li>
+	<li><a role="tab" tabid="t2" data-toggle="tab">手机认证</a></li>
+	<li><a role="tab" tabid="t3" data-toggle="tab">密码修改</a></li>
+</ul>
+<div class="tab-content" style="padding-top: 20px">
+	<div tcid="t1" class="tab-pane active">
+		<form role="form" class="form-horizontal" name="emailform">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">状态</label>
+				<div class="col-sm-10">
+					<span class="label label-danger">未认证</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">邮箱</label>
+				<div class="col-sm-10">
+					<input type="email" class="form-control" ng-model="user.email" required="required" ng-pattern="/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-10 col-sm-offset-2">
+					<a class="btn btn-success" ng-click="save()"
+						ng-disabled="emailform.$invalid">发送认证邮件</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div tcid="t2" class="tab-pane">
+		<form class="form-horizontal" name="telform">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">状态</label>
+				<div class="col-sm-10">
+					<span class="label label-danger">未认证</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">手机</label>
+				<div class="col-sm-10">
+					<input type="tel" class="form-control" ng-model="user.tel" required="required" ng-pattern="/^\d{11}$/" >
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-10 col-sm-offset-2">
+					<a class="btn btn-success" ng-click="save()"
+						ng-disabled="telform.$invalid">发送认证信息</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div tcid="t3" class="tab-pane">
+		<form class="form-horizontal" name="pswform">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">原密码</label>
+				<div class="col-sm-10">
+					<input type="tel" class="form-control" ng-model="user.oldpsw" required="required">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">新密码</label>
+				<div class="col-sm-10">
+					<input type="tel" class="form-control" ng-model="user.newpsw" required="required">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">新密码确认</label>
+				<div class="col-sm-10">
+					<input type="tel" class="form-control" ng-model="user.renewpsw" required="required">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-10 col-sm-offset-2">
+					<a class="btn btn-success" ng-click="save()"
+						ng-disabled="pswform.$invalid">发送认证信息</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+	$('#myTab a').click(function(e) {
+		e.preventDefault();
+		var p = $(this).attr("tabid");
+		$("[tcid=" + p + "]").siblings().removeClass("active");
+		$("[tcid=" + p + "]").addClass("active");
+	});
+</script>

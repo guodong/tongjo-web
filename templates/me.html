@@ -45,10 +45,16 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 				}).when('/message', {
 					templateUrl: 'tpl/me/message.html',
 					controller: 'message'
+				}).when('/account', {
+					templateUrl: 'tpl/me/account.html',
+					controller: 'account'
 				}).otherwise({
 					redirectTo: '/'
 				});
 			}]);
+			app.controller('account', function(){
+				
+			});
 			app.controller('info',
 			function($scope, $resource) {
 				var User = $resource(API + 'user/:userId', {
@@ -886,7 +892,9 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 					ng-show="user.role=='student'" href="#team" class="list-group-item"><span
 					class="glyphicon glyphicon-tower"></span> 我的团队</a> <a href="#info"
 					class="list-group-item"><span class="glyphicon glyphicon-user"></span>
-					个人信息</a> <a href="#message" class="list-group-item"><span
+					个人信息</a> <a href="#account" class="list-group-item"><span
+					class="glyphicon glyphicon-cog"></span> 账户设置</a><a href="#message"
+					class="list-group-item"><span
 					class="glyphicon glyphicon-envelope"></span> 消息通知</a> <a href="#"
 					ng-click="logout()" class="list-group-item"><span
 					class="glyphicon glyphicon-off"></span> 退出</a>
