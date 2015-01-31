@@ -189,14 +189,14 @@
 				<div style="clear: both"></div>
 				<table class="project-table">
 					<tbody>
-						<tr ng-repeat="project in projects">
-							<td><h5 class="text-primary" ng-bind="project.startTime"></h5></td>
+						<tr ng-repeat="exp in experiences">
+							<td><h5 class="text-primary" ng-bind="exp.from"></h5></td>
 							<td>
-								<h5 class="text-primary" ng-bind="project.endTime"></h5>
+								<h5 class="text-primary" ng-bind="exp.to"></h5>
 							</td>
 
 							<td>
-								<h5 class="text-primary" ng-bind="project.dec"></h5>
+								<h5 class="text-primary" ng-bind="exp.content"></h5>
 							</td>
 
 							<td style="text-align: right; padding-right: 14px"><a
@@ -232,12 +232,15 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td><input class="form-control" placeholder="参加项目的日期"
-													ng-model="curproject.startTime"></input></td>
-												<td><input class="form-control" placeholder="项目结束日期"
-													ng-model="curproject.endTime"></input></td>
+												<td><input class="form-control datepicker" placeholder="参加项目的日期"
+													ng-model="addexp.from" data-provide="datepicker" 
+													required data-date-format="yyyy-mm-dd"></input></td>
+												<td><input  class="form-control datepicker" placeholder="参加项目的日期"
+													ng-model="addexp.to" data-provide="datepicker" 
+													required data-date-format="yyyy-mm-dd" placeholder="项目结束日期"
+													></input></td>
 												<td><input class="form-control" placeholder="项目简述"
-													ng-model="curproject.dec"></input></td>
+													ng-model="addexp.content"></input></td>
 											</tr>
 										</tbody>
 									</table>
@@ -246,7 +249,7 @@
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default btn-sm"
-									ng-click="addproject()" data-dismiss="modal">完成</button>
+									ng-click="addexperience()" data-dismiss="modal">完成</button>
 							</div>
 						</div>
 					</div>

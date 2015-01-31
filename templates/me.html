@@ -57,6 +57,13 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 			});
 			app.controller('info',
 			function($scope, $resource) {
+				
+				$('.datepicker').datepicker({
+					startDate: '1d',
+					autoclose: true,
+					language: 'zh-CN', 
+				});
+				
 				var User = $resource(API + 'user/:userId', {
 					userId: '@id'
 				},
@@ -188,10 +195,33 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 				
 				/**项目弹出框的一些操作*/
 				$scope.projects =  new Array();
-				$scope.curproject = {"id":1,"startTime":"2013年6月","endTime":"2014年8月","dec":"参加全国信息安全比赛"};
-				$scope.addproject = function(){
-					
-					$scope.projects.push($scope.curproject);
+				var Exp = $resource(API + 'user/:user_id/experience');
+				$scope.getExperience = function(){
+					var exps = Exp.query({
+						user_id:localStorage.uid
+					}, function() {
+						$scope.experiences = exps;
+						for(var i=0;i < exps.length;i++){
+							$scope.experiences[i].from = exps[i].from.substr(0,10);
+							$scope.experiences[i].to = exps[i].to.substr(0,10);
+						}
+					});
+				};
+				$scope.getExperience();
+			
+				$scope.addexp = {"id":1,"from":"2015-01-15","to":"2015-01-17","content":"参加全国信息安全比赛",};
+				$scope.addexperience = function(){
+					var e = new Exp();
+					e.$save({
+						user_id:localStorage.uid,
+						from: $scope.addexp.from,
+						to: $scope.addexp.to,
+						content: $scope.addexp.content
+					},
+					function() {
+						$scope.getExperience();
+						alert("添加成功");
+					})
 				}
 				
 				
@@ -881,10 +911,10 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 				<a href="#avatar"> <img class="img-thumbnail" alt="140x140"
 					ng-src="{{user.avatar && 'http://api.tongjo.com/files/'+user.avatar || '/img/avatar.png'}}"
 					data-holder-rendered="true">
-					<h6>修改头像</h6>
+					<h6 ng-bind="user.realname"></h6>
 				</a>
 
-				<div ng-bind="user.realname"></div>
+				<!-- <div ng-bind="user.realname"></div> -->
 			</div>
 			<div class="list-group">
 				<a href="#project" class="list-group-item"><span
