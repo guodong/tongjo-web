@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>同舟哈哈哦哇</title>
+<title>同舟</title>
 <meta charset="utf-8" />
-<meta name="description" content="GetClouder" />
-<meta name="author" content="GetClouder" />
-<meta name="copyright"
-	content="Copyright by GetClouder. All Rights Reserved." />
-<meta name="Classification" content="clouds" />
-<meta name="referrer" content="never">
-
-
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" href="/css/site.css" />
 <script src="/lib/jquery/jquery.js"></script>
@@ -20,69 +12,68 @@
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 </head>
 <body>
-	<section class="header home">
+<script>
+var i = 1;
+var cgfocus = function(){
+	$(".header.home").css("background-image", "url(/img/index"+i+".png)");
+	$(".header .clear section").hide();
+	$("#focus"+i).fadeIn();
+	i++;
+	i = i==4?1:i;
+};
+var p = setInterval("cgfocus()", 5000);
+</script>
+	<section class="header home" ng-controller="index">
 		<div class="clear">
 			<header>
-				<a href="/" class="logo"><img alt="" src="/img/LOGO3.png"></a>
+				<a href="/" class="logo"><img alt="" src="/img/LOGO3.png" ng-bind="lo"></a>
 				<nav>
 					<a href="/login" class="signup">登陆</a> <a href="/signup" class="signup">注册</a>
 				</nav>
 				</header>
 
-			<section>
-				<h1>是时候，一起做点什么了</h1>
+			<section id="focus1">
+				<h1>十八般武艺，会四方英雄</h1>
 				<p>Make A Difference</p>
 
-				<form name="login" method="post" id="signupForm" class="clear"
-					action="https://www.getclouder.com/signup">
-					<input type="hidden" name="830f4cb4bd998fbc4d4e50193f7d6209"
-						value="1" /> <a href="project/create" class="big-button home btn"
+				<form class="clear">
+					<a href="project/create" class="big-button home btn"
 						id="signupSubmit">发 布</a> <a href="scanproject" class="big-button home btn"
 						id="signupSubmit">参 加</a>
 				</form>
-				<p></p>
 			</section>
+			<section style="display:none" id="focus2">
+				<h1>在这里,你总会找到你自己</h1>
+				<p>Make A Difference</p>
 
-			<!-- <img src="/img/zhuyepicture1.png" alt="" /> -->
+				<form class="clear">
+					<a href="project/create" class="big-button home btn"
+						id="signupSubmit">发 布</a> <a href="scanproject" class="big-button home btn"
+						id="signupSubmit">参 加</a>
+				</form>
+			</section>
+			<section style="display:none" id="focus3">
+				<h1>梦在延续，朝前方奋力奔跑</h1>
+				<p>Make A Difference</p>
+
+				<form class="clear">
+					<a href="project/create" class="big-button home btn"
+						id="signupSubmit">发 布</a> <a href="scanproject" class="big-button home btn"
+						id="signupSubmit">参 加</a>
+				</form>
+			</section>
 		</div>
 		<section class="short-list-features">
 			<ul class="clear">
-				<li><svg xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-						id="Layer_1" x="0px" y="0px" width="100px" height="100px"
-						viewBox="0 0 100 100" enable-background="new 0 0 100 100"
-						xml:space="preserve">
-						<g>
-						<path fill="#FFFFFF"
-							d="M50 14c19.851 0 36 16.149 36 36S69.851 86 50 86 14 69.851 14 50 30.149 14 50 14M50 0C22.386 0 0 22.386 0 50s22.386 50 50 50c27.613 0 50-22.386 50-50S77.613 0 50 0L50 0z" /></g>
-						<path fill="#FFFFFF"
-							d="M57.452 27.911v28.114c0 0.585-0.188 1.066-0.564 1.443s-0.857 0.565-1.442 0.565H35.363c-0.586 0-1.067-0.188-1.443-0.565s-0.565-0.858-0.565-1.443v-4.017c0-0.585 0.188-1.066 0.565-1.443S34.777 50 35.363 50H49.42V27.911c0-0.586 0.188-1.067 0.565-1.443 0.376-0.377 0.857-0.565 1.443-0.565h4.017c0.585 0 1.065 0.188 1.442 0.565C57.265 26.844 57.452 27.325 57.452 27.911z" /></svg>
+				<li><img src="/img/dengpao.png">
 					<strong>创新课题</strong>
 					<p>企业、实验室带薪让你做课题.</p></li>
 
-				<li><svg xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-						id="Layer_1" x="0px" y="0px" width="100px" height="100px"
-						viewBox="0 0 100 100" enable-background="new 0 0 100 100"
-						xml:space="preserve">
-						<g>
-						<path fill="#FFFFFF"
-							d="M50 14c19.851 0 36 16.149 36 36S69.851 86 50 86 14 69.851 14 50 30.149 14 50 14M50 0C22.386 0 0 22.386 0 50s22.386 50 50 50c27.613 0 50-22.386 50-50S77.613 0 50 0L50 0z" /></g>
-						<path fill="#FFFFFF"
-							d="M67.979 44.806c0 0.314-0.186 0.656-0.556 1.027l-7.766 7.574 1.84 10.695c0.014 0.099 0.021 0.241 0.021 0.428 0 0.3-0.075 0.552-0.225 0.76 -0.149 0.206-0.366 0.311-0.652 0.311 -0.271 0-0.556-0.086-0.855-0.258l-9.604-5.049 -9.605 5.049c-0.314 0.172-0.599 0.258-0.856 0.258 -0.299 0-0.524-0.104-0.674-0.311 -0.149-0.208-0.225-0.46-0.225-0.76 0-0.086 0.014-0.228 0.043-0.428l1.84-10.695 -7.787-7.574c-0.357-0.385-0.535-0.728-0.535-1.027 0-0.528 0.399-0.856 1.198-0.984l10.739-1.562 4.813-9.733c0.271-0.584 0.62-0.877 1.048-0.877 0.426 0 0.776 0.292 1.047 0.877l4.814 9.733 10.739 1.562C67.58 43.95 67.979 44.278 67.979 44.806z" /></svg>
+				<li><img src="/img/xiangmu.png">
 					<strong>学生项目</strong>
 					<p>创业、公益丰富你的大学生活</p></li>
 
-				<li><svg xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-						id="Layer_1" x="0px" y="0px" width="100px" height="100px"
-						viewBox="0 0 100 100" enable-background="new 0 0 100 100"
-						xml:space="preserve">
-						<g>
-						<path fill="#FFFFFF"
-							d="M50 14c19.851 0 36 16.149 36 36S69.851 86 50 86 14 69.851 14 50 30.149 14 50 14M50 0C22.386 0 0 22.386 0 50s22.386 50 50 50c27.613 0 50-22.386 50-50S77.613 0 50 0L50 0z" /></g>
-						<path fill="#FFFFFF"
-							d="M60.018 56.206c0 2.189-0.713 4.076-2.137 5.656 -1.424 1.582-3.274 2.561-5.551 2.932v3.758c0 0.201-0.064 0.365-0.192 0.494 -0.129 0.129-0.294 0.193-0.495 0.193h-2.898c-0.186 0-0.347-0.068-0.483-0.205 -0.136-0.135-0.205-0.297-0.205-0.482v-3.758c-0.944-0.129-1.857-0.35-2.737-0.666 -0.88-0.314-1.607-0.633-2.18-0.955 -0.572-0.32-1.102-0.666-1.589-1.031 -0.486-0.365-0.819-0.633-0.999-0.805 -0.179-0.172-0.304-0.301-0.375-0.387 -0.243-0.299-0.258-0.594-0.043-0.881l2.211-2.898c0.101-0.143 0.265-0.229 0.494-0.258 0.214-0.027 0.387 0.037 0.515 0.193l0.043 0.043c1.618 1.418 3.357 2.313 5.218 2.684 0.529 0.115 1.059 0.172 1.589 0.172 1.16 0 2.18-0.307 3.059-0.922 0.882-0.617 1.321-1.488 1.321-2.619 0-0.4-0.106-0.781-0.321-1.139s-0.455-0.658-0.721-0.902c-0.264-0.244-0.683-0.512-1.256-0.805 -0.572-0.295-1.045-0.523-1.417-0.688 -0.373-0.164-0.945-0.398-1.718-0.697 -0.558-0.229-0.999-0.408-1.321-0.537 -0.322-0.128-0.762-0.319-1.32-0.569 -0.559-0.251-1.006-0.473-1.342-0.666 -0.336-0.192-0.741-0.447-1.213-0.762 -0.473-0.315-0.855-0.619-1.149-0.913s-0.605-0.644-0.934-1.053c-0.33-0.407-0.583-0.822-0.762-1.245 -0.179-0.421-0.33-0.898-0.451-1.428 -0.122-0.529-0.183-1.087-0.183-1.674 0-1.976 0.702-3.708 2.104-5.196 1.403-1.489 3.228-2.449 5.475-2.878v-3.865c0-0.186 0.068-0.347 0.205-0.483 0.136-0.136 0.297-0.204 0.483-0.204h2.898c0.201 0 0.366 0.064 0.495 0.193 0.128 0.129 0.192 0.293 0.192 0.494v3.779c0.816 0.085 1.607 0.25 2.373 0.493 0.766 0.244 1.389 0.484 1.868 0.72 0.479 0.236 0.934 0.505 1.363 0.806s0.709 0.508 0.838 0.622c0.129 0.115 0.235 0.215 0.322 0.301 0.243 0.257 0.279 0.53 0.107 0.815l-1.739 3.135c-0.115 0.215-0.279 0.329-0.494 0.343 -0.2 0.043-0.394-0.007-0.58-0.15 -0.043-0.043-0.146-0.129-0.312-0.258 -0.164-0.128-0.443-0.319-0.837-0.569 -0.394-0.25-0.813-0.479-1.256-0.687 -0.444-0.208-0.978-0.394-1.6-0.559 -0.623-0.164-1.234-0.247-1.836-0.247 -1.36 0-2.47 0.308-3.329 0.924 -0.859 0.615-1.289 1.41-1.289 2.383 0 0.372 0.061 0.716 0.183 1.031s0.333 0.612 0.633 0.891c0.301 0.28 0.583 0.516 0.848 0.709 0.265 0.193 0.666 0.415 1.203 0.666 0.537 0.25 0.97 0.443 1.299 0.579 0.329 0.136 0.831 0.333 1.504 0.591 0.758 0.286 1.338 0.512 1.738 0.676 0.4 0.165 0.945 0.416 1.632 0.751 0.687 0.338 1.228 0.642 1.622 0.913 0.393 0.272 0.837 0.63 1.33 1.074 0.494 0.443 0.874 0.898 1.138 1.363 0.265 0.467 0.491 1.014 0.677 1.643C59.924 54.817 60.018 55.489 60.018 56.206z" /></svg>
+				<li><img src="/img/bisai.png">
 					<strong>比赛竞赛</strong>
 					<p>赛一赛，方显英雄本色</p></li>
 			</ul>
@@ -242,5 +233,8 @@ var API = 'http://api.tongjo.com/';
 		   
 	   }
   });
+  projectApp.controller("index", ["$scope", function($scope){
+	  $scope.lo = '123';
+  }]);
 </script>
 </html>

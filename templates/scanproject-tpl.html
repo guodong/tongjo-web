@@ -1,27 +1,17 @@
+<div infinite-scroll='loadMore()' infinite-scroll-distance='2'>
 <section class="tech">
 	<div class="clear clearfix">
-	<div ng-show="!projectLoaded" style="width:100%;text-align: center;padding-top:20px;padding-top:20px;"><p>加载中...</p></div>
-		<article ng-repeat="project in projects|paging:page.index:page.size track by $index">
-			<span ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()"> 
+		<article ng-repeat="project in view_projects track by $index" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+			<span> 
 			<img src="{{project.image|defaultImg}}">
-				<div class="transparent_class" ng-show="hoverEdit">
+			</span>
+		<div class="hover" ng-show="hoverEdit">
 					<p ng-bind="project.description|defaultDescription"></p>
 					<a class="small-button red" href="project/{{project.id}}">查看项目详情</a>
-				</div>
-			</span>
+		</div>
 			<h5 ng-bind="project.name"></h5>
-		</article>		   
+		</article>	
 	</div>
-	<pagination 
-	class="pagination-bottom"
-	ng-model="page.index"
-    total-items="projects|size"
-    items-per-page="page.size"
-    max-size="10"
-    previous-text="上一页"
-    next-text="下一页"
-    first-text="首页"
-    last-text="尾页"
-    boundary-links="true">
-    </pagination>
 </section>
+<div ng-show="!projectLoaded" style="width:100%;text-align: center;padding-top:20px;padding-top:20px;"><p>加载中...</p></div>
+</div>

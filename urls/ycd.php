@@ -6,11 +6,11 @@ return array(
 		'#^/personjoin$#' => 'personjoin',
 		'#^/personjoinsuccess$#' => 'personjoinsuccess',
 		'#^/jointeamsuccess$#' => 'jointeamsuccess',
-		'#^/scanproject$#' => 'scanproject',
+		'#^/scanproject2$#' => 'scanproject',
 		'#^/scanproject-tpl$#' => 'scanproject-tpl',
 		'#^/recomproject$#' => 'recomproject',
 		'#^/choseskill$#' => 'choseskill',
 		'#^/loginmodal$#' => 'loginmodal',
-		'#^/scanproject2$#' => 'scanproject2',
+		'#^/scanproject$#' => 'scanproject2',
 		'#^/scanproject-index-tpl$#' => 'scanproject-index-tpl'
 );

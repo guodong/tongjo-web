@@ -129,17 +129,17 @@
 				<h6>感兴趣的学术标签</h6>
 			</div>
 			<ul>
-				<li ng-repeat="label in userinfo.userlabels"><span
-					class="rectangle{{$index}}"></span>{{label}}</li>
+				<li ng-repeat="label in userinfo.tags" ><span
+					class="rectangle{{$index}}" ></span>{{label.name}}</li>
 			</ul>
 
 			<div class="clear"></div>
 			<div class="userdetail-label">
-				<h6>共同标签（3）</h6>
+				<h6>共同标签({{commontags.length}})</h6>
 			</div>
 			<ul>
-				<li ng-repeat="label in userinfo.commonlabels"><span
-					class="rectangle{{$index}}"></span>平面设计</li>
+				<li ng-repeat="label in commontags"><span
+					class="rectangle{{$index}}"></span>{{label.name}}</li>
 			</ul>
 		</div>
 
@@ -149,6 +149,8 @@
 					data-toggle="tab">已参加项目</a></li>
 				<li role="presentation"><a role="tab" tabid="t2"
 					data-toggle="tab">已发布项目</a></li>
+				<li role="presentation"><a role="tab" tabid="t3"
+					data-toggle="tab">实践经历</a></li>
 			</ul>
 
 			<div class="tab-content">
@@ -188,6 +190,18 @@
 					</div>
 
 				</div>
+				
+				<div role="tabpanel" tcid="t3" class="tab-pane projectitem"
+					ng-repeat="exp in experiences">
+					<div class="projectitem-title"> 
+						<h4 ng-bind="exp.content"></h4>
+						<h6 class="time" ng-bind="exp.from"></h6>
+						<h6 class="time deadtime" ng-bind="exp.to"></h6>
+					</div>
+					<div class="projectitem-content">
+						
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -202,17 +216,13 @@
 		app.controller('userdetailControl', function($scope, $resource) {
 
 			var url = window.location.href;
-
+			
+			/* 获取所访问用户的基本信息 */
 			var User = $resource(API + 'user/:userId');
 			$scope.userinfo = User.get({
 				userId : uid
 			}, function() {
-				console.log($scope.userinfo);
-
-				$scope.userinfo.userlabels = [ "吃货", "学习", "平面设计", "网站设计",
-						"Photoshop" ];
-				$scope.userinfo.commonlabels = [ "吃货", "学习", "平面设计", "网站设计",
-						"Photoshop" ];
+				$scope.commontags = $scope.getcommontags();
 
 				if ($scope.userinfo.degree < 10) {
 					$scope.userinfo.honor = "菜鸟";
@@ -223,6 +233,32 @@
 				}
 			});
 
+			/* 获取用户本人的技能 */
+			$scope.usertag =  new Array();
+			var UserTag = $resource(API + 'user/:userId/tag');
+			$scope.getUsertags = function(){
+				var tags = UserTag.query({
+					userId: localStorage.uid
+				}, function() {
+					$scope.usertag = tags;
+					$scope.commontags = $scope.getcommontags();
+				});
+			}
+			
+			$scope.getUsertags(); 
+			
+			$scope.getcommontags = function(){
+				var commontags = new Array();
+				for(var i=0;i < $scope.usertag.length;i++){
+					for(var j=0;j < $scope.userinfo.tags.length;j++){
+						if($scope.usertag[i].id == $scope.userinfo.tags[j].id){
+							commontags.push($scope.usertag[i]);
+						}
+					}
+				}
+				return commontags;
+			}
+			
 			$scope.getseximg = function($sex) {
 				if ($sex == 0) {
 					return "img/sex-femail.png";
@@ -280,6 +316,21 @@
 				$scope.jprojects = jprojects;
 				console.log(jprojects);
 			});
+			
+			/* 获取自己添加的实践经历 */
+			var Exp = $resource(API + 'user/:user_id/experience');
+			$scope.getExperience = function(){
+				var exps = Exp.query({
+					user_id:uid
+				}, function() {
+					$scope.experiences = exps;
+					for(var i=0;i < exps.length;i++){
+						$scope.experiences[i].from = exps[i].from.substr(0,10);
+						$scope.experiences[i].to = exps[i].to.substr(0,10);
+					}
+				});
+			};
+			$scope.getExperience();
 
 		});
 

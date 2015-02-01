@@ -23,6 +23,28 @@ color: #888;
 margin-bottom:10px;
 }
 }
+.special{
+a{
+padding-top: 6px;
+padding-bottom: 6px;
+padding-left: 20px;
+cursor: pointer;
+display: block;
+font-size: 13px;
+text-shadow: 0px 1px rgba(255,255,255,0.5);
+text-decoration: none;
+color: #000;
+vertical-align: middle;
+}
+.current{
+background: #5080d8;
+text-shadow: 0px -1px rgba(0,0,0,0.2);
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+color: #fff;
+}
+}
 .cate-button{
 position: relative;
 height: 22px;
@@ -93,7 +115,8 @@ margin-top: -1px;
 	box-shadow: inset 0 0 1px #b2b2b2;
 	min-height: 100%;
 	background-color: #ececec;
-	padding-top:10px;
+	padding-top:0px;
+	border-right: 1px solid #bdbdbd;
 .content{
 	padding: 20px;
 }
@@ -104,7 +127,8 @@ margin-top: -1px;
 	width:100%;
 	color: #b8b8b8;
 	background-color: #f8f8f8;
-	border-right: 1px solid #bdbdbd;
+	border-top: 1px solid #bdbdbd;
+	/*border-right: 1px solid #bdbdbd;*/
 	border-bottom: 1px solid #bdbdbd;
 	-webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;
 	-moz-box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;
@@ -116,6 +140,11 @@ margin-top: -1px;
 	padding: 10px 0 5px 10px;
 	float: left;
 	}
+	.all{
+	float: right;
+	margin-top: 30px;
+	margin-right:5px;
+	}
 	.clearBoth {
 	clear: both;
 	}
@@ -123,12 +152,38 @@ margin-top: -1px;
 .featured{
 	padding: 10px;
 	background-color:#f8f8f8;
+	.previous-arrow{
+		width: 23px;
+	height: 46px;
+	background: url(http://tongjo.me/img/previous-arrow.png);
+	z-index: 5;
+	position: absolute;
+	left: 0;
+	top: 50%;
+	margin-top: -15px;
+	}
+	.next-arrow{
+	width: 23px;
+	height: 46px;
+	background: url(http://tongjo.me/img/next-arrow.png);
+	z-index: 5;
+	position: absolute;
+	right: 0;
+	top: 50%;
+	margin-top: -15px;
+	}
+	img{
+	width:100%;
+	margin: auto;
+	overflow: visible;
+	}	
 }
 section {
 	display: block;
 	margin: 0;
 	text-align: center;
 	zoom: 1;
+	background-color: #f8f8f8;
 }
 section>div {
 	max-width: 1000px;
@@ -139,11 +194,14 @@ float: left;
 width: 25%;
 margin: 0 0 0 0%;
 padding:10px;
+border-right: 1px solid #c6c6c6;
+border-bottom: 1px solid #c6c6c6;
+position: relative;
 }
 section.tech article span {
 display: block;
 position: relative;
-border: 6px solid #fff;
+border: solid 1px #ddd;
 height: 0;
 overflow: hidden;
 padding-bottom: 75%;
@@ -161,23 +219,23 @@ section.tech article img {
       -ms-transform: translate(-50%,-50%);
           transform: translate(-50%,-50%);
 }
-section.tech article span div{
+section.tech article .hover{
 position: absolute;
 left: 0;
 top: 0;
-background: #000;
+background-color: #ececec;
 width: 100%;
 height: 100%;
-color: #fff;
+color: #000;
 padding-top:15%;
 paddng-left:10px;
 padding-right:10px;
 }
-section.tech article span div p {
+section.tech article .hover p {
 height: 40px;
 line-height: 20px;
-margin-top:5px;
-margin-bottom:25px;
+margin-top:20px;
+margin-bottom:40px;
 font-size:14px;
 overflow : hidden;
 text-overflow: ellipsis;
@@ -186,9 +244,13 @@ display: -webkit-box;
 -webkit-box-orient: vertical;
 }
 section.tech article h5{
+height:20px;
 margin: 0 0 10px;
-line-height: 2em;
+line-height: 20px;
 margin-top: 10px;
+white-space: nowrap;  
+text-overflow: ellipsis; 
+overflow: hidden;
 }
 .small-button.red {
 border-color: #f26334;

@@ -13,7 +13,7 @@ body {
 	padding: 0;
 	background: #fff;
 	font: 14px/18px 'Open Sans', Arial, sans-serif;
-	color: #666
+	color: #666;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -522,7 +522,7 @@ main>section>div {
 	position: relative;
 	max-height: 850px;
 	padding: 30px 30px 180px;
-	background: url(/img/index/header-bg-c96b5d9.jpg) no-repeat center
+	background: url(/img/index3.png) no-repeat center
 		center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -545,14 +545,16 @@ main>section>div {
 }
 
 .header.home>div section h1 {
-	font: 700 56px/58px 'Source Sans Pro', sans-serif;
+	font: 100 50px/58px Microsoft Yahei, 'Source Sans Pro', sans-serif;
 	margin: 0 0 15px;
 	color: #fff
 }
 
 .header.home>div section h1+p {
-	font-size: 20px;
-	font-weight: 300
+	font-size: 40px;
+	font-weight: 600;
+	color: #eee;
+	margin-top: 30px;
 }
 
 .header.home>div section h1+p strong {
@@ -654,7 +656,7 @@ main>section>div {
 .header.home .short-list-features ul {
 	max-width: 1000px;
 	margin: 0 auto;
-	padding: 30px
+	padding: 20px
 }
 
 .header.home .short-list-features ul li {
@@ -666,10 +668,9 @@ main>section>div {
 	font-size: 16px
 }
 
-.header.home .short-list-features ul li svg {
+.header.home .short-list-features ul li img {
 	float: left;
 	width: 44px;
-	height: 44px;
 	margin: 2px 16px 0 0;
 	opacity: .8;
 	filter: alpha(opacity = 80)
