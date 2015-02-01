@@ -59,7 +59,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 			function($scope, $resource) {
 				
 				$('.datepicker').datepicker({
-					startDate: '1d',
+					endDate: '1d',
 					autoclose: true,
 					language: 'zh-CN', 
 				});
@@ -120,16 +120,18 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 				var TagPivotDel = $resource(API + 'user/:user_id/tag/:tag_id/pivot/1');
 				
 				$scope.deltags = function(id) {
-					var t = new TagPivotDel();
-					t.$delete({
-						user_id: localStorage.uid,
-						tag_id:id
-					},function(tag){ 
-			            console.log(tag);
-			            $scope.getUsertags(); 
-			        });
-					
-				
+					if(window.confirm('你确定要删除这个标签吗？')){
+						var t = new TagPivotDel();
+						t.$delete({
+							user_id: localStorage.uid,
+							tag_id:id
+						},function(tag){ 
+				            console.log(tag);
+				            $scope.getUsertags(); 
+				        });
+		              }else{
+		               
+		             }
 				};
 				
 				
@@ -194,7 +196,6 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 				}
 				
 				/**项目弹出框的一些操作*/
-				$scope.projects =  new Array();
 				var Exp = $resource(API + 'user/:user_id/experience');
 				$scope.getExperience = function(){
 					var exps = Exp.query({
@@ -208,7 +209,24 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 					});
 				};
 				$scope.getExperience();
-			
+				
+				var DelExp = $resource(API + 'user/:user_id/experience/:eid');
+				$scope.deleteexp = function(id){
+					if(window.confirm('你确定要删除这条记录吗？')){
+						var e = new DelExp();
+						e.$delete({
+							user_id:localStorage.uid,
+							eid:id
+						},
+						function() {
+							$scope.getExperience();
+							alert("删除成功");
+						})
+		              }else{
+		               
+		             }
+				}
+				
 				$scope.addexp = {"id":1,"from":"2015-01-15","to":"2015-01-17","content":"参加全国信息安全比赛",};
 				$scope.addexperience = function(){
 					var e = new Exp();

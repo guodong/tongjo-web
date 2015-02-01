@@ -87,7 +87,7 @@
 
 	<div role="tabpanel" tcid="t2" class="tab-pane" id="profile">
 		<div class="form-group">
-			<div class="col-sm-12" style="margin-left:2px">
+			<div class="col-sm-12" style="margin-left: 2px">
 				<div class="secondtitle">
 					<h4>
 						<span class="glyphicon glyphicon-th-list"></span> 个人专长
@@ -105,7 +105,8 @@
 						<li ng-repeat="tag in usertag">
 							<div class="rectangle" ng-bind="tag.name"></div>
 							<div class="ex-toleft"></div>
-							<button type="button" class="close delete" ng-click="deltags(tag.id)">
+							<button type="button" class="close delete"
+								ng-click="deltags(tag.id)">
 								<span aria-hidden="true" style="color: #ff0000; font-size: 16px">×</span>
 							</button>
 						</li>
@@ -139,11 +140,12 @@
 							<div class="modal-body">
 								<!-- 主体 -->
 								<div class="container-fluid tagbody">
-									<div class="col-md-3" style="padding-left:0px">
+									<div class="col-md-3" style="padding-left: 0px">
 										<ul class="nav nav-stacked lefttree">
-											<li ng-repeat="tag in tags" ng-class="{'active': isActive(tag.id)}"><a ng-bind="tag.name"
-												ng-click="setid(tag.id)"></a></li>
-										</ul> 
+											<li ng-repeat="tag in tags"
+												ng-class="{'active': isActive(tag.id)}"><a
+												ng-bind="tag.name" ng-click="setid(tag.id)"></a></li>
+										</ul>
 									</div>
 
 									<div class="col-md-9">
@@ -161,7 +163,7 @@
 
 								</div>
 							</div>
-							
+
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default btn-sm"
 									ng-click="addtags()" data-dismiss="modal">完成</button>
@@ -173,7 +175,7 @@
 		</div>
 
 		<div class="form-group">
-			<div class="col-sm-12" style="margin-left:2px;margin-top:20px">
+			<div class="col-sm-12" style="margin-left: 2px; margin-top: 20px">
 				<div class="secondtitle">
 					<h4>
 						<span class="glyphicon glyphicon-th-list"></span> 项目经历
@@ -188,6 +190,15 @@
 
 				<div style="clear: both"></div>
 				<table class="project-table">
+					<thead ng-if="experiences.length>0">
+						<tr>
+							<th ><label>开始日期</label></th>
+							<th ><label>结束日期</label></th>
+							<th><label>简述</label></th>
+							<th style="text-align: right; padding-right: 14px"><label>操作</label></th>
+						</tr>
+					</thead>
+					<tbody>
 					<tbody>
 						<tr ng-repeat="exp in experiences">
 							<td><h5 class="text-primary" ng-bind="exp.from"></h5></td>
@@ -200,7 +211,7 @@
 							</td>
 
 							<td style="text-align: right; padding-right: 14px"><a
-								href="#">编辑</a> | <a href="#">删除</a></td>
+								ng-click="deleteexp(exp.id)">删除</a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -232,13 +243,14 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td><input class="form-control datepicker" placeholder="参加项目的日期"
-													ng-model="addexp.from" data-provide="datepicker" 
-													required data-date-format="yyyy-mm-dd"></input></td>
-												<td><input  class="form-control datepicker" placeholder="参加项目的日期"
-													ng-model="addexp.to" data-provide="datepicker" 
-													required data-date-format="yyyy-mm-dd" placeholder="项目结束日期"
-													></input></td>
+												<td><input class="form-control datepicker"
+													placeholder="参加项目的日期" ng-model="addexp.from"
+													data-provide="datepicker" required
+													data-date-format="yyyy-mm-dd"></input></td>
+												<td><input class="form-control datepicker"
+													placeholder="参加项目的日期" ng-model="addexp.to"
+													data-provide="datepicker" required
+													data-date-format="yyyy-mm-dd" placeholder="项目结束日期"></input></td>
 												<td><input class="form-control" placeholder="项目简述"
 													ng-model="addexp.content"></input></td>
 											</tr>
