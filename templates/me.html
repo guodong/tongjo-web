@@ -260,7 +260,61 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 
 			app.controller('avatar',
 			function($scope, $resource, cropperid) {
-
+				/* 初始化系统默认头像 */
+				var sysimg = new Array();
+				$scope.initsysimg = function(){
+					for(var i = 0; i<40;i++){
+						sysimg[i] = "sysavatar/"+(i+1)+".jpg";
+					}
+					$scope.sysimg = sysimg;
+				}
+				$scope.initsysimg();
+				
+				var selectimg = -1;
+				$scope.selectimg = function(index){
+					if(selectimg == index){
+						selectimg = -1;
+					}else{
+						selectimg = index;
+					}
+				}
+				
+				$scope.isselect = function(index){
+					if(selectimg == index){
+						return true;
+					}else{
+						return false;
+					}
+				};
+				
+				/* 保存用户选择的图片的url */
+				var User = $resource(API + 'user/:userId', {
+					userId: '@id'
+				},
+				{
+					save: {
+						method: 'PUT'
+					}
+				});
+				$scope.saveavatar = function(){
+					if(selectimg < 0 || selectimg > 39){
+						alert("请选选择图片");
+					}else{
+						var u = new User();
+						u.$save({
+							userId:localStorage.uid,
+							avatar:$scope.sysimg[selectimg]
+						},function(msg) {
+							if(msg.error){
+								alert(msg.msg);
+							}else{
+								alert("修改成功");
+								/* location.reload(); */
+							}
+						});
+					}
+				};
+				
 				var cropper;
 				$scope.init = function() {
 					cropper = new ImageCropper(300, 300, 180, 180);
@@ -306,6 +360,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 							function(data) {
 								if (data.id) {
 									alert("修改成功");
+									location.reload();
 								}
 							},
 							"json")
