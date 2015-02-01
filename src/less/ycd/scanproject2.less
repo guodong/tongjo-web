@@ -1,9 +1,11 @@
 .scanprojecttwo{
 .mainpanel{
 border-left: 1px solid #bdbdbd;
-width: 100%;
+width: 1200px;
 display: table;
 table-layout: fixed;
+margin-left: auto;
+margin-right: auto;
 .left-nav{
 display:table-cell;
 vertical-align: top;
@@ -98,6 +100,30 @@ margin-top: -1px;
 .textcenter{
 	text-align: center;
 }
+.sectionHeader{
+	width:100%;
+	color: #b8b8b8;
+	background-color: #f8f8f8;
+	border-right: 1px solid #bdbdbd;
+	border-bottom: 1px solid #bdbdbd;
+	-webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;
+	-moz-box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;
+	.title{
+	font-size: 28px;
+	text-shadow: 0px 1px rgba(255,255,255,0.8);
+	font-weight: lighter;
+	padding: 10px 0 5px 10px;
+	float: left;
+	}
+	.clearBoth {
+	clear: both;
+	}
+}
+.featured{
+	padding: 10px;
+	background-color:#f8f8f8;
+}
 section {
 	display: block;
 	margin: 0;
@@ -110,8 +136,9 @@ section>div {
 }
 section.tech article {
 float: left;
-width: 30%;
-margin: 0 0 0 3%;
+width: 25%;
+margin: 0 0 0 0%;
+padding:10px;
 }
 section.tech article span {
 display: block;
@@ -120,12 +147,19 @@ border: 6px solid #fff;
 height: 0;
 overflow: hidden;
 padding-bottom: 75%;
+background-color: #ffffff;
 }
 section.tech article img {
-	width: 100%;
 	display: block;
 	border: 0;
-	vertical-align:middle;
+	position: absolute;
+  left: 50%;
+  top: 50%;
+  height: auto;
+  width: 100%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
 }
 section.tech article span div{
 position: absolute;
@@ -140,10 +174,11 @@ paddng-left:10px;
 padding-right:10px;
 }
 section.tech article span div p {
-line-height: 2em;
+height: 40px;
+line-height: 20px;
 margin-top:5px;
 margin-bottom:25px;
-font-size:18px;
+font-size:14px;
 overflow : hidden;
 text-overflow: ellipsis;
 display: -webkit-box;
@@ -161,10 +196,10 @@ color: #f26334;
 }
 .small-button {
 display: inline-block;
-height: 40px;
+height: 30px;
 padding: 0 20px;
 border-radius: 5px;
-font: 400 18px/40px 'Source Sans Pro', sans-serif;
+font: 400 16px/30px 'Source Sans Pro', sans-serif;
 letter-spacing: .1em;
 background: #fff;
 border-width: 2px;

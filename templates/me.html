@@ -483,14 +483,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 						$scope.teams = $scope.teams_filtered = ProjectTs.query({
 							project_id: $routeParams.project_id
 						});
-						
-
-<<<<<<< Updated upstream
-						//$scope.getprojectTs();
-=======
 						$scope.getprojectTs();
-						
->>>>>>> Stashed changes
 						var Team = $resource(API + 'team/:team_id', {team_id: '@team_id'}, {save:{method: 'PUT'}});
 						$scope.handle = function(team, status) {
 							var t = Team.get({team_id: team.id});
@@ -500,7 +493,6 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 								team.status = status;
 							})
 						};
-<<<<<<< Updated upstream
 						$scope.filter = function(type){
 							$scope.teams_filtered = [];
 							switch(type){
@@ -528,11 +520,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 								});
 								break;
 							}
-						}
-
-						
-=======
->>>>>>> Stashed changes
+						}				
 					});
 			
 			app.controller('project-edit',

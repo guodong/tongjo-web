@@ -35,7 +35,7 @@
 				<div class="row">
 					<div class="messagebox">
 						<div class="col-md-1">	
-						<img alt="{{msg.comments[0].owener.username}}" class="avatar" height="48"
+						<img alt="{{msg.from.username}}" class="avatar" height="48"
 								src="http://api.tongjo.com/files/{{msg.from.avatar}}" width="48">	
 						</div>
 						<div class="col-md-8">
@@ -45,6 +45,23 @@
 					</div>
 				</div>
 				<div class="moreReplies" style="display: none">
+					<div class="commentbox">
+							<div class="avatarbox pull-left">
+								<img alt="{{msg.from.username}}" class="avatar"
+									height="48" src="http://api.tongjo.com/files/{{msg.from.avatar}}" width="48">
+							</div>
+							<div class="comment">
+								<div class="comment-header">
+									<strong> <a href="/userinfodetail/{{msg.from.id}}"
+										class="author" ng-bind="msg.from.realname"></a>
+									</strong> 发表于 <span ng-bind="msg.created_at"></span>
+								</div>
+								<div class="comment-content">
+									<p class="text-muted" ng-bind="msg.content">No
+										description provided.</p>
+								</div>
+							</div>
+						</div>
 						<div class="commentbox" ng-repeat="reply in msg.replies">
 							<div class="avatarbox pull-left">
 								<img alt="{{reply.user.avatar}}" class="avatar"
@@ -52,7 +69,7 @@
 							</div>
 							<div class="comment">
 								<div class="comment-header">
-									<strong> <a href="/userinfodetail!{{reply.user.id}}"
+									<strong> <a href="/userinfodetail/{{reply.user.id}}"
 										class="author" ng-bind="reply.user.realname"></a>
 									</strong> 发表于 <span ng-bind="reply.updated_at"></span>
 								</div>
