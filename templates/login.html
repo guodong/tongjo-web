@@ -63,7 +63,8 @@ require(['angular','lib/ycd-validation'], function(angular){
 	}});*/
   "use strict";
   var loginApp = angular.module('loginApp', ["w5c.validator"]);
-	loginApp.config(["w5cValidatorProvider", function (w5cValidatorProvider) {
+	loginApp.config(["w5cValidatorProvider", "$httpProvider", function (w5cValidatorProvider, $httpProvider) {
+		$httpProvider.defaults.withCredentials = true;
       // 全局配置
 		w5cValidatorProvider.config({
           blurTrig: false,
@@ -80,6 +81,7 @@ require(['angular','lib/ycd-validation'], function(angular){
       });
   }]);
   loginApp.controller("loginController", ["$scope", "$http", function ($scope, $http) {
+	  
       $scope.remember = true;
 	  if(localStorage.isRemember){
 		  $scope.email = localStorage.email;
@@ -107,6 +109,9 @@ require(['angular','lib/ycd-validation'], function(angular){
       		   url: "http://api.tongjo.com/accesstoken",
       		   data: data,
       		   dataType:"json",
+      		   xhrFields: {
+      		      withCredentials: true
+      		   },
       		   success: function(msg){
       			   console.log(msg);
       			   if(msg.error){
@@ -124,7 +129,7 @@ require(['angular','lib/ycd-validation'], function(angular){
       		    	   localStorage.password = passwordVal;
       		    	   localStorage.isRemember = true;
       		       }
-      		       location.href = "/me";
+      		       //location.href = "/me";
       			   
       		   },
       	       error: function(data) {

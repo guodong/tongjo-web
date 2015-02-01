@@ -13,8 +13,9 @@
 <script>
 require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 		function(angular, angular_route, $resource,bootstrap) {
-			var app = angular.module('me', ['ngRoute', 'ngResource','ui.bootstrap']).config(['$routeProvider',
-			function($routeProvider) {
+			var app = angular.module('me', ['ngRoute', 'ngResource','ui.bootstrap']).config(['$routeProvider', '$httpProvider',
+			function($routeProvider, $httpProvider) {
+				$httpProvider.defaults.withCredentials = true;
 				$routeProvider.when('/info', {
 					templateUrl: 'tpl/me/info.html',
 					controller: 'info'
