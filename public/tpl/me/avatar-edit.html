@@ -1,30 +1,68 @@
-<div class="me-avataredit container-fluid ">
-	<div class="page-header" style="text-align: bottom">
-		<h2 class="title">个人信息 <small >编辑头像</small></h2>
-	</div>
+<div class="page-header" style="text-align: bottom">
+	<h2 class="title">
+		个人信息 <small>编辑头像</small>
+	</h2>
+</div>
 
-	<div class="mcontainer" ginger_software_stylesheet="true" ginger_software_doc="true">
-		<div class="container-fluid">
-			<a class="selectBtn" href="javascript:void(0);"  onclick="document.getElementById(&#39;input&#39;).click();" ></a>
-			<a class="saveBtn" href="javascript:void(0);" ng-click="saveImage();"></a>	
-			<input type="file" fileread="uploadme" id="input" size="10" style="visibility:hidden;" accept="image/*"/>
-	
-			<div class="wrapper">
-				<canvas id="cropper" class="cropper" width="300" height="300"></canvas>
-				<a class="rotateLeftBtn" href="javascript:void(0);" onclick="rotateImage(event);">LeftRotate</a>
-				<a class="rotateRightBtn" href="javascript:void(0);" onclick="rotateImage(event);">RightRotate</a>
-	
-				<div class="previewContainer">
-					<canvas class="preview140 preview" id="preview140" width="140" height="140"></canvas>
-					<span style="display:block;width:100%;padding-top:5px;text-align:center;">large:140x140</span>
-	
-					<canvas class="preview50 preview" id="preview50" width="50" height="50" style="position:absolute;left:50px;top:220px;"></canvas>
-					<span style="position:absolute;left:45px;top:280px;width:70px;text-align:center;">small:50x50</span>
+<ul id="myTab" class="nav nav-tabs" role="tablist">
+	<li role="presentation" class="active"><a role="tab" tabid="t1"
+		data-toggle="tab">系统头像</a></li>
+	<li role="presentation"><a role="tab" tabid="t2" data-toggle="tab">自定义头像</a></li>
+</ul>
+
+
+
+
+<div class="me-avataredit tab-content">
+	<div role="tabpanel" tcid="t1" class="tab-pane active" id="home">
+		<ul class="nav nav-pills sys_defaultimg"> 
+			<li ng-repeat="img in sysimg">
+				<span ng-class="{'select': isselect($index)}" ng-click="selectimg($index)"><img 
+				alt="55x55" ng-src="{{'http://api.tongjo.com/files/'+img || '/img/avatar.png'}}"
+				data-holder-rendered="true"></span></li>
+		</ul>
+		<div>
+			<button class="btn btn-primary" style="margin-left:10px;margin-top:10px" ng-click="saveavatar()">保存信息</button>
+		</div>
+	</div>
+	<div role="tabpanel" tcid="t2" class="tab-pane" id="profile">
+		<div class="mcontainer" ginger_software_stylesheet="true"
+			ginger_software_doc="true">
+			<div class="container-fluid">
+				<a class="selectBtn" href="javascript:void(0);"
+					onclick="document.getElementById(&#39;input&#39;).click();"></a> <a
+					class="saveBtn" href="javascript:void(0);" ng-click="saveImage();"></a>
+				<input type="file" fileread="uploadme" id="input" size="10"
+					style="visibility: hidden;" accept="image/*" />
+
+				<div class="wrapper">
+					<canvas id="cropper" class="cropper" width="300" height="300"></canvas>
+					<a class="rotateLeftBtn" href="javascript:void(0);"
+						onclick="rotateImage(event);">LeftRotate</a> <a
+						class="rotateRightBtn" href="javascript:void(0);"
+						onclick="rotateImage(event);">RightRotate</a>
+
+					<div class="previewContainer">
+						<canvas class="preview140 preview" id="preview140" width="140"
+							height="140"></canvas>
+						<span
+							style="display: block; width: 100%; padding-top: 5px; text-align: center;">large:140x140</span>
+
+						<canvas class="preview50 preview" id="preview50" width="50"
+							height="50" style="position: absolute; left: 50px; top: 220px;"></canvas>
+						<span
+							style="position: absolute; left: 45px; top: 280px; width: 70px; text-align: center;">small:50x50</span>
+					</div>
 				</div>
 			</div>
-	
 		</div>
-	
 	</div>
-	
 </div>
+<script>
+	$('#myTab a').click(function(e) {
+		e.preventDefault();
+		var p = $(this).attr("tabid");
+		$("[tcid=" + p + "]").siblings().removeClass("active");
+		$("[tcid=" + p + "]").addClass("active");
+	});
+</script>

@@ -1,5 +1,4 @@
 <?php
-session_start();
 define('PATH_BASE', realpath('../') . '/');
 require_once (PATH_BASE.'vendor/smarty/smarty/libs/Smarty.class.php');
 
