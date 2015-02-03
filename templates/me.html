@@ -983,7 +983,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 		<div class="col-md-2" ng-controller="sidebar">
 			<div class="avatar clearfix">
 				<a href="#avatar"> <img class="img-thumbnail" alt="140x140"
-					ng-src="{{user.avatar && 'http://api.tongjo.com/files/'+user.avatar || '/img/avatar.png'}}"
+					ng-src="{{user.avatar && 'http://api.tongjo.com/files/'+user.avatar || '/img/avatar.png'}}" title="修改头像"
 					data-holder-rendered="true">
 					<h6 ng-bind="user.realname"></h6>
 				</a>
