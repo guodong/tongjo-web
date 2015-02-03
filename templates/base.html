@@ -19,7 +19,8 @@ requirejs.config({
 		angular: '/lib/angularjs/angular',
 		'angular-route': '/lib/angular-route/angular-route',
 		'angular-resource': '/lib/angular-resource/angular-resource',
-		'ui-bootstrap':'/lib/angular-uibootstrap/ui-bootstrap-tpls'
+		'ui-bootstrap':'/lib/angular-uibootstrap/ui-bootstrap-tpls',
+		'infinite-scroll':'/lib/angular-infinite-scroll/ng-infinite-scroll'
 	},
 	shim:{
         angular: {
@@ -36,6 +37,10 @@ requirejs.config({
         'ui-bootstrap':{
         	deps:['angular'],
             exports:"ui-bootstrap"
+        },
+        'infinite-scroll':{
+        	deps:['angular'],
+            exports:"infinite-scroll"
         }
     },
 	deps:['lib/ycd-validation'],
