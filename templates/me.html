@@ -607,14 +607,8 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 						$scope.teams = $scope.teams_filtered = ProjectTs.query({
 							project_id: $routeParams.project_id
 						});
-<<<<<<< HEAD
 						$scope.getprojectTs();
-=======
-						
 
-						$scope.getprojectTs();
-						
->>>>>>> c8b4cd16344140b4a7be044a1efb521cdb2b7907
 						var Team = $resource(API + 'team/:team_id', {team_id: '@team_id'}, {save:{method: 'PUT'}});
 						$scope.handle = function(team, status) {
 							var t = Team.get({team_id: team.id});
@@ -819,7 +813,8 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 					user_id: localStorage.uid,
 					type: 'joined'
 				});
-				$scope.quit = function(team){
+				$scope.quit = function(team, index){
+					if(!confirm("确定退出团队？")) return;
 					var TU = $resource(API + "team/:team_id/user/:user_id/pivot/1", {
 						team_id: '@team_id',
 						user_id: '@user_id'
@@ -830,10 +825,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 					});
 					tu.$remove(function(){
 						alert("退出成功");
-						$scope.joinedteams = Team.query({
-							user_id: localStorage.uid,
-							type: 'joined'
-						});
+						$scope.joinedteams.splice(index, 1);return;
 					});
 				};
 				$scope.filter = function(type, filter){
