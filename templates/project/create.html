@@ -102,10 +102,11 @@
 						<div class="modal-body">
 							<!-- 主体 -->
 							<div class="container-fluid tagbody">
-								<div class="col-md-3" style="padding-left:0px">
+								<div class="col-md-3" style="padding-left: 0px">
 									<ul class="nav nav-pills nav-stacked lefttree">
-										<li ng-repeat="tag in tags" ng-class="{'active': isActive(tag.id)}"><a ng-bind="tag.name" 
-											ng-click="setid(tag.id)"></a></li>
+										<li ng-repeat="tag in tags"
+											ng-class="{'active': isActive(tag.id)}"><a
+											ng-bind="tag.name" ng-click="setid(tag.id)"></a></li>
 									</ul>
 								</div>
 
@@ -180,8 +181,18 @@
 	<div class="form-group">
 		<div class="me-avataredit ">
 			<label>项目图片</label>
+			<div class="sys_projectimg" ng-show="status">
+				<div class="p_img">
+					<a ng-click="setstatus()"> <img alt="55x55"
+						ng-src="{{'http://api.tongjo.com/files/'+projectimg || '/img/avatar.png'}}">
+						<h3>点击修改项目图片</h3>
+					</a>
+				</div>
+
+			</div>
+
 			<div class="mcontainer" ginger_software_stylesheet="true"
-				ginger_software_doc="true">
+				ginger_software_doc="true" ng-show="!status">
 				<div class="container-fluid">
 					<a class="selectBtn" href="javascript:void(0);"
 						onclick="document.getElementById(&#39;input&#39;).click();"></a> <a
@@ -264,6 +275,7 @@
 					$scope.project.categorys.push(categorys[i].id);
 				}
 				$scope.project.user_id = localStorage.uid;
+				$scope.project.image = $scope.projectimg;
 				$scope.project.$save(function() {
 					location.href = "/project/" + $scope.project.id;
 				});
@@ -291,6 +303,14 @@
 					break;
 				}
 			});
+			
+			$scope.projectimg = 'sysproject/p1.png';
+			//true代表显示图片，false代表显示图片操作
+			$scope.status = true;
+			
+			$scope.setstatus = function(){
+				$scope.status = false;
+			}
 			
 			var cropper;
 			$scope.init = function() {
@@ -337,7 +357,10 @@
 						function(data) {
 							
 							if (data.file) {
-								$scope.project.image=data.file;
+								 $scope.$apply(function () {
+									 $scope.projectimg=data.file;
+									 $scope.status = true;
+							    }); 
 								console.log($scope.project);
 							}else{
 								alert("图片上传失败");
