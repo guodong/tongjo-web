@@ -9,9 +9,6 @@ margin-top: 0px;
 .bodyer.wrapper{
 width:100%;
 }
-.push {
-height: 0px;
-}
 </style>
 <div class="scanprojecttwo">
 <div class="container-fluid">
@@ -127,6 +124,7 @@ height: 0px;
         </div>
         </div>
 </div>
+</div>
 <script>
 	require(
 			['angular', 'angular-route', 'angular-resource','ui-bootstrap','infinite-scroll'],
@@ -185,8 +183,6 @@ height: 0px;
 					}).when('/category-:categoryId/:subcategoryId',{
 						templateUrl:'scanproject-tpl',
 						controller:'categoryCtl'
-					}).when('#',{
-						redirectTo:'/'
 					}).otherwise({
 						redirectTo:'/'
 					});		
