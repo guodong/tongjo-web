@@ -4,133 +4,105 @@
 .active {
 	display: block;
 	visibility: visible;
+	a{
+		color:#0088cc !important;
+	}
 }
 </style>
 
-<div class="userinfodetail container-fluid"
-	ng-controller="userdetailControl">
-	<div class="col-md-4">
-		<div class="leftbar">
-			<div class="userhead">
-				<img alt="240x160"
-					ng-src="{{userinfo.avatar && 'http://api.tongjo.com/files/'+userinfo.avatar || '/img/avatar.png'}}"
-					class="headImage">
-				<div class="isOnline">
-					<p class="text">在 线</p>
-				</div>
-			</div>
-
-			<div class="contract">
-				<div class="btn btn-info mbtn">
-					<div class="innerbutton" data-toggle="modal"
-						data-target="#contractModal">联系我吧</div>
+<div class="userinfodetail" ng-controller="userdetailControl">
+	<div class="userinfo container-fluid">
+		<div class="userdetailinfo col-md-5">
+			<div class="col-md-5">
+				<div class="userhead">
+					<img alt="120*120"
+						ng-src="{{userinfo.avatar && 'http://api.tongjo.com/files/'+userinfo.avatar || '/img/avatar.png'}}"
+						class="headImage">
 				</div>
 
-				<div class="modal fade" id="contractModal">
-					<div class="modal-dialog contract-dialog">
-						<div class="modal-content">
-							<div class="modal-header"
-								style="padding-top: 8px; padding-bottom: 8px;">
-								<button type="button" class="close" data-dismiss="modal"
-									ng-click="close()">
-									<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
-								</button>
-								<h4>
-									给<span ng-bind="userinfo.realname"></span>的一个私信
-								</h4>
-							</div>
+				<div class="contract">
+					<div class="btn btn-info mbtn" data-toggle="modal"
+						data-target="#contractModal">私信我</div>
 
-							<div class="modal-body">
-								<!-- 主体 -->
-								<div class="container-fluid">
-									<form class="form-horizontal" role="form" ng-submit="">
-										<div class="form-group">
-											<label class="col-md-2 control-label">标题：</label>
-											<div class="col-md-10 inputline">
-												<input type="text" class="form-control inputtext"
-													id="inputteamname" placeholder="留言的主题" name="name"
-													ng-model="message.title" required>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-md-2 control-label">详情：</label>
-											<div class="input-group col-md-10">
-												<textarea cols="3" type="text"
-													class="form-control mutilinput" placeholder="详细信息"
-													name="description" ng-model="message.content" required></textarea>
-											</div>
-										</div>
-									</form>
-
+					<div class="modal fade" id="contractModal">
+						<div class="modal-dialog contract-dialog">
+							<div class="modal-content">
+								<div class="modal-header"
+									style="padding-top: 8px; padding-bottom: 8px;">
+									<button type="button" class="close" data-dismiss="modal"
+										ng-click="close()">
+										<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
+									</button>
+									<h4>
+										给<span ng-bind="userinfo.realname"></span>的一个私信
+									</h4>
 								</div>
-							</div>
 
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default btn-sm" ng-click="message()"
-									data-dismiss="modal">发送</button>
+								<div class="modal-body">
+									<div class="container-fluid">
+										<form class="form-horizontal" role="form" ng-submit="">
+											<div class="form-group">
+												<label class="col-md-2 control-label">标题：</label>
+												<div class="col-md-10 inputline">
+													<input type="text" class="form-control inputtext"
+														id="inputteamname" placeholder="留言的主题" name="name"
+														ng-model="message.title" required>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-2 control-label">详情：</label>
+												<div class="input-group col-md-10">
+													<textarea cols="3" type="text"
+														class="form-control mutilinput" placeholder="详细信息"
+														name="description" ng-model="message.content" required></textarea>
+												</div>
+											</div>
+										</form>
+
+									</div>
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default btn-sm"
+										ng-click="message()" data-dismiss="modal">发送</button>
+								</div>
 							</div>
 						</div>
 					</div>
+
+				</div>
+			</div>
+
+			<div class="userdetail col-md-7">
+				<div class="userdetail-title">
+					<h1 ng-bind="userinfo.realname"></h1>
+					<img alt=".." ng-src="/{{getseximg(userinfo.gender)}}" class="sex">
 				</div>
 
+				<div class="userdetail-line">
+					<h6>LV：</h6>
+					<h6 ng-bind="userinfo.degree"></h6>
+					<h6 class="secondh6">称号:</h6>
+					<h6 ng-bind="userinfo.honor"></h6>
+				</div>
+				<div class="userdetail-line">
+					<h6>大学:</h6>
+					<h6 ng-bind="userinfo.school.name">同济大学</h6>
+				</div>
+				<div class="userdetail-line">
+					<h6>专业:</h6>
+					<h6 ng-bind="userinfo.major.name"></h6>
+				</div>
 			</div>
-
-			<!-- <div class="friend-comments-title">
-				<h6>好友印象</h6>
-			</div>
-			<ul>
-				<li class="friend-comments-detail">
-					<h5>黄小吃</h5>
-					<h6>黄小吃是大美女</h6>
-				</li>
-
-				<li class="friend-comments-detail">
-					<h5>黄小吃</h5>
-					<h6>黄小吃是大美女</h6>
-				</li>
-
-				<li class="friend-comments-detail">
-					<h5>黄小吃</h5>
-					<h6>黄小吃是大美女</h6>
-				</li>
-			</ul> -->
 		</div>
 
 
-	</div>
-	<div class="col-md-8">
-
-		<div class="userdetail">
-
-			<div class="userdetail-title">
-				<h1 ng-bind="userinfo.realname"></h1>
-			</div>
-
-			<div class="userdetail-line">
-				<h6>姓名：</h6>
-				<h6 ng-bind="userinfo.realname"></h6>
-				<img alt=".." ng-src="/{{getseximg(userinfo.gender)}}" class="sex">
-			</div>
-			<div class="userdetail-line">
-				<h6>LV：</h6>
-				<h6 ng-bind="userinfo.degree"></h6>
-				<h6 class="secondh6">称号:</h6>
-				<h6 ng-bind="userinfo.honor"></h6>
-			</div>
-			<div class="userdetail-line">
-				<h6>大学:</h6>
-				<h6 ng-bind="userinfo.school.name">同济大学</h6>
-			</div>
-			<div class="userdetail-line">
-				<h6>专业:</h6>
-				<h6 ng-bind="userinfo.major.name"></h6>
-			</div>
+		<div class="usertaginfo col-md-6">
 			<div class="userdetail-label">
 				<h6>感兴趣的学术标签</h6>
 			</div>
 			<ul>
-				<li ng-repeat="label in userinfo.tags" ><span
-					class="rectangle{{$index}}" ></span>{{label.name}}</li>
+				<li ng-repeat="label in userinfo.tags"><span class="rectangle"><span></span></span>{{label.name}}</li>
 			</ul>
 
 			<div class="clear"></div>
@@ -138,204 +110,256 @@
 				<h6>共同标签({{commontags.length}})</h6>
 			</div>
 			<ul>
-				<li ng-repeat="label in commontags"><span
-					class="rectangle{{$index}}"></span>{{label.name}}</li>
+				<li ng-repeat="label in commontags"><span class="rectangle"><span></span></span>{{label.name}}</li>
 			</ul>
 		</div>
 
-		<div class="userproject" ng-controller="userprojectControl">
-			<ul id="myTab" class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active"><a role="tab" tabid="t1"
-					data-toggle="tab">已参加项目</a></li>
-				<li role="presentation"><a role="tab" tabid="t2"
-					data-toggle="tab">已发布项目</a></li>
-				<li role="presentation"><a role="tab" tabid="t3"
-					data-toggle="tab">实践经历</a></li>
-			</ul>
+	</div>
 
-			<div class="tab-content">
-				<div role="tabpanel" tcid="t1" class="tab-pane projectitem active"
-					ng-repeat="project in projects">
-					<div class="projectitem-title">
-						<h4 ng-bind="project.name"></h4>
-						<h6 class="time" ng-bind="project.created_at">2015年01月01日</h6>
-						<h6 class="time deadtime" ng-bind="project.deadline">结束-6天12小时</h6>
-					</div>
-					<div class="projectitem-content">
-						<img alt="100*100"
-							ng-src="{{project.image && 'http://api.tongjo.com/files/'+project.image}}"
-							class="headimg">
-						<div class="detail">
-							<img src="/img/dialog.png" class="background">
-							<p class="detailtext" ng-bind="project.description"></p>
-						</div>
-					</div>
-				</div>
 
-				<div role="tabpanel" tcid="t2" class="tab-pane projectitem"
-					ng-repeat="project in jprojects">
-					<div class="projectitem-title">
-						<h4 ng-bind="project.name"></h4>
-						<h6 class="time" ng-bind="project.created_at">2015年01月01日</h6>
-						<h6 class="time deadtime" ng-bind="project.deadline">结束-6天12小时</h6>
-					</div>
-					<div class="projectitem-content">
-						<img alt="100*100"
-							ng-src="{{project.image && 'http://api.tongjo.com/files/'+project.image ||  '/img/head.jpg'}}"
-							class="headimg">
-						<div class="detail">
-							<img src="/img/dialog.png" class="background">
-							<p class="detailtext" ng-bind="project.description"></p>
-						</div>
-					</div>
 
-				</div>
-				
-				<div role="tabpanel" tcid="t3" class="tab-pane projectitem"
-					ng-repeat="exp in experiences">
-					<div class="projectitem-title"> 
-						<h4 ng-bind="exp.content"></h4>
-						<h6 class="time" ng-bind="exp.from"></h6>
-						<h6 class="time deadtime" ng-bind="exp.to"></h6>
-					</div>
-					<div class="projectitem-content">
-						
-					</div>
-				</div>
+	<div class="userproject" ng-controller="userprojectControl">
+		<ul id="myTab" class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a role="tab" tabid="t1"
+				data-toggle="tab">已参加项目</a></li>
+			<li role="presentation"><a role="tab" tabid="t2"
+				data-toggle="tab">已发布项目</a></li>
+			<li role="presentation"><a role="tab" tabid="t3"
+				data-toggle="tab">实践经历</a></li>
+		</ul>
+
+		<div class="tab-content">
+			<div role="tabpanel" tcid="t1" class="tab-pane projectitem active">
+				<table class="table">
+					<thead>
+						<tr class = "title">
+							<th class="projectname">项目名称</th>
+							<th>开始时间</th>
+							<th>结束时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="project in projects">
+							<td ng-bind="project.name" class="projectname"></td>
+							<td ng-bind="project.created_at"></td>
+							<td ng-bind="project.deadline"></td>
+							<td ><a href="/project/{{project.id}}">查看</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div role="tabpanel" tcid="t2" class="tab-pane projectitem">
+				<table class="table ">
+					<thead>
+						<tr class = "title">
+							<th class="projectname">项目名称</th>
+							<th>开始时间</th>
+							<th>结束时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="project in jprojects">
+							<td ng-bind="project.name" class="projectname"></td>
+							<td ng-bind="project.created_at"></td>
+							<td ng-bind="project.deadline"></td>
+							<td><a href="/project/{{project.id}}">查看</a></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+			<div role="tabpanel" tcid="t3" class="tab-pane projectitem">
+
+				<table class="table">
+					<thead>
+						<tr class = "title">
+							<th class="projectname">实践项目</th>
+							<th>开始时间</th>
+							<th>结束时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="exp in experiences">
+							<td ng-bind="exp.content" class="projectname"></td>
+							<td ng-bind="exp.from"></td>
+							<td ng-bind="exp.to"></td>
+							<td><a >查看</a></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
-
 </div>
 
 <script>
-	require([ 'angular', 'angular-route', 'angular-resource' ], function(
-			angular) {
-		var uid = location.pathname.replace(/\/.*\/(\d+)$/, '$1');
-		var app = angular.module('userinfoApp', [ 'ngRoute', 'ngResource' ]);
-		app.controller('userdetailControl', function($scope, $resource) {
+	require(
+			[ 'angular', 'angular-route', 'angular-resource' ],
+			function(angular) {
+				var uid = location.pathname.replace(/\/.*\/(\d+)$/, '$1');
+				var app = angular.module('userinfoApp', [ 'ngRoute',
+						'ngResource' ]);
+				app
+						.controller(
+								'userdetailControl',
+								function($scope, $resource) {
 
-			var url = window.location.href;
-			
-			/* 获取所访问用户的基本信息 */
-			var User = $resource(API + 'user/:userId');
-			$scope.userinfo = User.get({
-				userId : uid
-			}, function() {
-				$scope.commontags = $scope.getcommontags();
+									var url = window.location.href;
 
-				if ($scope.userinfo.degree < 10) {
-					$scope.userinfo.honor = "菜鸟";
-				} else if ($scope.userinfo.degree < 40) {
-					$scope.userinfo.honor = "中级";
-				} else {
-					$scope.userinfo.honor = "大神";
-				}
+									/* 获取所访问用户的基本信息 */
+									var User = $resource(API + 'user/:userId');
+									$scope.userinfo = User
+											.get(
+													{
+														userId : uid
+													},
+													function() {
+														$scope.commontags = $scope
+																.getcommontags();
+
+														if ($scope.userinfo.degree < 10) {
+															$scope.userinfo.honor = "菜鸟";
+														} else if ($scope.userinfo.degree < 40) {
+															$scope.userinfo.honor = "中级";
+														} else {
+															$scope.userinfo.honor = "大神";
+														}
+													});
+
+									/* 获取用户本人的技能 */
+									$scope.usertag = new Array();
+									var UserTag = $resource(API
+											+ 'user/:userId/tag');
+									$scope.getUsertags = function() {
+										var tags = UserTag.query({
+											userId : localStorage.uid
+										}, function() {
+											$scope.usertag = tags;
+											$scope.commontags = $scope
+													.getcommontags();
+										});
+									}
+
+									$scope.getUsertags();
+
+									$scope.getcommontags = function() {
+										var commontags = new Array();
+										for ( var i = 0; i < $scope.usertag.length; i++) {
+											for ( var j = 0; j < $scope.userinfo.tags.length; j++) {
+												if ($scope.usertag[i].id == $scope.userinfo.tags[j].id) {
+													commontags
+															.push($scope.usertag[i]);
+												}
+											}
+										}
+										return commontags;
+									}
+
+									$scope.getseximg = function($sex) {
+										if ($sex == 0) {
+											return "img/sex-femail.png";
+										} else if ($sex == 1) {
+											return "img/sex-man.png";
+										} else {
+											return "img/sex-man.png";
+										}
+									};
+
+									$scope.message = {};
+									var Mes = $resource(API + 'message');
+									$scope.message = function() {
+										var m = new Mes();
+										m.$save({
+											title : $scope.message.title,
+											from_id : localStorage.uid,
+											to_id : uid,
+											content : $scope.message.content
+										}, function(mes) {
+											if (mes && mes.id && mes.id > 0) {
+												alert("发送成功");
+											}
+										});
+									}
+
+								});
+
+				app
+						.controller(
+								'userprojectControl',
+								function($scope, $resource) {
+									var url = window.location.href;
+
+									var Project = $resource(API
+											+ 'user/:user_id/type/:type/project');
+									var projects = Project
+											.query(
+													{
+														user_id : uid,
+														type : 'created'
+													},
+													function() {
+														for ( var i = 0; i < projects.length; i++) {
+															projects[i].created_at = projects[i].created_at
+																	.substr(0,
+																			10);
+															projects[i].deadline = projects[i].created_at;
+														}
+														$scope.projects = projects;
+														console.log(projects);
+													});
+
+									var jprojects = Project
+											.query(
+													{
+														user_id : uid,
+														type : 'joined'
+													},
+													function() {
+														for ( var i = 0; i < projects.length; i++) {
+															projects[i].created_at = projects[i].created_at
+																	.substr(0,
+																			10);
+															projects[i].deadline = projects[i].created_at;
+														}
+														$scope.jprojects = jprojects;
+														console.log(jprojects);
+													});
+
+									/* 获取自己添加的实践经历 */
+									var Exp = $resource(API
+											+ 'user/:user_id/experience');
+									$scope.getExperience = function() {
+										var exps = Exp
+												.query(
+														{
+															user_id : uid
+														},
+														function() {
+															$scope.experiences = exps;
+															for ( var i = 0; i < exps.length; i++) {
+																$scope.experiences[i].from = exps[i].from
+																		.substr(
+																				0,
+																				10);
+																$scope.experiences[i].to = exps[i].to
+																		.substr(
+																				0,
+																				10);
+															}
+														});
+									};
+									$scope.getExperience();
+
+								});
+
+				angular.bootstrap(document.getElementById("body"),
+						[ 'userinfoApp' ]);
 			});
-
-			/* 获取用户本人的技能 */
-			$scope.usertag =  new Array();
-			var UserTag = $resource(API + 'user/:userId/tag');
-			$scope.getUsertags = function(){
-				var tags = UserTag.query({
-					userId: localStorage.uid
-				}, function() {
-					$scope.usertag = tags;
-					$scope.commontags = $scope.getcommontags();
-				});
-			}
-			
-			$scope.getUsertags(); 
-			
-			$scope.getcommontags = function(){
-				var commontags = new Array();
-				for(var i=0;i < $scope.usertag.length;i++){
-					for(var j=0;j < $scope.userinfo.tags.length;j++){
-						if($scope.usertag[i].id == $scope.userinfo.tags[j].id){
-							commontags.push($scope.usertag[i]);
-						}
-					}
-				}
-				return commontags;
-			}
-			
-			$scope.getseximg = function($sex) {
-				if ($sex == 0) {
-					return "img/sex-femail.png";
-				} else if ($sex == 1) {
-					return "img/sex-man.png";
-				} else {
-					return "img/sex-man.png";
-				}
-			};
-			
-			$scope.message = {};
-			var Mes = $resource(API + 'message');
-			$scope.message = function(){
-				var m = new Mes();
-				m.$save({
-					title:$scope.message.title, 
-					from_id: localStorage.uid,
-					to_id:uid,
-					content:$scope.message.content
-				},function(mes){
-					if(mes && mes.id && mes.id>0){
-						alert("发送成功");
-					}
-				});
-			}
-			
-		});
-
-		app.controller('userprojectControl', function($scope, $resource) {
-			var url = window.location.href;
-
-			var Project = $resource(API + 'user/:user_id/type/:type/project');
-			var projects = Project.query({
-				user_id : uid,
-				type : 'created'
-			}, function() {
-				for ( var i = 0; i < projects.length; i++) {
-					projects[i].created_at = projects[i].created_at.substr(0,
-							10);
-					projects[i].deadline = projects[i].created_at;
-				}
-				$scope.projects = projects;
-				console.log(projects);
-			});
-
-			var jprojects = Project.query({
-				user_id : uid,
-				type : 'joined'
-			}, function() {
-				for ( var i = 0; i < projects.length; i++) {
-					projects[i].created_at = projects[i].created_at.substr(0,
-							10);
-					projects[i].deadline = projects[i].created_at;
-				}
-				$scope.jprojects = jprojects;
-				console.log(jprojects);
-			});
-			
-			/* 获取自己添加的实践经历 */
-			var Exp = $resource(API + 'user/:user_id/experience');
-			$scope.getExperience = function(){
-				var exps = Exp.query({
-					user_id:uid
-				}, function() {
-					$scope.experiences = exps;
-					for(var i=0;i < exps.length;i++){
-						$scope.experiences[i].from = exps[i].from.substr(0,10);
-						$scope.experiences[i].to = exps[i].to.substr(0,10);
-					}
-				});
-			};
-			$scope.getExperience();
-
-		});
-
-		angular.bootstrap(document.getElementById("body"), [ 'userinfoApp' ]);
-	});
 </script>
 
 
