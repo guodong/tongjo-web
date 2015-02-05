@@ -2,8 +2,13 @@
 <link href="/lib/bootstrap-datepicker/datepicker3.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="/lib/umeditor/themes/default/css/umeditor.css">
-<div class="page-header">
-	<h2>发布项目</h2>
+<div class="page-header create-header">
+	<ul id="myTab" role="tablist" class="create">
+		<li role="presentation" class="active"><a role="tab" tabid="t1"
+			data-toggle="tab">项目信息</a></li>
+		<li role="presentation"><a role="tab" tabid="t2" data-toggle="tab">报名设置</a></li>
+		<li role="presentation"><a role="tab" tabid="t2" data-toggle="tab">完成</a></li>
+	</ul>
 </div>
 <form id="createforsm" name="createform" ng-controller="createform">
 
