@@ -1,6 +1,6 @@
 <?php
 return array(
-        '#^/login$#' => 'login',
+        '#^/login#' => 'login',
         '#^/signup$#' => 'signup',
 		'#^/forgetpassword$#' => 'forgetpsd',
 		'#^/personjoin$#' => 'personjoin',

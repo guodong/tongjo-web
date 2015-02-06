@@ -54,14 +54,12 @@
 	</div><!-- 整体 -->
 </div>
 <script type="text/javascript">
-require(['angular','lib/ycd-validation'], function(angular){
-	//var users = new Users();
-	/*users.fetch({success: function(d){
-		users.each(function(user){
-			alert(user.get("email")
-		})
-	}});*/
-  "use strict";
+require(['angular','lib/ycd-validation', 'Util', 'Auth'], function(angular, v, Util, Auth){
+	Auth.check(function(d){
+		if(!d.error){
+			location.href="/me";
+		}
+	})
   var loginApp = angular.module('loginApp', ["w5c.validator"]);
 	loginApp.config(["w5cValidatorProvider", "$httpProvider", function (w5cValidatorProvider, $httpProvider) {
 		$httpProvider.defaults.withCredentials = true;
@@ -129,8 +127,12 @@ require(['angular','lib/ycd-validation'], function(angular){
       		    	   localStorage.password = passwordVal;
       		    	   localStorage.isRemember = true;
       		       }
-      		       location.href = "/me";
-      			   
+      		       var ret = Util.getGet('return');
+      		       if(ret){
+      		    	   location.href=ret;
+      		       }else{
+      		    	 location.href = "/me";
+      		       }
       		   },
       	       error: function(data) {
       	    	   console.log(data);

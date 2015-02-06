@@ -14,8 +14,9 @@
 <script src="http://open.web.meitu.com/sources/xiuxiu.js" type="text/javascript"></script>
 
 <script>
-require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
-		function(angular, angular_route, $resource,bootstrap) {
+require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
+		function(angular, angular_route, $resource,bootstrap, Auth) {
+			Auth.check();
 			var app = angular.module('me', ['ngRoute', 'ngResource','ui.bootstrap']).config(['$routeProvider', '$httpProvider',
 			function($routeProvider, $httpProvider) {
 				$httpProvider.defaults.withCredentials = true;
@@ -932,7 +933,8 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap'],
 				$scope.logout = function() {
 					localStorage.removeItem("uid");
 					localStorage.removeItem("accesstoken");
-					location.href = "/scanproject";
+					localStorage.removeItem("user");
+					Auth.logout();
 				}
 			});
 			app.controller('message',
