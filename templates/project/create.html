@@ -470,6 +470,7 @@
 							$scope.$apply(function(){
 								$scope.projectimg = d.file;
 							})
+							$scope.hidedialog();
 							alert("图片保存成功");
 						} else {
 							alert("图片上传失败:" + data);
@@ -478,6 +479,10 @@
 				}
 
 				$scope.initmeitu();
+				
+				$scope.hidedialog = function(){
+					$('#tagModal').modal('hide');
+				}; 
 
 			});
 
