@@ -1,0 +1,264 @@
+{!extends file='layout.html'!} {!block name=main!}
+<style>
+.footer-fix{
+background-color: #f5f5f5;
+}
+</style>
+<div class="projectdetail" ng-controller="info">
+	<div class="container-fluid page-header">
+		<img ng-src="{{'http://api.tongjo.com/files/'+project.image}}"
+			class="image">
+		<div class="projectname">
+			<h3 >12344</h3>
+			<p>123456</p>
+		</div>
+
+		<a class="btn btn-default" href="#join"> 参加项目 </a>
+	</div>
+	<div class="well clearfix">
+		<div class="panel pull-left">
+			<ul>
+				<li class="first">
+					<p>项目分类来源</p> <a>创新课题</a>
+				</li>
+				<li>
+					<p>项目分类来源</p> <a>创新课题</a>
+				</li>
+			</ul>
+		</div>
+		<div class="panel pull-right">
+			<p>剩下<span>100</span>天</p>
+			<span>开放</span>
+		</div>
+	</div>
+
+	<div style="clear: both"></div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-9 left-panel">
+			<div class="nav">
+		<ul>
+			<li role="presentation" ng-class="{'active': isActive(0,selectedTab)}"><a class="tab"  ng-click="setCurTab(0)" >项目介绍</a></li>
+			<li role="presentation" ng-class="{'active': isActive(1,selectedTab)}"><a class="tab" ng-click="setCurTab(1)">已有团队({{project.teams_count + project.users_count}})</a></li>
+			<li role="presentation" ng-class="{'active': isActive(2,selectedTab)}"><a class="tab" ng-click="setCurTab(2)">评论({{project.comments.length}})</a></li>
+		</ul>
+		</div>
+				<h3>项目描述</h3>
+				<div class="detail" ng-bind-html="project.description|trusted"></div>
+			</div>
+			<div class="col-md-3 right-panel">
+					<div class="panel creator">
+							<img ng-src="http://api.tongjo.com/files/{{project.creator.avatar}}" 
+							href="/userinfodetail/{{project.creator.id}}"
+							class="image">
+							<div class="projectname">
+							<h3>发布者：<a href="/userinfodetail/{{project.creator.id}}" ng-bind="project.creator.realname"></a></h3>
+							<h3 >同济大学 嘉定</h3>
+							<p>lv65 大神</p>
+							</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<section>
+		<a class="btn btn-primary pull-right" id="joinone" ng-show="project.parttype==1||project.parttype==2"
+			style="margin-bottom: 20px; margin-left: 20px" href="/newteam/{{project.id}}"><span
+			class="glyphicon glyphicon-star"></span> 组建团队</a> <a
+			class="btn btn-info pull-right" id="join" ng-show="project.parttype==0||project.parttype==2"
+			style="margin-bottom: 20px;" ng-click="joinone()"><span
+			class="glyphicon glyphicon-user"></span> 个人参加</a>
+		<table class="group">
+			<thead class="bg-primary">
+				<tr>
+					<th>参加的团队和个人</th>
+					<th>人数</th>
+					<th width="130px">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="v in project.teams">
+					<td>
+						<h3 class="text-success" ng-bind="v.name"></h3> <small><a
+							target="_blank" href="/team/{{v.id}}">查看团队详情</a></small>
+					</td>
+					<td>
+						<p class="text-primary">
+							已有：<span ng-bind="v.members_count"></span>人
+						</p>
+						<p class="text-muted">
+							共需：<span ng-bind="v.teammember_all"></span>人
+						</p>
+					</td>
+					<td style="text-align: right;">
+						<button class="btn btn-warning" ng-click="jointeam(v)">
+							<span class="glyphicon glyphicon-plus"></span> 参加团队
+						</button>
+					</td>
+				</tr>
+				<tr ng-repeat="v in project.users">
+					<td>
+						<h3 class="text-success" ng-bind="v.realname"></h3> <small><a
+							target="_blank" href="/userinfodetail/{{v.id}}">查看个人详情</a></small>
+					</td>
+					<td>-</td>
+					<td style="text-align: right;">-</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+	<section class="project-list">
+		<h3>相似项目：</h3>
+		<div class="row">
+			<div class="col-xs-6 col-md-3" ng-repeat="v in projects|limitTo:4">
+				<a href="/project/{{v.id}}" class="thumbnail"> <img
+					src="/img/web.png" alt="...">
+				</a>
+				<h4>
+					<a href="/project/{{v.id}}" ng-bind="v.name"></a>
+				</h4>
+			</div>
+		</div>
+	</section>
+	<section class="projectdiscuss">
+		<h3>讨论区：</h3>
+		<hr>
+		<div class="discussbox">
+			<div class="commentbox">
+				<div class="avatarbox pull-left">
+					<img alt="{{user.realname}}" class="avatar" data-user="219689"
+						height="48" ng-src="http://api.tongjo.com/files/{{user.avatar}}"
+						width="48">
+				</div>
+				<div class="inputcommentbox">
+
+					<form role="form" name="commentForm"
+						ng-submit="submit(commentForm)">
+						<div class="form-group">
+							<textarea name="comment" ng-model="comment" placeholder="请留言"
+								rows="3" required></textarea>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary">发表评论</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<hr>
+			<div class="comments">
+				<div class="commentbox"
+					ng-repeat="comment in project.comments | reverse">
+					<div class="avatarbox pull-left">
+						<img alt="{{comment.user.realname}}" class="avatar"
+							data-user="219689" height="48"
+							ng-src="http://api.tongjo.com/files/{{comment.user.avatar}}"
+							width="48">
+					</div>
+					<div class="comment">
+						<div class="comment-header">
+							<strong> <a href="/userinfodetail!{{comment.user.id}}"
+								class="author" ng-bind="comment.user.realname"></a>
+							</strong> 发表于 <span ng-bind="comment.updated_at"></span>
+						</div>
+						<div class="comment-content">
+							<p class="text-muted" ng-bind="comment.content">No
+								description provided.</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+</div>
+<script>
+	var project_id = location.pathname.replace(/\/project2\/(\d+)$/, '$1');
+	require(['angular', 'angular-resource'], function(angular) {
+		var app = angular.module('me', ['ngResource']);
+		app.filter('trusted', ['$sce', function($sce) {
+			return function(text) {
+				return $sce.trustAsHtml(text);
+			};
+		}]);
+		app.filter('reverse', function() {
+			return function(items) {
+				if (items)
+					return items.slice().reverse();
+			}
+		});
+		app.controller('info', function($scope, $resource, $sce) {
+			var Project = $resource(API + 'project/:project_id');
+			$scope.project = Project.get({
+				project_id: project_id
+			});
+			$scope.project.description = $sce
+					.trustAsHtml($scope.project.description);
+			$scope.projects = Project.query();
+			$scope.joinone = function() {
+				var PU = $resource(API + 'project/:project_id/user/:user_id/pivot', {
+					project_id: '@project_id',
+					user_id: '@user_id'
+				});
+				var pu = new PU({
+					user_id: localStorage.uid,
+					project_id: project_id
+				});
+				pu.$save(function(d) {
+					if(d.error){
+						alert("你已经申请过了");
+						return;
+					}
+					alert("参加成功");
+				});
+			};
+			$scope.jointeam = function(team){
+				var TU = $resource(API + 'team/:team_id/user/:user_id/pivot', {
+					team_id: '@team_id',
+					user_id: '@user_id'
+				});
+				var tu = new TU({
+					team_id: team.id,
+					user_id: localStorage.uid,
+				});
+				tu.$save(function(d){
+					if(d.error){
+						alert("你已经申请过了");
+						return;
+					}
+					alert("参加成功");
+					team.members_count++;
+				});
+			};
+			$scope.user = JSON.parse(localStorage.user);
+			$scope.selectedTab = 0;
+			$scope.setCurTab = function(selectedTab){
+				$scope.selectedTab = selectedTab;				
+			}
+			$scope.isActive = function(current,selectedTab){
+				if(current == selectedTab)
+					return true;
+				else return false;
+			}
+			$scope.submit = function(commentForm, projectId) {
+				var commentVal = commentForm.comment.$modelValue;
+				var data = {
+					project_id: project_id,
+					user_id: localStorage.uid,
+					content: commentVal
+				};
+				console.log(data);
+				var PC = $resource(API + 'comment');
+				var pc = new PC(data);
+				pc.$save(function() {
+					//alert("评论成功");
+					$scope.project = Project.get({
+						project_id: project_id
+					});
+				});
+			};
+		});
+		angular.bootstrap(document.getElementById("body"), ['me']);
+	});
+</script>
+{!/block!}
