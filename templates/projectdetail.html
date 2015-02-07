@@ -1,4 +1,9 @@
 {!extends file='layout.html'!} {!block name=main!}
+<style>
+.footer-fix{
+background-color: #f5f5f5;
+}
+</style>
 <div class="projectdetail" ng-controller="info">
 	<div class="container-fluid page-header">
 		<img ng-src="{{'http://api.tongjo.com/files/'+project.image}}"
@@ -29,30 +34,33 @@
 
 	<div style="clear: both"></div>
 
-	<section>
+	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-9">
-			
+			<div class="col-md-9 left-panel">
+			<div class="nav">
+		<ul>
+			<li role="presentation" ng-class="{'active': isActive(0,selectedTab)}"><a class="tab"  ng-click="setCurTab(0)" >项目介绍</a></li>
+			<li role="presentation" ng-class="{'active': isActive(1,selectedTab)}"><a class="tab" ng-click="setCurTab(1)">已有团队({{project.teams_count + project.users_count}})</a></li>
+			<li role="presentation" ng-class="{'active': isActive(2,selectedTab)}"><a class="tab" ng-click="setCurTab(2)">评论({{project.comments.length}})</a></li>
+		</ul>
+		</div>
 				<h3>项目描述</h3>
 				<div class="detail" ng-bind-html="project.description|trusted"></div>
 			</div>
-			<div class="col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">项目发布者</h3>
+			<div class="col-md-3 right-panel">
+					<div class="panel creator">
+							<img ng-src="http://api.tongjo.com/files/{{project.creator.avatar}}" 
+							href="/userinfodetail/{{project.creator.id}}"
+							class="image">
+							<div class="projectname">
+							<h3>发布者：<a href="/userinfodetail/{{project.creator.id}}" ng-bind="project.creator.realname"></a></h3>
+							<h3 >同济大学 嘉定</h3>
+							<p>lv65 大神</p>
+							</div>
 					</div>
-					<div class="panel-body">
-						<img
-							ng-src="http://api.tongjo.com/files/{{project.creator.avatar}}"
-							class="img-rounded" style="width: 60px;margin-right: 10px" /><a style=""
-							ng-bind="project.creator.realname" target="_blank"
-							href="/userinfodetail/{{project.creator.id}}"></a>
-					</div>
-				</div>
-
 			</div>
 		</div>
-	</section>
+	</div>
 	<hr>
 	<section>
 		<a class="btn btn-primary pull-right" id="joinone" ng-show="project.parttype==1||project.parttype==2"
@@ -165,7 +173,7 @@
 	</section>
 </div>
 <script>
-	var project_id = location.pathname.replace(/\/project\/(\d+)$/, '$1');
+	var project_id = location.pathname.replace(/\/project2\/(\d+)$/, '$1');
 	require(['angular', 'angular-resource'], function(angular) {
 		var app = angular.module('me', ['ngResource']);
 		app.filter('trusted', ['$sce', function($sce) {
@@ -223,6 +231,15 @@
 				});
 			};
 			$scope.user = JSON.parse(localStorage.user);
+			$scope.selectedTab = 0;
+			$scope.setCurTab = function(selectedTab){
+				$scope.selectedTab = selectedTab;				
+			}
+			$scope.isActive = function(current,selectedTab){
+				if(current == selectedTab)
+					return true;
+				else return false;
+			}
 			$scope.submit = function(commentForm, projectId) {
 				var commentVal = commentForm.comment.$modelValue;
 				var data = {
