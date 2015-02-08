@@ -1,7 +1,7 @@
 {!extends file='layout.html'!} {!block name=main!}
 <style>
 .footer-fix {
-	background-color: #f5f5f5;
+	background-color: #f2f2f2;
 }
 </style>
 <div class="projectdetail" ng-controller="info">
@@ -173,8 +173,8 @@
 								ng-bind="project.creator.realname"></a>
 						</h3>
 						<p>同济大学 <span ng-show="project.creator.campus_id == 2">嘉定</span>
-						<span ng-show="project.creator.campus_id == 1">本部</span></p>
-						<p>lv<span ng-bind="project.creator.degree"></span> 大神</p>
+						&nbsp;<span ng-show="project.creator.campus_id == 1">本部</span></p>
+						<p>lv<span ng-bind="project.creator.degree"></span>&nbsp;<span ng-bind="project.creator.honor"></span></p>
 					</div>
 				</div>
 				<div class="panel labels clear clearfix">
@@ -186,23 +186,21 @@
 					</div>
 				</div>
 				<div class="panel time">
-				    <div ng-show="project.is_open">
 					<div class="leave">
-						剩余<span class="day">87</span>天
+						<span ng-bind = "project.daysmsg"></span><span class="day" ng-bind = "project.opendays"></span>天
 					</div>
-					<div class="open">报名开发</div>
-					</div>
+					<div class="open" ng-show="project.is_open">报名开放</div>
 				    <div class="open" ng-show="!project.is_open">报名关闭</div>
 				</div>
 				<div class="panel collect">
-					<a><img src="/img/collect.png"></img></a>
+					<a href="#collect"><img src="/img/collect.png"></img></a>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <script>
-	var project_id = location.pathname.replace(/\/project2\/(\d+)$/, '$1');
+	var project_id = location.pathname.replace(/\/project\/(\d+)$/, '$1');
 	require([ 'angular', 'angular-resource' ], function(angular) {
 		var app = angular.module('me', [ 'ngResource' ]);
 		app.filter('trusted', [ '$sce', function($sce) {
@@ -226,7 +224,7 @@
 		app.filter('defaultDescription',function(){
 			   return function(item){
 				   if(item==null || item =="")
-					   return "项目是指一系列独特的、复杂的并相互关联的活动，这些活动有着一个明确的目标或目的，必须在特定的时间、预算、资源限定内，依据规范完成";
+					   return "无相关项目介绍";
 				   else  return $($.parseHTML(item)).text();
 				   
 			   }
@@ -235,6 +233,23 @@
 			var Project = $resource(API + 'project/:project_id');
 			$scope.project = Project.get({
 				project_id : project_id
+			}, function() {
+				if ($scope.project.creator.degree < 10) {
+					$scope.project.creator.honor = "菜鸟";
+				} else if ($scope.project.creator.degree < 40) {
+					$scope.project.creator.honor = "中级";
+				} else {
+					$scope.project.creator.honor = "大神";
+				}
+				var dateNow= new Date();
+				var dateDeadline = new Date($scope.project.deadline);
+				var openTime=dateDeadline.getTime() - dateNow.getTime();
+				$scope.project.opendays = Math.floor(openTime/(24*3600*1000));
+				if( $scope.project.opendays < 0){
+					$scope.project.daysmsg = "过期";
+					$scope.project.opendays = -$scope.project.opendays;
+				}
+				else $scope.project.daysmsg = "剩余";
 			});
 			$scope.project.description = $sce
 					.trustAsHtml($scope.project.description);

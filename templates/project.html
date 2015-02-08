@@ -32,63 +32,14 @@
 	</div>
 
 	<div style="clear: both"></div>
+
+	<section>
 		<div class="row">
 			<div class="col-md-9">
 				<div ng-show="currentView()" class="detailview">
 					<div class="detail" ng-bind-html="project.description|trusted"></div>
 				</div>
-				<div ng-show="currentView()" class="teamview">
-					<section>
-						<a class="btn btn-primary pull-right" id="joinone"
-							ng-show="project.parttype==1||project.parttype==2"
-							style="margin-bottom: 20px; margin-left: 20px"
-							href="/newteam/{{project.id}}"><span
-							class="glyphicon glyphicon-star"></span> 组建团队</a> <a
-							class="btn btn-info pull-right" id="join"
-							ng-show="project.parttype==0||project.parttype==2"
-							style="margin-bottom: 20px;" ng-click="joinone()"><span
-							class="glyphicon glyphicon-user"></span> 个人参加</a>
-						<table class="group">
-							<thead class="bg-primary">
-								<tr>
-									<th>参加的团队和个人</th>
-									<th>人数</th>
-									<th width="130px">操作</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="v in project.teams">
-									<td>
-										<h3 class="text-success" ng-bind="v.name"></h3> <small><a
-											target="_blank" href="/team/{{v.id}}">查看团队详情</a></small>
-									</td>
-									<td>
-										<p class="text-primary">
-											已有：<span ng-bind="v.members_count"></span>人
-										</p>
-										<p class="text-muted">
-											共需：<span ng-bind="v.teammember_all"></span>人
-										</p>
-									</td>
-									<td style="text-align: right;">
-										<button class="btn btn-warning" ng-click="jointeam(v)">
-											<span class="glyphicon glyphicon-plus"></span> 参加团队
-										</button>
-									</td>
-								</tr>
-								<tr ng-repeat="v in project.users">
-									<td>
-										<h3 class="text-success" ng-bind="v.realname"></h3> <small><a
-											target="_blank" href="/userinfodetail/{{v.id}}">查看个人详情</a></small>
-									</td>
-									<td>-</td>
-									<td style="text-align: right;">-</td>
-								</tr>
-							</tbody>
-						</table>
-					</section>
-
-				</div>
+				<div ng-show="currentView()" class="teamview"></div>
 				<div ng-show="currentView()" class="commentview">
 					<section class="projectdiscuss">
 						<h3>讨论区：</h3>

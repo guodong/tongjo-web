@@ -13,5 +13,5 @@ return array(
 		'#^/loginmodal$#' => 'loginmodal',
 		'#^/scanproject$#' => 'scanproject2',
 		'#^/scanproject-index-tpl$#' => 'scanproject-index-tpl',
-		'#^/project2/\d+#' => 'projectdetail',
+		'#^/project/\d+#' => 'projectdetail',
 );
