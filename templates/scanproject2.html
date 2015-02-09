@@ -9,9 +9,6 @@ margin-top: 0px;
 .bodyer.wrapper{
 width:100%;
 }
-.push {
-height: 0px;
-}
 </style>
 <div class="scanprojecttwo">
 <div class="container-fluid">
@@ -19,10 +16,10 @@ height: 0px;
         <div class="left-nav" ng-controller="navController">
            <div class="special nav-section">
            <div>
-           <div><a href="#special-1" ng-class="{current:isActive(1,specialId)}" ng-click="specialClick(1)">推荐</a></div>
-           <div><a href="#special-2" ng-class="{current:isActive(2,specialId)}" ng-click="specialClick(2)">最新</a></div>
-           <div><a href="#special-3" ng-class="{current:isActive(3,specialId)}" ng-click="specialClick(3)">最热</a></div>
-           <div><a href="#special-4" ng-class="{current:isActive(4,specialId)}"ng-click="specialClick(4)">同校</a></div>
+           <div><a href="#special-1" ng-class="{current:isActive(1,$root.specialId)}">推荐</a></div>
+           <div><a href="#special-2" ng-class="{current:isActive(2,$root.specialId)}">最新</a></div>
+           <div><a href="#special-3" ng-class="{current:isActive(3,$root.specialId)}">最热</a></div>
+           <div><a href="#special-4" ng-class="{current:isActive(4,$root.specialId)}">同校</a></div>
            </div>
            </div>
            <div class="category nav-section">
@@ -127,6 +124,7 @@ height: 0px;
         </div>
         </div>
 </div>
+</div>
 <script>
 	require(
 			['angular', 'angular-route', 'angular-resource','ui-bootstrap','infinite-scroll'],
@@ -185,8 +183,6 @@ height: 0px;
 					}).when('/category-:categoryId/:subcategoryId',{
 						templateUrl:'scanproject-tpl',
 						controller:'categoryCtl'
-					}).when('#',{
-						redirectTo:'/'
 					}).otherwise({
 						redirectTo:'/'
 					});		
@@ -203,6 +199,7 @@ height: 0px;
 				}]);
 				scanApp.controller('defaultCtl',function($scope,$rootScope,$routeParams, $resource){
 					$rootScope.cateTitle = "全部";
+					$rootScope.specialId = -1;
 					//$scope.cateTitle = "全部123";
 					//TODO 获得数据
 					//$scope.projects = projects;
@@ -216,6 +213,8 @@ height: 0px;
 				scanApp.controller('specialCtl',function($scope,$rootScope,$routeParams, $resource){
 					//TODO 获得数据
 					$rootScope.cateTitle = "全部";
+					if($routeParams.specialId != null)
+						$rootScope.specialId = $routeParams.specialId;
 					var last = -1;
 					$scope.view_projects = new Array();
 					$scope.projectLoaded = false;
@@ -243,9 +242,12 @@ height: 0px;
 					//修改分类标题
 					if($routeParams.specialId != null){
 						$rootScope.cateTitle = "全部";
+						$rootScope.specialId = $routeParams.specialId;
 					}else if($routeParams.subcategoryId != null){
+						$rootScope.specialId = -1;
 						$rootScope.cateTitle = subcategoryArrays[$routeParams.subcategoryId - 1].name;
 					}else if($routeParams.categoryId != null){
+						$rootScope.specialId = -1;
 						$rootScope.cateTitle = categoryTitle[$routeParams.categoryId-1];
 					}
 					var last = -1;

@@ -3,7 +3,7 @@
 	<div class="clear clearfix">
 		<article ng-repeat="project in view_projects track by $index" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
 			<span> 
-			<img src="{{project.image|defaultImg}}">
+			<img ng-src="{{project.image|defaultImg}}">
 			</span>
 		<div class="hover" ng-show="hoverEdit">
 					<p ng-bind="project.description|defaultDescription"></p>

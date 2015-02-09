@@ -1,99 +1,118 @@
 {!extends file='layout.html'!} {!block name=main!}
-
+<style>
+.footer-fix {
+	background-color: #f2f2f2;
+}
+</style>
 <div class="teamdetail" ng-controller="teamdetailControl">
-	<div class="team-name">
-		<h2 class="team-name-title">团队名称：</h2>
-		<h1 class="team-name-name" ng-bind="teamdetail.name"></h1>
-		<div class="team-add">
-			<button class="btn btn-warning" ng-click="joinTeam()">
-				<span class="glyphicon glyphicon-plus"></span> 加入这个团队
-			</button>
-		</div>
-	</div>
 
-	<div class="team-sum">
-		<div class="team-count">
-			<div class="team-count-current col-md-5">
-				<h5 class="team-count-title">现有人数</h5>
-				<h5 class="team-count-digital"
-					ng-bind="teamdetail.members_count"></h5>
-			</div>
-			<span class="team-count-spilt col-md-2">|</span>
-			<div class="team-count-sum col-md-5">
-				<h5 class="team-count-title">共需人数</h5>
-				<h5 class="team-count-digital" ng-bind="teamdetail.teammember_all"></h5>
+	<div class="container-fluid page-header">
+		<img ng-src="/img/avatar.png" class="image">
+		<div class="projectname">
+			<h3 ng-bind="teamdetail.name"></h3>
+			<div class="creator">
+				<span>创建者</span><span style="margin-left: 10px"
+					ng-bind="teamdetail.creator.realname"></span>
 			</div>
 		</div>
 
-		<div class="team-time">
-			<span class="team-time-title">截止时间：</span> <span
-				class="team-time-text" ng-bind="teamdetail.signup_time"></span>
-		</div>
+		<a class="btn btn-default" ng-click="joinTeam()"> 加入团队 </a>
 	</div>
 
-	<div class="team-content">
-		<div class="col-md-8 team-introduce">
-
-			<h1 class="team-content-title">团队简介:</h1>
-			<h5 class="team-content-text" ng-bind="teamdetail.description">我们是一个好团队，我们不怕困难，积极进取，一起开玩笑，一起玩，一起傻BI,一起逗比，一起哈哈哈，我们有爱，我们爱好和平，我们心底善良，赶紧加入我们把，美女越多越好呀，哈哈哈哈哈哈哈哈哈哈哈</h5>
-
-		</div>
-
-		<div class="col-md-4 team-leader">
-			<h3 class="team-leader-title">关于队长：</h3>
-			<h6 class="team-leader-name" ng-bind = "teamdetail.creator.realname" style="margin-left:6px"></h6> 
-			<!-- <div class="team-leader-comments">
-				<ul class="team-leader-star">
-					<li>★</li>
-					<li>★</li>
-					<li>★</li>
-					<li>★</li>
-					<li>★</li>
+	<div class="container-fluid"
+		style="padding-left: 0px; padding-right: 0px">
+		<div class="col-md-9 left-panel">
+			<div class="nav">
+				<ul>
+					<li role="presentation" ng-class="{'active': isActive(0)}"
+						ng-click="setCurTab(0)"><a>团 队 介 绍</a></li>
+					<li role="presentation" ng-class="{'active': isActive(1)}"
+						ng-click="setCurTab(1)"><a>已 有 团
+							员({{teamdetail.members.length}})</a></li>
 				</ul>
-				<h6 class="team-leader-starcount">5.0</h6>
-				<h6 class="team-leader-commentscount">26条评论</h6>
-			</div> -->
+			</div>
+			<div class="tab" ng-class="{'isdisplay': isActive(0)}">
+				<div class="detail-title">
+					<h3>[项目描述]</h3>
+					<div class="detail" ng-bind="teamdetail.description"></div>
+				</div>
+				
+			</div>
+
+			<div class="tab" ng-class="{'isdisplay': isActive(1)}">
+				<table class="table team-table">
+					<thead style="border">
+						<tr>
+							<th class="first">姓名</th>
+							<th>大学</th>
+							<th>专业</th>
+							<th width="130px" class="last">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="member in teamdetail.members"
+							ng-show="member.pivot.status=='permited'">
+							<td class="first"><img src="/img/head.jpg"
+								ng-src="//api.tongjo.com/files/{{member.avatar}}" alt="*"
+								class="smallhead"> <a class="text-primary"
+								ng-bind="member.realname" href="/userinfodetail/{{member.id}}"></a></td>
+							<td>
+								<h5 class="text-primary" ng-bind="member.school.name"></h5>
+							</td>
+
+							<td>
+								<h5 class="text-primary" ng-bind="member.major.name"></h5>
+							</td>
+
+							<td class="last"><a class="text-primary"
+								href="/userinfodetail/{{member.id}}">查看资料</a></td>
+							</div>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
 		</div>
-	</div>
+		<div class="col-md-3 right-panel">
+			<div class="panel creator">
+				<img ng-src="http://api.tongjo.com/files/{{teamdetail.creator.avatar}}"
+					href="/userinfodetail/{{project.creator.id}}" class="image">
+				<div class="creator-name">
+					<h3>
+						发布者 <a href="/userinfodetail/{{teamdetail.creator.id}}"
+							ng-bind="teamdetail.creator.realname"></a>
+					</h3>
+					<p>同济大学 <span ng-show="teamdetail.creator.campus_id == 2">嘉定</span>
+					&nbsp;<span ng-show="teamdetail.creator.campus_id == 1">本部</span></p>
+					<p>lv.<span ng-bind="teamdetail.creator.degree"></span>&nbsp&nbsp;<span ng-bind="teamdetail.creator.honor"></span></p>
+				</div>
+			</div>
 
-	<div class="clear"></div>
+			<div class="panel create-time">
 
-	<div class="team-teamer">
+				<h3>
+					团队创建时间&nbsp&nbsp<span ng-bind="teamdetail.created_at"></span>
+				</h3>
+				<h3>
+					团员平均等级&nbsp&nbsp<span>lv.</span><span ng-bind="teamdetail.average"></span>
+				</h3>
+			</div>
 
-		<div class="team-share">
-			<button class="btn btn-primary" ng-click="shareTeam()">
+			<div class="panel time">
+				<div class="leave">
+					<span ng-bind="teamdetail.daysmsg"></span><span class="day"
+						ng-bind="teamdetail.opendays"></span>天
+				</div>
+				<div class="open" ng-show="teamdetail.is_open">报名开放</div>
+				<div class="open" ng-show="!teamdetail.is_open">报名关闭</div>
+			</div>
+			
+			<div class="panel share">
+				<button class="btn btn-primary" ng-click="shareTeam()">
 				分享给好友</button>
+			</div>
+			
 		</div>
-		<div class="clear"></div>
-		<table class="team-table">
-			<thead class="bg-primary">
-				<tr>
-					<th>团队成员介绍</th>
-					<th>大学</th>
-					<th>专业</th>
-					<th width="130px"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="member in teamdetail.members" ng-show="member.pivot.status=='permited'">
-					<td><img src="/img/head.jpg" ng-src="//api.tongjo.com/files/{{member.avatar}}" alt="*" class="smallhead"> <a
-						class="text-primary" ng-bind="member.realname"
-						href="/userinfodetail/{{member.id}}"></a></td>
-					<td>
-						<h5 class="text-primary" ng-bind="member.school.name"></h5>
-					</td>
-
-					<td>
-						<h5 class="text-primary" ng-bind="member.major.name"></h5>
-					</td>
-
-					<td><a class="text-primary"
-						href="/userinfodetail/{{member.id}}">查看资料</a></td>
-					</div>
-				</tr>
-			</tbody>
-		</table>
 	</div>
 </div>
 
@@ -113,9 +132,16 @@
 						'shareModal', 'ngRoute', 'ngResource' ]);
 				app.controller('teamdetailControl', function($scope, $resource,
 						loginService, shareService) {
-
-					/* var url = window.location.href;
-					var tid = url.substr(url.indexOf("!") + 1, url.length); */
+					
+					$scope.selectedTab = 0;
+					$scope.setCurTab = function(selectedTab){
+						$scope.selectedTab = selectedTab;				
+					}
+					$scope.isActive = function(current){
+						if(current == $scope.selectedTab)
+							return true;
+						else return false;
+					}
 					
 					var tid = window.location.pathname.replace(/\/team\/(\d+)$/, '$1');
 					
@@ -131,11 +157,38 @@
 									.substr(0, 10);
 							$scope.teamdetail.signup_time = team.signup_time
 									.substr(0, 10);
+							$scope.teamdetail.creator.honor = $scope.getdegree($scope.teamdetail.creator.degree);
+							
+							var dateNow= new Date();
+							var dateDeadline = new Date($scope.teamdetail.signup_time);
+							var openTime=dateDeadline.getTime() - dateNow.getTime();
+							$scope.teamdetail.opendays = Math.floor(openTime/(24*3600*1000));
+							if( $scope.teamdetail.opendays < 0){
+								$scope.teamdetail.daysmsg = "过期";
+								$scope.teamdetail.is_open = false;
+								$scope.teamdetail.opendays = -$scope.teamdetail.opendays;
+							}
+							else {
+								$scope.teamdetail.daysmsg = "剩余";
+								$scope.teamdetail.is_open = true;
+							}
+							
+							$scope.teamdetail.average = $scope.getaverage();
+							
 							console.log($scope.teamdetail);
+							
 						});
 					}
 
 					$scope.getteamdetail();
+					
+					$scope.getaverage = function(){
+						var degree = 0;
+						for(var i = 0;i<$scope.teamdetail.members.length;i ++){
+							degree = degree+$scope.teamdetail.members[i].degree;
+						}
+						return degree/$scope.teamdetail.members.length; 
+					}
 
 					$scope.login = function() {
 						loginService.showModal().then(function(isSuccess) {
@@ -146,6 +199,16 @@
 						});
 					}
 
+					$scope.getdegree = function(degree){
+						if (degree < 10) {
+							return "菜鸟";
+						} else if (degree < 40) {
+							return "中级";
+						} else {
+							return "大神";
+						}
+					}
+					
 					var JTeam = $resource(API + 'team/:teamId/user');
 					$scope.joinTeam = function() {
 						var uid = localStorage.uid;

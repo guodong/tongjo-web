@@ -12,5 +12,6 @@ return array(
 		'#^/choseskill$#' => 'choseskill',
 		'#^/loginmodal$#' => 'loginmodal',
 		'#^/scanproject$#' => 'scanproject2',
-		'#^/scanproject-index-tpl$#' => 'scanproject-index-tpl'
+		'#^/scanproject-index-tpl$#' => 'scanproject-index-tpl',
+		'#^/project/\d+#' => 'projectdetail',
 );

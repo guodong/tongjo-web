@@ -1,11 +1,260 @@
 /** new teamdetail*/
 .teamdetail{
-	margin-right:20px;
-	margin-left:20px;
-	
+	margin-right:0px;
+	margin-left:0px;
+	background:#f2f2f2;
 	.clear{
 		clear:both;
 	}
+	
+	.page-header{
+		position: relative;
+		padding-left:55px;
+		padding-top:70px;
+		padding-right:55px;	
+		background-color:black;
+		height:232px;
+		.btn{
+			position: absolute;
+			right: 55px;
+			bottom: 20px;
+			margin-left:0px;
+			width:94px;
+			height:30px;
+			font-size: 14px;
+			line-height:30px;
+			background-color: transparent;
+			padding: 0px;
+			color:white;
+		}
+		a:hover{
+			color:#83c257;
+		}
+		
+		.image{
+			width:140px;
+			height:140px;
+			float:left;
+			border:1px solid #83c257;
+			border-radius:4px;
+			padding:1px;
+			vertical-align: bottom;
+		}
+		
+		.projectname{
+			position: relative;
+			left:20px;
+			top:90px;
+			bottom:0px;
+			h3{
+				margin-top:0px;
+				font-size: 18px;
+				color:white;
+			}
+			
+			.creator{
+				margin-top:10px;
+				font-size: 14px;
+				color:#b2b2b2;
+			}
+		}
+		
+	}
+	
+	.left-panel{
+		padding-left:0px;
+		padding-right:0px;
+		display:block;
+		background:#ffffff;
+		
+		.nav{
+			li {
+				text-align: center;
+				float: left;
+				width: 50%;
+				height: 45px;	
+				background-color:#72c8d5;
+				display:block;		
+		
+				a{
+					height: 45px;
+					text-align:center;
+					line-height:45px;	
+					color:white;
+					font-size:20px;
+					text-decoration:none;
+				}
+			}
+			li:hover{
+				cursor:pointer;
+			} 	
+				
+
+			.active{
+				background-color: #f2d649
+			}
+		}
+		
+		.tab{
+			display: none;
+			visibility: hidden;
+			position:relative;
+			
+			.detail-title{
+				margin-top:20px;
+				padding-left:20px;
+				padding-right:20px;
+				.detail{
+					margin-top:10px;
+					line-height:30px;
+					margin-bottom:20px;
+				}
+			}
+			
+		}
+		
+		.isdisplay {
+			display: block;
+			visibility: visible;
+		}
+		
+		.team-table{
+			width: 100%;
+			margin: 18px 0px 0px 0px;
+			
+			thead{
+				th{
+					height: 40px;
+					padding-left: 10px;
+					font-weight:700;
+				}
+			}
+			
+			.first{
+				padding-left:30px;
+			}
+			
+			.last{
+				padding-right:30px;
+			}
+			
+			tbody tr{
+				height: 60px;
+				border-bottom: 1px solid #ccc;
+				
+				td{
+					padding: 10px 0;
+					line-height: 1.8em;
+					vertical-align:middle;
+					
+					h5{
+						font-family:SimHei;
+						color:#222222;
+					}
+					
+					a{
+						font-family:SimHei;
+						font-size:14px;
+						line-weight:30px;
+						margin-left:10px;
+					}
+					
+					a:hover{
+						color:#83c257
+					}
+					
+					.smallhead{
+						width:28px;
+						float:left;
+					}
+				}
+			}
+		}
+		
+	}
+	.right-panel{
+		padding-right:0px;
+		padding-left:20px;
+		
+	 	.creator{
+		  	position: relative;
+			padding-left:20px;
+			padding-top:35px;
+			height:140px;	
+		
+			.image{
+				width:70px;
+				height:70px;
+				float:left;
+				border:1px solid #83c257;
+				border-radius:4px;
+				padding:1px;
+				vertical-align: bottom;
+			}  
+			.creator-name{
+				float:left;
+				padding-left:20px;
+				h3{
+					margin-top:0px;
+					font-size: 14px;
+					text-align: left;
+					line-height:23px;
+					font-weight: bold;
+				}
+			    p{
+					font-size: 14px;
+					text-align: left;
+					line-height:23px;
+					color:#6e6b6b;
+				}
+			}
+		 }
+		 
+		.create-time{
+		  	position: relative;
+			padding-left:20px;
+			padding-top:10px;
+			padding-bottom:20px;
+			h3{
+				margin-top:10px;
+				font-size: 14px;
+				text-align: left;
+				line-height:23px;
+				font-weight: bold;
+				
+				span{
+					color:#337ab7;
+					font-weight: 500;
+				}
+			}
+		 }
+		 
+		.time{
+			text-align:center;
+		  	padding-bottom:20px;
+			padding-top:20px;
+		  	.leave{
+		     	font-size:20px;
+		     	font-weight: bold;	     
+		     	.day{
+		    		font-size:46px;
+		    		color:#0088cc;
+		     	}
+		  	}
+		  	
+			.open{
+		    	font-size:14px;
+			}
+		}
+		
+		.share{
+			text-align:center;
+		  	padding-bottom:20px;
+			padding-top:20px;
+		}
+	}
+	
+	
 	
 	.team-name{
 		margin-top:50px;

@@ -305,11 +305,12 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					if(selectimg < 0 || selectimg > 39){
 						alert("请选选择图片");
 					}else{
-						var u = new User();
-						u.$save({
-							userId:localStorage.uid,
+						var data = {
+							id:localStorage.uid,
 							avatar:$scope.sysimg[selectimg]
-						},function(msg) {
+						};
+						var u = new User(data);console.log(u);window.u=u;
+						u.$save(function(msg) {
 							if(msg.error){
 								alert(msg.msg);
 							}else{
@@ -352,92 +353,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 				}
 				
 				$scope.initmeitu();
-				
-				/* 图片裁剪 */
-				/* var cropper;
-				$scope.init = function() {
-					cropper = new ImageCropper(300, 300, 180, 180);
-					cropper.setCanvas("cropper");
-					cropper.addPreview("preview140");
-					cropper.addPreview("preview50");
-
-					if (!cropper.isAvaiable()) {
-						alert("Sorry, your browser doesn't support FileReader, please use Firefox3.6+ or Chrome10+ to run it.");
-					}
-				};
-
-				$scope.init();
-
-				$scope.$watch('uploadme',
-				function(to, from) {
-					if ($scope.uploadme != "undefined" && $scope.uploadme != null) cropper.loadImage($scope.uploadme);
-				});
-
-				$scope.rotateImage = function(e) {
-					switch (e.target.id) {
-					case "rotateLeftBtn":
-						cropper.rotate( - 90);
-						break;
-					case "rotateRightBtn":
-						cropper.rotate(90);
-						break;
-					}
-				};
-
-				$scope.saveImage = function() {
-					var file140 = document.getElementById("preview140");
-					var file50 = document.getElementById("preview50");
-
-					if (file140.toDataURL() != "undefined") {
-						var uid = localStorage.uid;
-						if (uid > 0) {
-							var url = API + "user/" + uid + "/";
-							$.post(url + 'avatar', {
-								"image": file140.toDataURL(),
-							},
-							function(data) {
-								if (data.id) {
-									alert("修改成功");
-									location.reload();
-								}
-							},
-							"json")
-						} else {
-							alert("用户没有登陆");
-						}
-					} else {
-						alert("请先设置图片");
-					}
-				};
-
-				$scope.trace = function() {
-					if (typeof(console) != "undefined") console.log(Array.prototype.slice.apply(arguments).join(" "));
-				}; */
 			});
-
-		/* 	app.directive("fileread", [function() {
-				return {
-					scope: {
-						fileread: "="
-					},
-
-					link: function(scope, element, attributes) {
-						element.bind("change",
-						function(changeEvent) {
-							var reader = new FileReader();
-							reader.onload = function(loadEvent) {
-
-								scope.$apply(function() {
-									scope.fileread = changeEvent.target.files[0];
-									// or all selected files:
-									// scope.fileread = changeEvent.target.files;
-								});
-							}
-							reader.readAsDataURL(changeEvent.target.files[0]);
-						});
-					}
-				}
-			}]); */
 
 			app.controller('project',
 			function($scope, $resource) {
