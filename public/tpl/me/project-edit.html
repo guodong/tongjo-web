@@ -4,7 +4,7 @@
 	</h2>
 </div>
 
-<div ng-controller="createform" class="projectedit">
+<div ng-controller="project-edit" class="projectedit">
 	<div class="page-header create-header">
 		<ul class="create">
 			<li role="presentation"><a class="complete"
@@ -105,7 +105,7 @@
 							<div class="p_img">
 								<a data-toggle="modal"
 									data-target="#imgModal"> <img alt="55x55"
-									ng-src="{{'http://api.tongjo.com/files/'+projectimg || '/img/avatar.png'}}">
+									ng-src="{{'http://api.tongjo.com/files/'+project.image || '/img/avatar.png'}}">
 									<h3>点击修改项目图片</h3>
 								</a>
 							</div>
@@ -141,7 +141,7 @@
 			<div class="form-group" style="margin-top:20px">
 				<label>项目描述</label>
 				<script id="dsc" name="dsc" type="text/plain"
-					style="width: 910px; height: 200px;">
+					style="width: 750px; height: 200px;">
 </script>
 
 			</div>
@@ -154,7 +154,7 @@
  		
  		<div style="clear: both"></div>
 		<div class="tab container" ng-class="{'active': isselect(1)}">
-			<div class="col-md-6 col-md-offset-3" style="margin-top:20px">
+			<div class="col-md-8 col-md-offset-2" style="margin-top:20px">
 				<table>
 					<tr>
 						<td width="10%" nowrap="nowrap"><label class="title">报名方式</label></td>
@@ -181,73 +181,83 @@
 					</tr>
 				</table>
 
-				<div style="margin-top: 30px;">
-					<label class="title">选择技能需求标签</label>
-					<div>
-						<span ng-repeat="tag in projecttag" style="margin-left: 20px"
-							ng-bind="tag.name"></span> <a class="mbtn"
-							data-toggle="modal" data-target="#tagModal" ng-if="projecttag.length<1">添加技能标签 ></a>
-							<a class="mbtn"
-							data-toggle="modal" data-target="#tagModal" ng-if="projecttag.length>0">编辑技能标签 ></a>
-						<div class="modal fade info" id="tagModal">
-							<div class="modal-dialog">
-								<div class="modal-content tagmodal">
-									<div class="modal-header"
-										style="padding-top: 8px; padding-bottom: 8px; border-bottom: 0px;">
-										<button type="button" class="close" data-dismiss="modal">
-											<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
-										</button>
-										<h5 class="title">已选择标签：</h5>
-										<ul class="nav nav-pills selecttag">
-											<li ng-repeat="tag in selecttag">
-												<div class="rectangle" ng-bind="tag.name"></div>
-												<div class="ex-toleft"></div>
-												<button type="button" class="close delete"
-													ng-click="del($index)">
-													<span aria-hidden="true"
-														style="color: #ff0000; font-size: 16px">×</span>
-												</button>
-											</li>
-										</ul>
-									</div>
+				<table style="margin-top: 30px;">
+					<tr>
+						<td width="10%" nowrap="nowrap"><label class="title">技能需求标签</label></td>
+						<td style="padding-left: 14px; padding-right: 14px;">
+							<ul class="nav nav-pills tagselect">
+								<li ng-repeat="tag in projecttag">
+									<div class="rectangle" ng-bind="tag.name"></div>
+									<div class="ex-toleft"></div>
+									<button type="button" class="close delete"
+										ng-click="deltags(tag.id)">
+										<span aria-hidden="true"
+											style="color: #ff0000; font-size: 16px">×</span>
+									</button>
+								</li>
+							</ul> 
+							<a class="mbtn" style="margin-left:-2px;" data-toggle="modal" data-target="#tagModal">添加</a>
 
-									<div class="modal-body">
-										<!-- 主体 -->
-										<div class="container-fluid tagbody">
-											<div class="col-md-3" style="padding-left: 0px">
-												<ul class="nav nav-pills nav-stacked lefttree">
-													<li ng-repeat="tag in tags"
-														ng-class="{'active': isActive(tag.id)}"><a
-														ng-bind="tag.name" ng-click="setid(tag.id)"></a></li>
-												</ul>
-											</div>
-
-											<div class="col-md-9">
-												<ul class="nav nav-pills nav-stacked righttree"
-													ng-repeat="tag in tags" ng-if="tag.id==curid">
-													<li class="outerli" ng-repeat="tag2 in tag.children">
-														<h5 ng-bind="tag2.name"></h5>
-														<ul class="nav nav-pills">
-															<li ng-repeat="tag3 in tag2.children"
-																ng-click="select(tag3)"><a ng-bind="tag3.name"></a></li>
-														</ul>
-													</li>
-												</ul>
-											</div>
-
+							<div class="modal fade info" id="tagModal">
+								<div class="modal-dialog">
+									<div class="modal-content tagmodal">
+										<div class="modal-header"
+											style="padding-top: 8px; padding-bottom: 8px; border-bottom: 0px;">
+											<button type="button" class="close" data-dismiss="modal">
+												<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
+											</button>
+											<h5 class="title">已选择标签：</h5>
+											<ul class="nav nav-pills selecttag">
+												<li ng-repeat="tag in selecttag">
+													<div class="rectangle" ng-bind="tag.name"></div>
+													<div class="ex-toleft"></div>
+													<button type="button" class="close delete"
+														ng-click="del($index)">
+														<span aria-hidden="true"
+															style="color: #ff0000; font-size: 16px">×</span>
+													</button>
+												</li>
+											</ul>
 										</div>
-									</div>
 
-									<div class="modal-footer">
-										<button type="button" class="btn btn-default btn-sm"
-											ng-click="addtags()" data-dismiss="modal">完成</button>
+										<div class="modal-body">
+											<!-- 主体 -->
+											<div class="container-fluid tagbody">
+												<div class="col-md-3" style="padding-left: 0px">
+													<ul class="nav nav-pills nav-stacked lefttree">
+														<li ng-repeat="tag in tags"
+															ng-class="{'active': isActive(tag.id)}"><a
+															ng-bind="tag.name" ng-click="setid(tag.id)"></a></li>
+													</ul>
+												</div>
+
+												<div class="col-md-9">
+													<ul class="nav nav-pills nav-stacked righttree"
+														ng-repeat="tag in tags" ng-if="tag.id==curid">
+														<li class="outerli" ng-repeat="tag2 in tag.children">
+															<h5 ng-bind="tag2.name"></h5>
+															<ul class="nav nav-pills">
+																<li ng-repeat="tag3 in tag2.children"
+																	ng-click="selectt(tag3)"><a ng-bind="tag3.name"></a></li>
+															</ul>
+														</li>
+													</ul>
+												</div>
+
+											</div>
+										</div>
+
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default btn-sm"
+												ng-click="addtags()" data-dismiss="modal">完成</button>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-				
+						</td>
+					</tr>
+				</table>
+
 				<table style="margin-top:30px;">
 					<tr>
 						<td width="10%" nowrap="nowrap"><label class="title">报名截止时间</label></td>
@@ -272,7 +282,7 @@
 			<div style="margin-top: 30px; text-align: center">
 					<button class="btn btn-next" ng-click="setCurTab(1)">上 一 步</button>
 					<button class="btn btn-next" ng-click="create()"
-					ng-disabled="createform.$invalid" style="margin-left:60px">发 布 项 目</button>
+					ng-disabled="createform.$invalid" style="margin-left:60px">保 存 修 改</button>
 			</div>
 			<div style="margin-top: 20px; text-align: center">
 				<p style="color:#bbb">点击“发布项目”，表示您已经阅读并同意</p><p style="color:#bbb">用户协议以及隐私策略</p>
@@ -281,188 +291,4 @@
 
 	</form>
 </div>
-
-
-<!-- <form id="createforsm" name="createform">
-
-	<div class="form-group">
-		<label>项目名称</label> <input type="text" class="form-control"
-			ng-model="project.name" required>
-	</div>
-	<div class="form-group">
-		<label>报名截止时间</label>
-		<div>
-			<input data-provide="datepicker" class="form-control datepicker"
-				ng-model="project.deadline" required data-date-format="yyyy-mm-dd">
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label style="display: block">选择项目分类来源</label> <label
-			class="radio-inline"> <input type="radio"
-			name="optionsRadios" ng-model="project.type" value="0"
-			ng-checked="true"> 个人
-		</label> <label class="radio-inline"> <input type="radio"
-			name="optionsRadios" ng-model="project.type" value="1"> 赛事
-		</label> <label class="radio-inline"> <input type="radio"
-			name="optionsRadios" ng-model="project.type" value="2"> 科研课题
-		</label> <label class="radio-inline"> <input type="radio"
-			name="optionsRadios" ng-model="project.type" value="3"> 企业研究
-		</label>
-	</div>
-	<div class="form-group" ng-hide="project.type==0">
-		<label ng-bind="label"></label> <input type="text"
-			ng-model="project.sponsor" class="form-control"
-			ng-required="project.type!=0">
-	</div>
-	<div class="form-group">
-		<label>选择项目标签</label>
-		<div>
-			<span ng-repeat="cate in selcates" style="margin-right: 20px"
-				ng-bind="cate.name"></span> <a class="btn btn-success"
-				data-toggle="modal" data-target="#myModal">添加标签</a>
-			<div class="modal fade" id="myModal">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-							</button>
-							<h4 class="modal-title">选择项目标签</h4>
-						</div>
-						<div class="modal-body">
-							<dl ng-repeat="cate in cates">
-								<dt ng-bind="cate.name"></dt>
-								<dd ng-repeat="c in cate.children">
-									<input type="checkbox" value="{{c.id}}"
-										ng-click="select($event, c)" ng-checked="c.select==true">
-									{{c.name}}
-								</dd>
-							</dl>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">关 闭</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label>选择技能标签</label>
-		<div>
-			<span ng-repeat="tag in projecttag" style="margin-right: 20px"
-				ng-bind="tag.name"></span> <a class="btn btn-success"
-				data-toggle="modal" data-target="#tagModal">添加技能标签</a>
-			<div class="modal fade info" id="tagModal">
-				<div class="modal-dialog">
-					<div class="modal-content tagmodal">
-						<div class="modal-header"
-							style="padding-top: 8px; padding-bottom: 8px; border-bottom: 0px;">
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
-							</button>
-							<h5 class="title">已选择标签：</h5>
-							<ul class="nav nav-pills selecttag">
-								<li ng-repeat="tag in selecttag">
-									<div class="rectangle" ng-bind="tag.name"></div>
-									<div class="ex-toleft"></div>
-									<button type="button" class="close delete"
-										ng-click="del($index)">
-										<span aria-hidden="true"
-											style="color: #ff0000; font-size: 16px">×</span>
-									</button>
-								</li>
-							</ul>
-						</div>
-
-						<div class="modal-body">
-							<div class="container-fluid tagbody">
-								<div class="col-md-3" style="padding-left:0px">
-									<ul class="nav nav-pills nav-stacked lefttree">
-										<li ng-repeat="tag in tags" ng-class="{'active': isActive(tag.id)}"><a ng-bind="tag.name"
-											ng-click="setid(tag.id)"></a></li>
-									</ul>
-								</div>
-
-								<div class="col-md-9">
-									<ul class="nav nav-pills nav-stacked righttree"
-										ng-repeat="tag in tags" ng-if="tag.id==curid">
-										<li class="outerli" ng-repeat="tag2 in tag.children">
-											<h5 ng-bind="tag2.name"></h5>
-											<ul class="nav nav-pills">
-												<li ng-repeat="tag3 in tag2.children"
-													ng-click="selectt(tag3)"><a ng-bind="tag3.name"></a></li>
-											</ul>
-										</li>
-									</ul>
-								</div>
-
-							</div>
-						</div>
-
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default btn-sm"
-								ng-click="addtags()" data-dismiss="modal">完成</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label>项目描述</label>
-		<script id="dsc" name="dsc" type="text/plain"
-			style="width: 100%; height: 200px;">
-		</script>
-
-	</div>
-	<div class="form-group">
-		<label>报名方式</label>
-		<div class="radio">
-			<label> <input type="radio" name="parttype" value="0"
-				required ng-model="project.parttype"> 个人
-			</label>
-		</div>
-		<div class="radio">
-			<label> <input type="radio" name="parttype" value="1"
-				required ng-model="project.parttype"> 团队
-			</label>
-		</div>
-		<div class="radio">
-			<label> <input type="radio" name="parttype" value="2"
-				required ng-model="project.parttype"> 个人或团队
-			</label>
-		</div>
-	</div>
-	<div class="form-group">
-		<label>开启报名</label>
-		<div class="radio">
-			<label> <input type="radio" name="is_open" value="1" required
-				ng-model="project.is_open"> 开启
-			</label>
-		</div>
-		<div class="radio">
-			<label> <input type="radio" name="is_open" value="0" required
-				ng-model="project.is_open"> 关闭
-			</label>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label>项目图片</label>
-		<button class="btn btn-sm">更换图片</button>
-		<div style="clear:both"></div>
-		<img style="margin-top:20px" alt="150*150" ng-src="{{project.image && 'http://api.tongjo.com/files/'+project.image}}">
-
-	</div>
-
-	<div class="form-group">
-		<a class="btn btn-success btn-lg" ng-click="create()"
-			ng-disabled="createform.$invalid">保存</a>
-	</div>
-</form> -->
 

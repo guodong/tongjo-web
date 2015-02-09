@@ -117,6 +117,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 						userId: localStorage.uid
 					}, function() {
 						$scope.usertag = tags;
+						console.log(tags);
 					});
 				}
 				
@@ -621,6 +622,9 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 				},
 				function() {
 					$scope.project.deadline = $scope.project.deadline.substr(0, 10);
+					
+					$scope.projecttag = $scope.project.tags;
+					
 					um = UM.getEditor('dsc', {
 						autoFloatEnabled: false
 					});
@@ -667,7 +671,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 						alert("保存成功");
 					});
 				};
-
+				
 				$scope.select = function($event, cate) {
 					var checkbox = $event.target;
 					cate.select = checkbox.checked ? true: false;
@@ -718,9 +722,109 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					return false;
 				}
 				
-				$scope.addtags = function() {
-					$scope.projecttag=$scope.selecttag;
+				
+				/* 删除项目技能标签 */
+				var TagPivotDel = $resource(API + 'project/:project_id/tag/:tag_id/pivot/1');
+				$scope.deltags = function(id) {
+					if(window.confirm('你确定要删除这个标签吗？删除将立即生效')){
+						var t = new TagPivotDel();
+						t.$delete({
+							project_id: $scope.project.id,
+							tag_id:id
+						},function(tag){
+				            console.log(tag);
+				            var index = -1;
+				            for(var i = 0; i<$scope.projecttag.length;i++){
+				            	if($scope.projecttag[i].id == id){
+				            		index = i;
+				            	}
+				            }
+				            if(index > -1){
+				            	$scope.projecttag.remove(index);
+				            }
+				        });
+		              }else{
+		               
+		             }
 				};
+				
+				/* 添加项目技能标签 */
+				var TagPivotAdd = $resource(API + 'project/:project_id/tag/:tag_id/pivot');
+				$scope.addtags = function() {
+					
+					var currenttags = $scope.projecttag;
+					/* 判断时候重复，没有重复就发送请求，并加入当前的tag中 */
+					for(var i=0;i < $scope.selecttag.length;i++){
+						var iscontainer = false;
+						for(var j =0;j <$scope.projecttag.length;j++){
+							if($scope.selecttag[i].id == $scope.projecttag[j].id){
+								iscontainer = true;
+							}
+						}
+						
+						if(!iscontainer){
+							$scope.projecttag.push($scope.selecttag[i]);
+							var t = new TagPivotAdd();
+							t.$save({
+								project_id: $scope.project.id,
+								tag_id: $scope.selecttag[i].id
+							},function(tag){ 
+					            console.log(tag);
+					        });
+						}
+						
+					}
+				};
+				
+				
+				/* 用于标签页切换 */
+				$scope.currenttab = 0;
+				$scope.setCurTab = function(index) {
+					$scope.currenttab = index;
+				};
+
+				$scope.isselect = function(index) {
+					if (index == $scope.currenttab) {
+						return true;
+					} else {
+						return false;
+					}
+				};
+
+				$scope.initmeitu = function() {
+					/* 设置不预览 */
+					/* xiuxiu.setLaunchVars("avatarPreview", {visible : false}); */
+					/* 设置取消拍照 */
+					xiuxiu.setLaunchVars("cameraEnabled",0);
+					/* 取消左边菜单 */
+					xiuxiu.setLaunchVars("customMenu", []);
+					/* 设置裁剪的数值 */
+					xiuxiu.setLaunchVars("cropPresets", "300x300");
+
+					xiuxiu.embedSWF("imageid", 5, "100%","100%");
+					//修改为您自己的图片上传接口
+					xiuxiu.setUploadURL("http://api.tongjo.com/image");
+					xiuxiu.setUploadType(1);
+					xiuxiu.setUploadDataFieldName("image");
+					xiuxiu.onInit = function() {
+						xiuxiu.loadPhoto("http://api.tongjo.com/files/"+$scope.project.image);
+					}
+					xiuxiu.onUploadResponse = function(data) {
+						var d = JSON.parse(data);
+						if (d.hasOwnProperty("file")) {
+							$scope.$apply(function(){
+								$scope.project.image = d.file;
+							})
+							$scope.hidedialog();
+							alert("图片保存成功");
+						} else {
+							alert("图片上传失败:" + data);
+						}
+					}
+				}
+
+				$scope.initmeitu();
+				
 				
 				Array.prototype.remove=function(dx) 
 				{ 
