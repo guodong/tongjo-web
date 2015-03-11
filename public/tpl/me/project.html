@@ -52,8 +52,9 @@
 					</button>
 					<ul class="dropdown-menu">
 						<li><a ng-click="joined_filter('all')">全部</a></li>
-						<li><a ng-click="joined_filter('open')">报名中</a></li>
-						<li><a ng-click="joined_filter('close')">报名关闭</a></li>
+						<li><a ng-click="joined_filter('checking')">报名审核中</a></li>
+						<li><a ng-click="joined_filter('success')">参加成功</a></li>
+						<li><a ng-click="joined_filter('failed')">参加失败</a></li>
 					</ul>
 					</th>
 					<th>参加形式</th>
@@ -64,7 +65,7 @@
 				<tr ng-repeat="v in joined_filtered">
 					<td ng-bind="v.name"></td>
 					<td ng-bind="v.created_at|limitTo:10"></td>
-					<td><span class="label label-success" ng-if="v.is_open==1">报名中</span><span class="label label-danger" ng-if="v.is_open==0">报名关闭</span></td>
+					<td><span class="label label-default" ng-if="v.joinstatus==1">报名审核中</span><span class="label label-success" ng-if="v.joinstatus==2">参加成功</span><span class="label label-danger" ng-if="v.joinstatus==3">参加失败</span></td>
 					<td><span class="label label-warning" ng-if="v.type=='solo'">个人</span><span class="label label-info" ng-if="v.type=='team'">团队</span></td>
 					<td><a href="/project/{{v.id}}" target="_blank">查看</a></td>
 				</tr>

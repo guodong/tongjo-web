@@ -150,7 +150,7 @@
 						<h3>相似项目：</h3>
 						<div class="clear clearfix tech">
 							<article ng-repeat="v in projects|limitTo:4" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
-								<span> <img src="{{v.image|defaultImg}}">
+								<span> <img ng-src="{{v.image|defaultImg}}">
 								</span>
 								<div class="hover" ng-show="hoverEdit">
 									<p ng-bind="v.description|defaultDescription"></p>
@@ -297,7 +297,8 @@
 					team.members_count++;
 				});
 			};
-			$scope.user = JSON.parse(localStorage.user);
+			if(localStorage.user)
+				$scope.user = JSON.parse(localStorage.user);
 			$scope.selectedTab = 0;
 			$scope.setCurTab = function(selectedTab) {
 				$scope.selectedTab = selectedTab;

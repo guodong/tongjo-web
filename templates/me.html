@@ -392,14 +392,20 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					case 'all':
 						$scope.joined_filtered = $scope.joined;
 						break;
-					case 'open':
+					case 'checking':
 						$scope.joined.forEach(function(t){
-							t.is_open == 1?$scope.joined_filtered.push(t):0;
+							t.joinstatus == 1?$scope.joined_filtered.push(t):0;
 						});
 						break;
-					case 'close':
+					case 'success':
 						$scope.joined.forEach(function(t){
-							t.is_open == 0?$scope.joined_filtered.push(t):0;
+							t.joinstatus == 2?$scope.joined_filtered.push(t):0;
+						});
+						break;
+					
+					case 'failed':
+						$scope.joined.forEach(function(t){
+							t.joinstatus == 3?$scope.joined_filtered.push(t):0;
 						});
 						break;
 					}
