@@ -10,10 +10,13 @@
 			class="image">
 		<div class="projectname">
 			<h3 ng-bind="project.name"></h3>
-			<p>项目来源 同济大学</p>
+			<div class="creator">
+				<span>项目来源</span><span style="margin-left: 10px"
+					>同济大学</span>
+			</div>
 		</div>
 
-		<a class="btn btn-default" href="#join"> 参加项目 </a>
+		<a class="btn btn-default" ng-click="setCurTab(1)" href="#join"> 参加项目 </a>
 	</div>
 
 	<div style="clear: both"></div>
@@ -22,7 +25,7 @@
 		<div class="row">
 			<div class="col-md-9 left-panel">
 				<div class="this-project panel">
-					<div class="nav">
+					<div class="nav stick">
 						<ul>
 							<li role="presentation"
 								ng-class="{'active': isActive(0,selectedTab)}"
@@ -36,12 +39,12 @@
 								class="tab">评论({{project.comments.length}})</a></li>
 						</ul>
 					</div>
-					<div ng-show="isActive(0,selectedTab)" class="detailview">
+					<div ng-show="isActive(0,selectedTab)" class="detailview" >
 						<section>
 							<div class="detail" ng-bind-html="project.description|trusted"></div>
 						</section>
 					</div>
-					<div ng-show="isActive(1,selectedTab)" class="teamview">
+					<div ng-show="isActive(1,selectedTab)" class="teamview" >
 						<section>
 							<a class="btn btn-primary pull-right" id="joinone"
 								ng-show="project.parttype==1||project.parttype==2"
@@ -199,6 +202,18 @@
 		</div>
 	</div>
 </div>
+
+<script src="/js/lib/stickUp.min.js"></script>
+<script type="text/javascript">
+	//initiating jQuery
+	jQuery(function($) {
+		$(document).ready(function() {
+			//enabling stickUp on the '.navbar-wrapper' class
+			$('.stick').stickUp();
+		});
+	});
+</script>
+
 <script>
 	var project_id = location.pathname.replace(/\/project\/(\d+)$/, '$1');
 	require([ 'angular', 'angular-resource' ], function(angular) {

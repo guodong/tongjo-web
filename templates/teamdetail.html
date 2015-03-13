@@ -22,7 +22,7 @@
 	<div class="container-fluid"
 		style="padding-left: 0px; padding-right: 0px">
 		<div class="col-md-9 left-panel">
-			<div class="nav">
+			<div class="nav stick">
 				<ul>
 					<li role="presentation" ng-class="{'active': isActive(0)}"
 						ng-click="setCurTab(0)"><a>团 队 介 绍</a></li>
@@ -122,6 +122,17 @@
 	src="http://static.bshare.cn/b/bshareC0.js"></script>
 	
 <script type="text/javascript" src="/js/lib/jquery.zclip.js"></script>
+
+<script src="/js/lib/stickUp.min.js"></script>
+<script type="text/javascript">
+	//initiating jQuery
+	jQuery(function($) {
+		$(document).ready(function() {
+			//enabling stickUp on the '.navbar-wrapper' class
+			$('.stick').stickUp();
+		});
+	});
+</script>
 
 
 <script>
