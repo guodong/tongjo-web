@@ -228,7 +228,7 @@
 </div>
 <script>
 	var project_id = location.pathname.replace(/\/project\/(\d+)$/, '$1');
-	require([ 'angular', 'angular-resource' ], function(angular) {
+	require([ 'angular', 'angular-resource', 'Auth' ], function(angular, Auth) {
 		var app = angular.module('me', [ 'ngResource' ]);
 		app.filter('trusted', [ '$sce', function($sce) {
 			return function(text) {
@@ -250,6 +250,7 @@
 					.trustAsHtml($scope.project.description);
 			$scope.projects = Project.query();
 			$scope.joinone = function() {
+				Auth.check(); 
 				var PU = $resource(API
 						+ 'project/:project_id/user/:user_id/pivot', {
 					project_id : '@project_id',
@@ -268,6 +269,7 @@
 				});
 			};
 			$scope.jointeam = function(team) {
+				Auth.check();
 				var TU = $resource(API + 'team/:team_id/user/:user_id/pivot', {
 					team_id : '@team_id',
 					user_id : '@user_id'
@@ -287,6 +289,7 @@
 			};
 			$scope.user = JSON.parse(localStorage.user);
 			$scope.submit = function(commentForm, projectId) {
+				Auth.check()
 				var commentVal = commentForm.comment.$modelValue;
 				var data = {
 					project_id : project_id,

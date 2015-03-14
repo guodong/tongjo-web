@@ -66,8 +66,7 @@
 								<tbody>
 									<tr ng-repeat="v in project.teams">
 										<td>
-											<h3 class="text-success" ng-bind="v.name"></h3> <small><a
-												target="_blank" href="/team/{{v.id}}">查看团队详情</a></small>
+											<a target="_blank" href="/team/{{v.id}}"><h3 class="text-success" ng-bind="v.name"></h3></a>
 										</td>
 										<td>
 											<p class="text-primary">
@@ -216,7 +215,7 @@
 
 <script>
 	var project_id = location.pathname.replace(/\/project\/(\d+)$/, '$1');
-	require([ 'angular', 'angular-resource' ], function(angular) {
+	require([ 'angular', 'angular-resource', 'Auth' ], function(angular, angular_resource, Auth) {
 		var app = angular.module('me', [ 'ngResource' ]);
 		app.filter('trusted', [ '$sce', function($sce) {
 			return function(text) {
@@ -276,7 +275,8 @@
 			$scope.hoverOut = function(){
 			    this.hoverEdit = false;
 			};
-			$scope.joinone = function() {
+			$scope.joinone = function() {console.log(Auth)
+				Auth.check();
 				var PU = $resource(API
 						+ 'project/:project_id/user/:user_id/pivot', {
 					project_id : '@project_id',
@@ -295,6 +295,7 @@
 				});
 			};
 			$scope.jointeam = function(team) {
+				Auth.check();
 				var TU = $resource(API + 'team/:team_id/user/:user_id/pivot', {
 					team_id : '@team_id',
 					user_id : '@user_id'
@@ -325,6 +326,7 @@
 					return false;
 			}
 			$scope.submit = function(commentForm, projectId) {
+				Auth.check();
 				var commentVal = commentForm.comment.$modelValue;
 				var data = {
 					project_id : project_id,

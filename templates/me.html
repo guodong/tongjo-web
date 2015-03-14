@@ -54,11 +54,20 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					templateUrl: 'tpl/me/account.html',
 					controller: 'account'
 				}).otherwise({
-					redirectTo: '/'
+					redirectTo: '/project'
 				});
 			}]);
-			app.controller('account', function(){
-				
+			app.controller('account', function($scope){
+				$scope.user = JSON.parse(localStorage.user);
+				$scope.send = function(){
+					$.ajax({
+						url: API+'emailsend',
+						data: {id: localStorage.uid},
+						success: function(){
+							alert("已发送验证邮件到"+$scope.user.email);
+						}
+					});
+				}
 			});
 			app.controller('info',
 			function($scope, $resource) {

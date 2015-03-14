@@ -23,6 +23,16 @@
 #top ada{
 	color: #6dbccb;
 }
+.navbar{
+	background: #666;
+	height: 40px;
+}
+.navbar a{
+	color: #eee !important;
+}
+.navbar li.active a{
+	color: #7baf52 !important;
+}
 </style>
 <div class="footer-fix">
 	<nav class="navbar navbar-default" role="navigation"
@@ -37,17 +47,17 @@
 					<li ng-class="{ active: isActive('/scanproject')}"><a href="/scanproject#/">浏览项目</a></li>
 					<li ng-class="{ active: isActive('/project/create')}"><a href="/project/create">发布项目</a></li>
 				</ul>
-				<form class="navbar-form navbar-left" role="search">
+				<!-- <form class="navbar-form navbar-left" role="search">
 					<div class="form-group has-feedback">
 						<input type="text" class="form-control" placeholder="搜索" /> <i
 							class="glyphicon glyphicon-search form-control-feedback"></i>
 					</div>
-				</form>
+				</form> -->
 				<ul class="nav navbar-nav navbar-right" ng-show="auth==true">
-					<li><a href="/me#message"><span
+					<li><a href="/me#message" title="消息"><span
 							class="glyphicon glyphicon-envelope"></span></a></li>
-					<li><a href="/me#message"><span
-							class="glyphicon glyphicon-bell"></span></a></li>
+					<!-- <li><a href="/me#message"><span
+							class="glyphicon glyphicon-bell"></span></a></li> -->
 					<li><a href="/me"><span class="glyphicon glyphicon-user"></span>
 							<span ng-bind="user.realname"></span></a></li>
 				</ul>
@@ -69,7 +79,7 @@
 		<div class="clearfix">
 			<div class="lists clear">
 				<div>
-					<strong>关于同舟</strong>
+					<!-- <strong>关于同舟</strong> -->
 					<ul>
 						<li><a href="https://www.getclouder.com/">意见反馈</a></li>
 						<li><a href="https://www.getclouder.com/technology">联系我们</a></li>
@@ -77,13 +87,13 @@
 					</ul>
 				</div>
 				<div>
-					<strong>隐私条款</strong>
+					<!-- <strong>隐私条款</strong> -->
 					<ul>
-						<li><a href="https://tutorials.getclouder.com/">免费申请</a></li>
+						<li><a href="https://tutorials.getclouder.com/">隐私条款</a></li>
 					</ul>
 				</div>
 				<div>
-					<strong>服务范围</strong>
+					<!-- <strong>服务范围</strong> -->
 					<ul>
 						<li><a href="https://www.facebook.com/getclouder"
 							target="_blank">友情链接</a></li>
@@ -91,7 +101,7 @@
 					</ul>
 				</div>
 				<div>
-					<strong>帮助手册</strong>
+					<!-- <strong>帮助手册</strong> -->
 					<ul>
 						<li><a href="https://www.getclouder.com/terms">招聘及广告服务</a></li>
 					</ul>
