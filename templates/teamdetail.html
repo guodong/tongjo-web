@@ -136,7 +136,7 @@
 
 
 <script>
-	require([ 'angular', 'model/login', 'model/share', 'angular-route',
+	require([ 'angular','Auth', 'model/login', 'model/share', 'angular-route',
 			'angular-resource' ],
 			function(angular) {
 				var app = angular.module('teamdetailApp', [ 'loginModal',
@@ -222,6 +222,7 @@
 					
 					var JTeam = $resource(API + 'team/:teamId/user');
 					$scope.joinTeam = function() {
+						Auth.check();
 						var uid = localStorage.uid;
 						/* console.log(uid); */
 
