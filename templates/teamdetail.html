@@ -183,6 +183,10 @@
 								$scope.teamdetail.daysmsg = "剩余";
 								$scope.teamdetail.is_open = true;
 							}
+							//0为报名关闭
+							if($scope.teamdetail.is_signup = 0){
+								$scope.teamdetail.is_open = false;
+							}
 							
 							$scope.teamdetail.average = $scope.getaverage();
 							
