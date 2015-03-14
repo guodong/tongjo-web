@@ -54,7 +54,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					templateUrl: 'tpl/me/account.html',
 					controller: 'account'
 				}).otherwise({
-					redirectTo: '/'
+					redirectTo: '/project'
 				});
 			}]);
 			app.controller('account', function($scope){
