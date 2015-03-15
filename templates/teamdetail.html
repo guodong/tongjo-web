@@ -25,13 +25,13 @@
 			<div class="nav stick">
 				<ul>
 					<li role="presentation" ng-class="{'active': isActive(0)}"
-						ng-click="setCurTab(0)"><a>团 队 介 绍</a></li>
+						ng-click="setCurTab(0)"><a href="#des">团 队 介 绍</a></li>
 					<li role="presentation" ng-class="{'active': isActive(1)}"
-						ng-click="setCurTab(1)"><a>已 有 团
+						ng-click="setCurTab(1)"><a href="#member">已 有 团
 							员({{teamdetail.members.length}})</a></li>
 				</ul>
 			</div>
-			<div class="tab" ng-class="{'isdisplay': isActive(0)}">
+			<div class="tab" ng-class="{'isdisplay': isActive(0)}" id="des" style="padding-top:45px">
 				<div class="detail-title">
 					<h3>[团队描述]</h3>
 					<div class="detail" ng-bind="teamdetail.description"></div>
@@ -39,7 +39,7 @@
 				
 			</div>
 
-			<div class="tab" ng-class="{'isdisplay': isActive(1)}">
+			<div class="tab" ng-class="{'isdisplay': isActive(1)}" id="member" style="padding-top:45px">
 				<table class="table team-table">
 					<thead style="border">
 						<tr>
