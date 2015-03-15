@@ -10,11 +10,11 @@
 	<div class="page-header create-header">
 		<ul class="create">
 			<li role="presentation"><a class="complete"
-				ng-class="{'complete_select':isselect(2)}" ng-click="setCurTab(2)">完成</a></li>
+				ng-class="{'complete_select':isselect(2)}" >完成</a></li>
 			<li role="presentation"><a class="next"
-				ng-class="{'next_select': isselect(1)}" ng-click="setCurTab(1)">报名设置</a></li>
+				ng-class="{'next_select': isselect(1)}"  >报名设置</a></li>
 			<li role="presentation"><a class="next"
-				ng-class="{'next_select': isselect(0)}" ng-click="setCurTab(0)">项目信息</a></li>
+				ng-class="{'next_select': isselect(0)}" >项目信息</a></li>
 		</ul>
 	</div>
 
@@ -25,7 +25,7 @@
 					<tr>
 						<td width="10%" nowrap="nowrap"><label class="title">项目名称</label></td>
 						<td style="padding-left: 14px; padding-right: 14px;"><input
-							type="text" class="form-control textinput"
+							type="text" class="form-control textinput" name="projectname"
 							ng-model="project.name" required></td>
 					</tr>
 				</table>
@@ -92,7 +92,6 @@
 									</div>
 
 									<div class="modal-body">
-										<!-- 主体 -->
 										<div class="container-fluid tagbody">
 											<div class="col-md-3" style="padding-left: 0px">
 												<ul class="nav nav-pills nav-stacked lefttree">
@@ -179,7 +178,7 @@
 			</div>
 			
 			<div style="margin-top: 50px;text-align:center">
-				<button class="btn btn-next" ng-click="setCurTab(1)">下 一 步</button>
+				<button class="btn btn-next" ng-click="setCurTab(1)" ng-disabled="createform.projectname.$invalid">下 一 步</button>
 			</div>
 			
 		</div>
@@ -216,7 +215,7 @@
 				<div style="margin-top: 30px;">
 					<label class="title">选择技能需求标签</label>
 					<div>
-						<span ng-repeat="tag in selecttag" style="margin-left: 20px"
+						<span ng-repeat="tag in projecttag" style="margin-left: 20px"
 							ng-bind="tag.name"></span> <a class="mbtn"
 							data-toggle="modal" data-target="#tagModal" ng-if="projecttag.length<1">添加技能标签 ></a>
 							<a class="mbtn"
@@ -285,13 +284,13 @@
 						<td width="10%" nowrap="nowrap"><label class="title">报名截止时间</label></td>
 						<td style="padding-left: 14px; padding-right: 14px;"><input data-provide="datepicker" class="form-control datepicker"
 							ng-model="project.deadline" required style="padding-left:14px;padding-right:14px"
-							data-date-format="yyyy-mm-dd" autoclose="true"></td>
+							data-date-format="yyyy-mm-dd" autoclose="true" name="deadtime"></td>
 					</tr>
 				</table>
 
 				<div style="margin-top: 50px; text-align: center">
 					<button class="btn btn-next" ng-click="setCurTab(0)">上 一 步</button>
-					<button class="btn btn-next" ng-click="setCurTab(2)" style="margin-left:60px">下 一 步</button>
+					<button class="btn btn-next" ng-click="setCurTab(2)" style="margin-left:60px" ng-disabled="createform.deadtime.$invalid">下 一 步</button>
 				</div>
 			</div>
 		</div>
@@ -378,6 +377,12 @@
 				};
 				var Cate = $resource(API + 'category');
 				$scope.cates = Cate.query();
+/* <<<<<<< HEAD
+				$scope.selectcate = function($event, cate) {
+					var checkbox = $event.target;
+					cate.select = checkbox.checked ? true
+							: false; */
+
 				$scope.selectcate = function(cate) {
 					if($scope.selcates.length == 5) return;
 					cate.select = true;

@@ -5,8 +5,9 @@ display: table;
 table-layout: fixed;
 margin-left: auto;
 margin-right: auto;
-border-bottom:1px solid #bdbdbd;
-border-right: 1px solid #bdbdbd;
+margin-top:30px;
+/*border-bottom:1px solid #bdbdbd;*/
+/*border-right: 1px solid #bdbdbd;*/
 .left-nav{
 display:table-cell;
 vertical-align: top;
@@ -14,9 +15,9 @@ width: 200px;
 padding-left:10px;
 padding-top:10px;
 padding-right:10px;
-background-color: #ececec;
-border-right: 1px solid #bdbdbd;
-border-left: 1px solid #bdbdbd;
+background-color: #f6f6f6;
+/*border-right: 1px solid #bdbdbd;*/
+/*border-left: 1px solid #bdbdbd;*/
 .nav-section{
 margin-bottom:24px;
 font-size: 12px;
@@ -120,11 +121,11 @@ margin-top: -1px;
 }
 .rightpanel{
 	display: table-cell;
-	box-shadow: inset 0 0 1px #b2b2b2;
+	/*box-shadow: inset 0 0 1px #b2b2b2;*/
 	min-height: 100%;
-	background-color: #ececec;
+	background-color: #f6f6f6;
 	padding-top:0px;
-	border-right: 1px solid #bdbdbd;
+	/*border-right: 1px solid #bdbdbd;*/
 .content{
 	padding: 20px;
 }
@@ -135,12 +136,12 @@ margin-top: -1px;
 	width:100%;
 	color: #b8b8b8;
 	background-color: #f8f8f8;
-	border-top: 1px solid #bdbdbd;
+	/*border-top: 1px solid #bdbdbd;*/
 	/*border-right: 1px solid #bdbdbd;*/
-	border-bottom: 1px solid #bdbdbd;
-	-webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;
+	/*border-bottom: 1px solid #bdbdbd;*/
+	/*-webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;
 	-moz-box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;
-	box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;*/
 	.title{
 	font-size: 28px;
 	text-shadow: 0px 1px rgba(255,255,255,0.8);
@@ -159,7 +160,7 @@ margin-top: -1px;
 }
 .featured{
 	padding: 10px;
-	background-color:#f8f8f8;
+	background-color:#fff;
 	.previous-arrow{
 		width: 23px;
 	height: 46px;
@@ -199,11 +200,13 @@ section>div {
 }
 section.tech article {
 float: left;
-width: 25%;
+width: 23%;
 margin: 0 0 0 0%;
-padding:10px;
-border-right: 1px solid #c6c6c6;
-border-bottom: 1px solid #c6c6c6;
+padding:0px;
+border: 1px solid #c6c6c6;
+margin:1%;
+/*border-right: 1px solid #c6c6c6;*/
+/*border-bottom: 1px solid #c6c6c6;*/
 position: relative;
 }
 section.tech article span {
@@ -231,16 +234,16 @@ section.tech article .hover{
 position: absolute;
 left: 0;
 top: 0;
-background-color: #ececec;
+background-color: #000;
+opacity: 0.5;
 width: 100%;
 height: 100%;
-color: #000;
+color: #FFF;
 padding-top:15%;
 padding-left:10px;
 padding-right:10px;
 }
 section.tech article .hover p {
-height: 40px;
 line-height: 20px;
 margin-top:20px;
 margin-bottom:40px;
@@ -248,7 +251,7 @@ font-size:14px;
 overflow : hidden;
 text-overflow: ellipsis;
 display: -webkit-box;
--webkit-line-clamp: 2;
+-webkit-line-clamp: 3;
 -webkit-box-orient: vertical;
 }
 section.tech article h5{
@@ -260,32 +263,12 @@ white-space: nowrap;
 text-overflow: ellipsis; 
 overflow: hidden;
 }
-.small-button.red {
-border-color: #f26334;
-color: #f26334;
-}
-.small-button {
-display: inline-block;
-height: 30px;
-padding: 0 20px;
-border-radius: 5px;
-font: 400 16px/30px 'Source Sans Pro', sans-serif;
-letter-spacing: .1em;
-background: #fff;
-border-width: 2px;
-border-style: solid;
-text-transform: uppercase;
-text-align: center;
-transition: opacity .2s ease;
--moz-transition: opacity .2s ease;
--webkit-transition: opacity .2s ease;
--o-transition: opacity .2s ease;
-}
-.transparent_class {
-	filter:alpha(opacity=80);
-	-moz-opacity:0.8;
-	-khtml-opacity: 0.8;
-	opacity: 0.8;
+.detail-button{
+	position: absolute;
+	font-size:14px;
+	color:#FFF;
+	right:10px;
+	bottom:30px;	
 }
 img {
 	max-width: 100%;
