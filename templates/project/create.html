@@ -66,30 +66,59 @@
 					<div>
 						<span ng-repeat="cate in selcates" style="margin-left: 20px;"
 							ng-bind="cate.name"></span> <a class="mbtn" data-toggle="modal"
-							data-target="#myModal" ng-if="selcates.length<1">添加分类 ></a>
+							data-target="#cateModal" ng-if="selcates.length<1">添加分类 ></a>
 							<a class="mbtn" data-toggle="modal"
-							data-target="#myModal" ng-if="selcates.length>0">编辑分类 ></a>
-						<div class="modal fade" id="myModal">
+							data-target="#cateModal" ng-if="selcates.length>0">编辑分类 ></a>
+							<div class="modal fade info" id="cateModal">
 							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
+								<div class="modal-content tagmodal">
+									<div class="modal-header"
+										style="padding-top: 8px; padding-bottom: 8px; border-bottom: 0px;">
 										<button type="button" class="close" data-dismiss="modal">
-											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+											<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
 										</button>
-										<h4 class="modal-title">选择项目标签</h4>
+										<h5 class="title">已选择分类：</h5>
+										<ul class="nav nav-pills selecttag">
+											<li ng-repeat="tag in selcates">
+												<div class="rectangle" ng-bind="tag.name"></div>
+												<div class="ex-toleft"></div>
+												<button type="button" class="close delete"
+													ng-click="delcate($index)">
+													<span aria-hidden="true"
+														style="color: #ff0000; font-size: 16px">×</span>
+												</button>
+											</li>
+										</ul>
 									</div>
+
 									<div class="modal-body">
-										<dl ng-repeat="cate in cates">
-											<dt ng-bind="cate.name"></dt>
-											<dd ng-repeat="c in cate.children">
-												<input type="checkbox" ng-click="selectcate($event, c)">
-												{{c.name}}
-											</dd>
-										</dl>
+										<div class="container-fluid tagbody">
+											<div class="col-md-3" style="padding-left: 0px">
+												<ul class="nav nav-pills nav-stacked lefttree">
+													<li ng-repeat="cate in cates"
+														ng-class="{'active': isActive(cate.id)}"><a
+														ng-bind="cate.name" ng-click="setid(cate.id)"></a></li>
+												</ul>
+											</div>
+
+											<div class="col-md-9">
+												<ul class="nav nav-pills nav-stacked righttree"
+													ng-repeat="cate in cates" ng-if="cate.id==curid">
+													<li class="outerli">
+														<ul class="nav nav-pills">
+															<li ng-repeat="c in cate.children"
+																ng-click="selectcate(c)"><a ng-bind="c.name"></a></li>
+														</ul>
+													</li>
+												</ul>
+											</div>
+
+										</div>
 									</div>
+
 									<div class="modal-footer">
-										<button type="button" class="btn btn-default"
-											data-dismiss="modal">关 闭</button>
+										<button type="button" class="btn btn-default btn-sm"
+											ng-click="addtags()" data-dismiss="modal">完成</button>
 									</div>
 								</div>
 							</div>
@@ -348,12 +377,20 @@
 				};
 				var Cate = $resource(API + 'category');
 				$scope.cates = Cate.query();
+/* <<<<<<< HEAD
 				$scope.selectcate = function($event, cate) {
 					var checkbox = $event.target;
 					cate.select = checkbox.checked ? true
-							: false;
+							: false; */
+
+				$scope.selectcate = function(cate) {
+					if($scope.selcates.length == 5) return;
+					cate.select = true;
 					getCates();
 				}
+				$scope.delcate = function(index) {
+					$scope.selcates.remove(index);
+				};
 				$scope.$watch('project.type',
 						function(type) {
 							switch (type) {
