@@ -79,12 +79,12 @@
 					<img alt=".." ng-src="/{{getseximg(userinfo.gender)}}" class="sex">
 				</div>
 
-				<div class="userdetail-line">
+				<!-- <div class="userdetail-line">
 					<h6>LV：</h6>
 					<h6 ng-bind="userinfo.degree"></h6>
 					<h6 class="secondh6">称号:</h6>
 					<h6 ng-bind="userinfo.honor"></h6>
-				</div>
+				</div> -->
 				<div class="userdetail-line">
 					<h6>大学:</h6>
 					<h6 ng-bind="userinfo.school.name">同济大学</h6>
@@ -99,7 +99,7 @@
 
 		<div class="usertaginfo col-md-6">
 			<div class="userdetail-label">
-				<h6>感兴趣的学术标签</h6>
+				<h6>学术技能标签</h6>
 			</div>
 			<ul>
 				<li ng-repeat="label in userinfo.tags"><span class="rectangle"><span></span></span>{{label.name}}</li>
@@ -141,7 +141,7 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="project in projects">
-							<td ng-bind="project.name" class="projectname"></td>
+							<td ><a class="projectname" href="/project/{{project.id}}" ng-bind="project.name" >查看</a></td>
 							<td ng-bind="project.created_at"></td>
 							<td ng-bind="project.deadline"></td>
 							<td ><a href="/project/{{project.id}}">查看</a></td>
