@@ -75,10 +75,10 @@
 
 							<label class="radio-inline" style="margin-left: 40px;padding-top:0px"> <input
 								type="radio" name="inlineRadioOptions" id="inlineRadio1"
-								value="0" checked="checked"> 开启
+								value="0" ng-model="team.is_signup" ng-checked="true" > 开启
 							</label> <label class="radio-inline" style="margin-left: 80px;padding-top:0px"> <input
 								type="radio" name="inlineRadioOptions" id="inlineRadio2"
-								value="1"> 关闭
+								value="1" ng-model="team.is_signup"> 关闭
 							</label>
 
 
@@ -133,6 +133,7 @@
 				$scope.team.is_signup = $("input[type='radio']:checked").val();
 				$scope.team.user_id = localStorage.uid;
 				$scope.team.project_id = pid;
+				
 				t = new Team($scope.team);
 				t.$save(null,function(team){ 
 		            console.log(team);

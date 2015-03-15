@@ -29,22 +29,22 @@
 						<ul>
 							<li role="presentation"
 								ng-class="{'active': isActive(0,selectedTab)}"
-								ng-click="setCurTab(0)"><a class="tab">项目介绍</a></li>
+								ng-click="setCurTab(0)" ><a class="tab" href="#detail">项目介绍</a></li>
 							<li role="presentation"
 								ng-class="{'active': isActive(1,selectedTab)}"
-								ng-click="setCurTab(1)"><a class="tab">已有团队({{project.teams.length}})</a></li>
+								ng-click="setCurTab(1)"><a class="tab"  href="#team">已有团队({{project.teams.length}})</a></li>
 							<li role="presentation"
 								ng-class="{'active': isActive(2,selectedTab)}"
 								style="margin-right: 0px;" ng-click="setCurTab(2)"><a
-								class="tab">评论({{project.comments.length}})</a></li>
+								class="tab"  href="#comment">评论({{project.comments.length}})</a></li>
 						</ul>
 					</div>
-					<div ng-show="isActive(0,selectedTab)" class="detailview" >
+					<div ng-show="isActive(0,selectedTab)" class="detailview" id="detail" style="margin-top:-45px;padding-top:80px;">
 						<section>
 							<div class="detail" ng-bind-html="project.description|trusted"></div>
 						</section>
 					</div>
-					<div ng-show="isActive(1,selectedTab)" class="teamview" >
+					<div ng-show="isActive(1,selectedTab)" class="teamview" id="team" style="margin-top:-45px;padding-top:80px;">
 						<section>
 							<a class="btn btn-primary pull-right" id="joinone"
 								ng-show="project.parttype==1||project.parttype==2"
@@ -94,7 +94,7 @@
 							</table>
 						</section>
 					</div>
-					<div ng-show="isActive(2,selectedTab)" class="commentview">
+					<div ng-show="isActive(2,selectedTab)" class="commentview" id="comment" style="margin-top:-45px;padding-top:80px;">
 						<section class="projectdiscuss">
 							<div class="discussbox">
 								<div class="commentbox">
