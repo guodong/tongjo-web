@@ -67,6 +67,25 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 							alert("已发送验证邮件到"+$scope.user.email);
 						}
 					});
+				};
+				$scope.resetpsw = function(){
+					if($scope.newpsw != $scope.renewpsw){
+						alert("两次密码输入不同");
+						return;
+					}
+					$.ajax({
+						type: 'post',
+						url: API + 'resetpassword',
+						data: {uid: localStorage.uid, oldpsw: $scope.user.oldpsw, newpsw: $scope.user.newpsw},
+						success: function(d){
+							if(d == 0){
+								alert("修改成功");
+								location.reload();
+							}else if(d == 1){
+								alert("原密码错误");
+							}
+						}
+					});
 				}
 			});
 			app.controller('info',
