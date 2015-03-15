@@ -39,12 +39,12 @@
 								class="tab"  href="#comment">评论({{project.comments.length}})</a></li>
 						</ul>
 					</div>
-					<div ng-show="isActive(0,selectedTab)" class="detailview" id="detail" style="padding-top:45px;">
+					<div ng-show="isActive(0,selectedTab)" class="detailview" id="detail" style="margin-top:-45px;padding-top:80px;">
 						<section>
 							<div class="detail" ng-bind-html="project.description|trusted"></div>
 						</section>
 					</div>
-					<div ng-show="isActive(1,selectedTab)" class="teamview" id="team" style="padding-top:45px;">
+					<div ng-show="isActive(1,selectedTab)" class="teamview" id="team" style="margin-top:-45px;padding-top:80px;">
 						<section>
 							<a class="btn btn-primary pull-right" id="joinone"
 								ng-show="project.parttype==1||project.parttype==2"
@@ -94,7 +94,7 @@
 							</table>
 						</section>
 					</div>
-					<div ng-show="isActive(2,selectedTab)" class="commentview" id="comment" style="padding-top:45px;">
+					<div ng-show="isActive(2,selectedTab)" class="commentview" id="comment" style="margin-top:-45px;padding-top:80px;">
 						<section class="projectdiscuss">
 							<div class="discussbox">
 								<div class="commentbox">
