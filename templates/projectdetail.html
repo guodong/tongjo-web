@@ -49,11 +49,11 @@
 							<a class="btn btn-primary pull-right" id="joinone"
 								ng-show="project.parttype==1||project.parttype==2"
 								style="margin-bottom: 20px; margin-left: 20px"
-								href="/newteam/{{project.id}}"><span
+								href="/newteam/{{project.id}}" ng-disabled="!project.is_open"><span
 								class="glyphicon glyphicon-star"></span> 组建团队</a> <a
 								class="btn btn-info pull-right" id="join"
 								ng-show="project.parttype==0||project.parttype==2"
-								style="margin-bottom: 20px;" ng-click="joinone()"><span
+								style="margin-bottom: 20px;" ng-click="joinone()" ng-disabled="!project.is_open"><span
 								class="glyphicon glyphicon-user"></span> 个人参加</a>
 							<table class="group">
 								<thead class="bg-primary">
@@ -77,7 +77,7 @@
 											</p>
 										</td>
 										<td style="text-align: right;">
-											<button class="btn btn-warning" ng-click="jointeam(v)">
+											<button class="btn btn-warning" ng-click="jointeam(v)" ng-disabled="!project.is_open">
 												<span class="glyphicon glyphicon-plus"></span> 参加团队
 											</button>
 										</td>
@@ -174,9 +174,9 @@
 							发布者 <a href="/userinfodetail/{{project.creator.id}}"
 								ng-bind="project.creator.realname"></a>
 						</h3>
-						<p>同济大学 <span ng-show="project.creator.campus_id == 2">嘉定</span>
-						&nbsp;<span ng-show="project.creator.campus_id == 1">本部</span></p>
-						<p>lv<span ng-bind="project.creator.degree"></span>&nbsp;<span ng-bind="project.creator.honor"></span></p>
+						<p>同济大学 </p>
+						<!-- <p>lv<span ng-bind="project.creator.degree"></span>&nbsp;<span ng-bind="project.creator.honor"></span></p> -->
+						<p>计算机科学与技术</p>
 					</div>
 				</div>
 				<div class="panel labels clear clearfix">
@@ -194,9 +194,9 @@
 					<div class="open" ng-show="project.is_open">报名开放</div>
 				    <div class="open" ng-show="!project.is_open">报名关闭</div>
 				</div>
-				<div class="panel collect">
+				<!-- <div class="panel collect">
 					<a href="#collect"><img src="/img/collect.png"></img></a>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -264,6 +264,7 @@
 					$scope.project.opendays = -$scope.project.opendays;
 				}
 				else $scope.project.daysmsg = "剩余";
+				console.log($scope.project);
 			});
 			$scope.project.description = $sce
 					.trustAsHtml($scope.project.description);
