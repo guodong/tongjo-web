@@ -3,5 +3,6 @@ return array(
         '#^/$#' => 'index',
         '#^/me$#' => 'me',
         '#^/project/create#' => 'project/create',
-        '#^/verify?#' => 'emailverify'
+        '#^/verify?#' => 'emailverify',
+        '#^/about#' => 'about'
 );

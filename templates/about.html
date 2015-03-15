@@ -1,0 +1,59 @@
+{!extends file='layout.html'!} {!block name=main!}
+<div id="about" class="hide">
+	<div class="page-header">
+		<h3>关于同舟</h3>
+	</div>
+	<div>
+		同舟致力于为在校的大学生提供一个以项目会友的平台，营造一个用于创新用于实践勇于创业的平台，在这里你可以找到适合自己的实践创新创业项目，你可以找到志同道合的朋友，一起思行同舟，在项目中提升能力，收获友谊，书写华丽的青春之歌，创造属于彼此的故事。
+	</div>
+</div>
+<div id="join" class="hide">
+	<div class="page-header">
+		<h3>加入我们</h3>
+	</div>
+	<div>
+		<p>我们是一群青春活力的90后，让同舟给大学生活带来新的激情，如果你跟我们有同样的理念，欢迎加入我们，来同舟你可以收获什么？
+		<p>1，一群有意思的人和一些有趣的事
+		<p>2，当然少不了补贴
+		<p>如果你有下面的特长：
+		<p>1，擅长php后台开发
+		<p>2，擅长web前端开发
+		<p>3，你是一个设计自信的设计师
+		<p>4，你擅长与人交流，并且自信能坚持，是一个公关大师
+		<p>5，你擅长文案以及推广策划
+		<p>赶紧发送你的简历到：hr@tongjo.com。
+		<p>如有任何疑问也可发送邮件到contact@tongjo.com,欢迎来电。
+	</div>
+</div>
+<div id="mobile" class="hide">
+	<div class="page-header">
+		<h3>移动应用</h3>
+	</div>
+	<div>敬请期待</div>
+</div>
+<div id="service" class="hide">
+	<div class="page-header">
+		<h3>服务范围</h3>
+	</div>
+	<div>
+		<p>校园活动赛事推广：
+		<p>同舟在各个校园有扎实的校园小分队，可以帮助解决企业或单位解决在校园活动宣传遇到的问题，包括与学校相关机构谈合作以及提供活动线下推广的人员，同舟将结合线上线下的平台，致力于给活动营造最好的氛围。
+		
+		<p>合作电话：021-69583744
+		<p>联系邮件：business@tongjo.com
+		<p>
+		<p>平台定制：
+		<p>如果你的单位需要类似于同舟平台功能的企业网站，我们为相关单位提供企业版的官方定制。
+		<p>合作电话：021-69583744
+		<p>联系邮件：business@tongjo.com
+	</div>
+</div>
+<script>
+	var getHash = function(window) {
+		var match = (window || this).location.href.match(/#\/(.*)$/);
+		return match ? match[1] : '';
+	}
+	var pos = getHash();
+	$("#" + pos).removeClass('hide');
+</script>
+{!/block!}
