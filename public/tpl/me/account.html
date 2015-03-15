@@ -4,34 +4,34 @@
 
 <ul id="myTab" class="nav nav-tabs" role="tablist">
 	<li class="active"><a role="tab" tabid="t1" data-toggle="tab">邮箱认证</a></li>
-	<li><a role="tab" tabid="t2" data-toggle="tab">手机认证</a></li>
+<!-- 	<li><a role="tab" tabid="t2" data-toggle="tab">手机认证</a></li> -->
 	<li><a role="tab" tabid="t3" data-toggle="tab">密码修改</a></li>
 </ul>
 <div class="tab-content" style="padding-top: 20px">
 	<div tcid="t1" class="tab-pane active">
 		<form role="form" class="form-horizontal" name="emailform">
 			<div class="form-group">
-				<label class="col-sm-2 control-label">状态</label>
-				<div class="col-sm-10">
+				<label class="col-sm-1 control-label">邮箱</label>
+				<div class="col-sm-11">
+					<input type="email" class="form-control" ng-model="user.email" required="required" readonly="readonly" value="{{user.email}}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-1 control-label">状态</label>
+				<div class="col-sm-11">
 					<span class="label label-danger" ng-show="user.is_email_verified==0">未认证</span>
 					<span class="label label-success" ng-show="user.is_email_verified==1">已认证</span>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">邮箱</label>
-				<div class="col-sm-10">
-					<input type="email" class="form-control" ng-model="user.email" required="required" readonly="readonly" value="{{user.email}}">
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-10 col-sm-offset-2">
+				<div class="col-sm-10 col-sm-offset-1">
 					<a class="btn btn-success" ng-click="send()"
-						ng-disabled="emailform.$invalid">发送认证邮件</a>
+						ng-disabled="emailform.$invalid" ng-show='user.is_email_verified==0'>发送认证邮件</a>
 				</div>
 			</div>
 		</form>
 	</div>
-	<div tcid="t2" class="tab-pane">
+ 	<div tcid="t2" class="tab-pane">
 		<form class="form-horizontal" name="telform">
 			<div class="form-group">
 				<label class="col-sm-2 control-label">状态</label>
@@ -64,19 +64,19 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">新密码</label>
 				<div class="col-sm-10">
-					<input type="password" class="form-control" ng-model="user.newpsw" required="required">
+					<input type="password" class="form-control" ng-model="user.newpsw" required="required" ng-pattern="/^.{6}$/">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">新密码确认</label>
 				<div class="col-sm-10">
-					<input type="password" class="form-control" ng-model="user.renewpsw" required="required">
+					<input type="password" class="form-control" ng-model="user.renewpsw" required="required" ng-pattern="/^.{6}$/">
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-10 col-sm-offset-2">
-					<a class="btn btn-success" ng-click="save()"
-						ng-disabled="pswform.$invalid">发送认证信息</a>
+					<a class="btn btn-success" ng-click="resetpsw()"
+						ng-disabled="pswform.$invalid">修改密码</a>
 				</div>
 			</div>
 		</form>
