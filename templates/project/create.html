@@ -68,7 +68,7 @@
 							ng-bind="cate.name"></span> <a class="mbtn" data-toggle="modal"
 							data-target="#cateModal" ng-if="selcates.length<1">添加分类 ></a>
 							<a class="mbtn" data-toggle="modal"
-							data-target="#myModal" ng-if="selcates.length>0">编辑分类 ></a>
+							data-target="#cateModal" ng-if="selcates.length>0">编辑分类 ></a>
 							<div class="modal fade info" id="cateModal">
 							<div class="modal-dialog">
 								<div class="modal-content tagmodal">
@@ -83,7 +83,7 @@
 												<div class="rectangle" ng-bind="tag.name"></div>
 												<div class="ex-toleft"></div>
 												<button type="button" class="close delete"
-													ng-click="del($index)">
+													ng-click="delcate($index)">
 													<span aria-hidden="true"
 														style="color: #ff0000; font-size: 16px">×</span>
 												</button>
@@ -120,31 +120,6 @@
 									<div class="modal-footer">
 										<button type="button" class="btn btn-default btn-sm"
 											ng-click="addtags()" data-dismiss="modal">完成</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal fade" id="myModal">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">
-											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-										</button>
-										<h4 class="modal-title">选择项目标签</h4>
-									</div>
-									<div class="modal-body">
-										<dl ng-repeat="cate in cates">
-											<dt ng-bind="cate.name"></dt>
-											<dd ng-repeat="c in cate.children">
-												<input type="checkbox" ng-click="selectcate($event, c)">
-												{{c.name}}
-											</dd>
-										</dl>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-default"
-											data-dismiss="modal">关 闭</button>
 									</div>
 								</div>
 							</div>
@@ -404,9 +379,13 @@
 				var Cate = $resource(API + 'category');
 				$scope.cates = Cate.query();
 				$scope.selectcate = function(cate) {
+					if($scope.selcates.length == 5) return;
 					cate.select = true;
 					getCates();
 				}
+				$scope.delcate = function(index) {
+					$scope.selcates.remove(index);
+				};
 				$scope.$watch('project.type',
 						function(type) {
 							switch (type) {
