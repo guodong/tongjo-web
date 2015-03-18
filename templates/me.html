@@ -127,6 +127,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					var _school, _academy;
 					$scope.getAcademies = function() {
 						$scope.academies = [];
+						//if(!_school)return;
 						for (var i in $scope.schools) {
 							if ($scope.schools[i].id == user.school_id) {
 								_school = $scope.schools[i];
@@ -138,6 +139,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					};
 					$scope.getMajors = function() {
 						$scope.majors = [];
+						if(!_school)return;
 						for (var i in _school.academies) {
 							if (_school.academies[i].id == user.academy_id) {
 								$scope.majors = _school.academies[i].majors;
