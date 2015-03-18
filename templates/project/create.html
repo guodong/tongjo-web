@@ -311,7 +311,7 @@
 					ng-disabled="createform.$invalid || iscontentempty" style="margin-left:60px">发 布 项 目</button>
 			</div>
 			<div style="margin-top: 20px; text-align: center">
-				<p style="color:#bbb">点击“发布项目”，表示您已经阅读并同意</p><p style="color:#bbb">用户协议以及隐私策略</p>
+				<p style="color:#bbb">点击“发布项目”，表示您已经阅读并同意</p><p style="color:#bbb"><a style="font-size:14px" href="../agreement" target="_blank">用户协议</a>以及隐私策略</p>
 			</div>
 			<div style="margin-top: 20px; text-align: center">
 				<p
@@ -372,6 +372,13 @@
 				$scope.project.parttype = 2;
 				$scope.project.is_open = 1;
 				$scope.create = function() {
+					
+					var user = JSON.parse(localStorage.user);
+					if(user.is_email_verified != 1){
+						alert("请先验证邮箱");
+						location.href="/me#/account";
+					}
+					
 					$scope.project.description = um
 							.getContent();
 					var categorys = getCates();
@@ -429,7 +436,8 @@
 							}
 						});
 
-				$scope.projectimg = 'sysproject/p1.png';
+				$r = Math.round(Math.random()*6);
+				$scope.projectimg = 'sysproject/p'+$r+'.jpg';
 				//true代表显示图片，false代表显示图片操作
 				$scope.status = true;
 

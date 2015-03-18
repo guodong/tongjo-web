@@ -3,7 +3,6 @@
 	<div>
 		<div class="fullscreen_post_bg"
 			style="background-image: url('/img/zhuce.jpg');">
-
 			<!-- 主体 -->
 			<div ng-controller="signupController"
 				class="container-fluid loginsignupbox">
@@ -50,7 +49,9 @@
 
 					</div>
 				</div>
-            <div class="col-sm-5 col-sm-offset-8"><a  class = "logina" href="/login">快速登录</a></div>
+				<div class="col-sm-5 col-sm-offset-8">
+					<a class="logina" href="/login">快速登录</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -58,11 +59,11 @@
 </div>
 <script>
 	require(
-			['angular', 'lib/ycd-validation'],
-			function(angular) {
+			['angular', 'lib/ycd-validation','model/alertmodal'],
+			function(angular, alertModal) {
 				"use strict";
 				var signupApp = angular
-						.module('signupApp', [ "w5c.validator" ]);
+						.module('signupApp', [ 'alertModal',"w5c.validator" ]);
 				signupApp.config([ "w5cValidatorProvider",
 						function(w5cValidatorProvider) {
 							// 全局配置
@@ -87,13 +88,9 @@
 								}
 							});
 						} ]);
-				signupApp
-						.controller(
-								"signupController",
-								[
-										"$scope",
-										"$http",
-										function($scope, $http) {
+				signupApp.controller("signupController",
+								["$scope","$http",'alertService',
+										function($scope, $http, alertService) {
 											$scope.agree = true;
 											var vm = $scope.vm = {
 												htmlSource : "",
@@ -123,31 +120,24 @@
 														      	        password:passwordVal
 														      	};
 														      	console.log(data);
-														      	$.ajax({
-														      		   type: "GET",
-														      		   url: "http://api.tongjo.com/accesstoken",
-														      		   data: data,
-														      		   success: function(msg){
-														      		       console.log(msg);
-														      		       localStorage.user = msg;
-														      		       localStorage.uid = JSON.parse(msg).id;
-														      		       if($scope.remember){
-														      		    	   localStorage.email = emailVal;
-														      		    	   localStorage.password = passwordVal;
-														      		    	   localStorage.isRemember = true;
-														      		       }
-														      		       location.href = "/me";
-														      		   },
-														      	       error: function(data) {
-														      	    	   console.log(data);
-														                 }
-														      	});
-
+														      	
+												      		    var modalOptions = {
+													      		            closeButtonText: 'Cancel',
+													      		            bodyText: '注册成功，请登陆邮箱验证链接'
+													      		        };
+												      		  			alertService.showModal({}, modalOptions).then(function (result) {
+													      	            	location.href = "/me";
+													      	    });
 															},
 															error : function(
 																	data) {
-																console
-																		.log(data);
+												      		    var modalOptions = {
+												      		            closeButtonText: 'Cancel',
+												      		            bodyText: '注册失败'
+												      		        };
+												      		  	alertService.showModal({}, modalOptions).then(function (result) {
+												      	            	location.href = "/me";
+												      	   		 });
 															}
 												});
 											};
