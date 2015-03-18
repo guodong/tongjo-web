@@ -21,17 +21,24 @@
 </div>
 <script type="text/javascript">
 	/*$('#jointeamsuccessModal').modal('show');*/
-	require([ 'angular', 'model/login' ], function(angular, loginModal) {
-		angular.module('login', [ 'loginModal' ]).controller(
+	require([ 'angular', 'model/alertmodal' ], function(angular, alertModal) {
+		angular.module('login', [ 'alertModal' ]).controller(
 				'loginController',
-				function($scope, loginService) {
+				function($scope, alertService) {
 					$scope.aclick = function() {
-						loginService.showModal().then(
+						/*loginService.showModal().then(
 								function(isSuccess) {
 									if(isSuccess)
 										alert("登陆成功:");
 									else alert("登陆失败:");
-								});
+								});*/
+		      		    var modalOptions = {
+		      		            closeButtonText: 'Cancel',
+		      		            bodyText: '请登陆邮箱验证链接'
+		      		        };
+		      		  	alertService.showModal({}, modalOptions).then(function (result) {
+		      	            	location.href = "/me";
+		      	   		 });
 					}
 				});
 		angular.bootstrap(document.getElementById("body"), [ 'login' ]);
