@@ -428,7 +428,8 @@
 							}
 						});
 
-				$scope.projectimg = 'sysproject/p1.png';
+				$r = Math.round(Math.random()*6);
+				$scope.projectimg = 'sysproject/p'+$r+'.jpg';
 				//true代表显示图片，false代表显示图片操作
 				$scope.status = true;
 
