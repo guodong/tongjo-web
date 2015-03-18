@@ -4,5 +4,7 @@ return array(
         '#^/me$#' => 'me',
         '#^/project/create#' => 'project/create',
         '#^/verify?#' => 'emailverify',
-        '#^/about#' => 'about'
+        '#^/about#' => 'about',
+        '#^/findpsw#' => 'findpsw',
+        '#^/resetpsw#' => 'resetpsw'
 );

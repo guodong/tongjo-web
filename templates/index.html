@@ -152,35 +152,38 @@ $(function(){
 	</section>
 	</main>
 
-	<section class="footer">
+	<section class="footer" style="padding:20px 30px">
 		<div class="clear">
-			<div class="lists clear">
+			<div class="lists clear" style="line-height:1.4em">
 				<div>
 					<ul>
-					<li><a href="#">关于同舟</a></li>
-						<li><a href="https://www.getclouder.com/">意见反馈</a></li>
+						<li><a href="/about#/about" target="_blank">关于同舟</a></li>
+						<!-- <li><a href="https://www.getclouder.com/">意见反馈</a></li>
 						<li><a href="https://www.getclouder.com/technology">联系我们</a></li>
-						<li><a href="https://www.getclouder.com/features">联系我们</a></li>
+						<li><a href="https://www.getclouder.com/features">联系我们</a></li> -->
 					</ul>
 				</div>
 				<div>
 					<ul>
-					<li><a href="#">隐私条款</a></li>
+						<li><a href="/about#/join" target="_blank">加入我们</a></li>
+						<!-- <li><a href="#">隐私条款</a></li>
 						<li><a href="#">服务范围</a></li>
-						<li><a href="https://tutorials.getclouder.com/">免费申请</a></li>
+						<li><a href="https://tutorials.getclouder.com/">免费申请</a></li> -->
 					</ul>
 				</div>
 				<div>
 					<ul>
-					    <li><a href="#">服务范围</a></li>
+						<li><a href="/about#/mobile" target="_blank">移动应用</a></li>
+						<!--  <li><a href="#">服务范围</a></li>
 						<li><a href="https://www.facebook.com/getclouder" target="_blank">友情链接</a></li>
-						<li><a href="https://twitter.com/GetClouder" target="_blank">移动应用</a></li>
+						<li><a href="https://twitter.com/GetClouder" target="_blank">移动应用</a></li> -->
 					</ul>
 				</div>
 				<div>
 					<ul>
-					<li><a href="#">帮助手册</a></li>
-						<li><a href="https://www.getclouder.com/terms">招聘及广告服务</a></li>
+						<li><a href="/about#/service" target="_blank">服务范围</a></li>
+						<!-- <li><a href="#">帮助手册</a></li>
+						<li><a href="https://www.getclouder.com/terms">招聘及广告服务</a></li> -->
 					</ul>
 				</div>
 			</div>
@@ -202,6 +205,14 @@ var API = 'http://api.tongjo.com/';
   var projectApp = angular.module('projectApp', ['ngResource']);
   projectApp.controller("projectController", ["$scope", "$resource",function ($scope, $resource) {
 		//get recommendation projects	
+		
+		$time = localStorage.time;
+		if($time == 1){
+			location.href = "/me";
+		}else{
+			localStorage.time = 1;
+		}
+		
 		$scope.projectLoaded = false;
 		var RecomProject = $resource(API + 'project');
 		var recomProjects = RecomProject.query(function() {

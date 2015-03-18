@@ -10,11 +10,11 @@
 	<div class="page-header create-header">
 		<ul class="create">
 			<li role="presentation"><a class="complete"
-				ng-class="{'complete_select':isselect(2)}" >完成</a></li>
+				ng-class="{'complete_select':isselect(2)}" ng-click="setCurTab(2)">完成</a></li>
 			<li role="presentation"><a class="next"
-				ng-class="{'next_select': isselect(1)}"  >报名设置</a></li>
+				ng-class="{'next_select': isselect(1)}"  ng-click="setCurTab(1)">报名设置</a></li>
 			<li role="presentation"><a class="next"
-				ng-class="{'next_select': isselect(0)}" >项目信息</a></li>
+				ng-class="{'next_select': isselect(0)}" ng-click="setCurTab(0)">项目信息</a></li>
 		</ul>
 	</div>
 
@@ -25,7 +25,7 @@
 					<tr>
 						<td width="10%" nowrap="nowrap"><label class="title">项目名称</label></td>
 						<td style="padding-left: 14px; padding-right: 14px;"><input
-							type="text" class="form-control textinput" name="projectname"
+							type="text" class="form-control textinput" name="projectname" placeholder="项目名称不能为空"
 							ng-model="project.name" required></td>
 					</tr>
 				</table>
@@ -89,6 +89,9 @@
 												</button>
 											</li>
 										</ul>
+										
+										<p style="color:#ff0000;padding-left:20px;padding-bottom:0px;padding-top:0px;font-size:12px" ng-show="selcates.length>4">提示：最多只能选择五个项目分类</p>
+										
 									</div>
 
 									<div class="modal-body">
@@ -240,6 +243,8 @@
 												</button>
 											</li>
 										</ul>
+										
+										<p style="color:#ff0000;padding-left:20px;padding-bottom:0px;padding-top:0px;font-size:12px" ng-show="selecttag.length>4">提示：最多只能选择五个技能标签</p>
 									</div>
 
 									<div class="modal-body">
@@ -283,7 +288,7 @@
 					<tr>
 						<td width="10%" nowrap="nowrap"><label class="title">报名截止时间</label></td>
 						<td style="padding-left: 14px; padding-right: 14px;"><input data-provide="datepicker" class="form-control datepicker"
-							ng-model="project.deadline" required style="padding-left:14px;padding-right:14px"
+							ng-model="project.deadline" required style="padding-left:14px;padding-right:14px" placeholder="报名截止日期不能为空"
 							data-date-format="yyyy-mm-dd" autoclose="true" name="deadtime"></td>
 					</tr>
 				</table>
@@ -303,10 +308,21 @@
 			<div style="margin-top: 30px; text-align: center">
 					<button class="btn btn-next" ng-click="setCurTab(1)">上 一 步</button>
 					<button class="btn btn-next" ng-click="create()"
-					ng-disabled="createform.$invalid" style="margin-left:60px">发 布 项 目</button>
+					ng-disabled="createform.$invalid || iscontentempty" style="margin-left:60px">发 布 项 目</button>
 			</div>
 			<div style="margin-top: 20px; text-align: center">
-				<p style="color:#bbb">点击“发布项目”，表示您已经阅读并同意</p><p style="color:#bbb">用户协议以及隐私策略</p>
+				<p style="color:#bbb">点击“发布项目”，表示您已经阅读并同意</p><p style="color:#bbb"><a style="font-size:14px" href="../agreement" target="_blank">用户协议</a>以及隐私策略</p>
+			</div>
+			<div style="margin-top: 20px; text-align: center">
+				<p
+					style="color: #ff0000; padding-left: 20px; padding-bottom: 0px; padding-top: 0px; font-size: 12px"
+					ng-show="createform.projectname.$invalid">温馨提示：请先填写项目名称，填完才能发布</p>
+				<p
+					style="color: #ff0000; padding-left: 20px; padding-bottom: 0px; padding-top: 0px; font-size: 12px"
+					ng-show="iscontentempty && !createform.projectname.$invalid">温馨提示：项目详细内容不能为空，填完才能发布</p>
+				<p
+					style="color: #ff0000; padding-left: 20px; padding-bottom: 0px; padding-top: 0px; font-size: 12px"
+					ng-show="createform.deadtime.$invalid && !iscontentempty && !createform.projectname.$invalid">温馨提示：项目截止日期不能为空，请先填写</p>
 			</div>
 		</div>
 
@@ -355,6 +371,13 @@
 				$scope.project.parttype = 2;
 				$scope.project.is_open = 1;
 				$scope.create = function() {
+					
+					var user = JSON.parse(localStorage.user);
+					if(user.is_email_verified != 1){
+						alert("请先验证邮箱");
+						location.href="/me#/account";
+					}
+					
 					$scope.project.description = um
 							.getContent();
 					var categorys = getCates();
@@ -384,12 +407,16 @@
 							: false; */
 
 				$scope.selectcate = function(cate) {
-					if($scope.selcates.length == 5) return;
+					if($scope.selcates.length == 5) {
+						return;
+					}
 					cate.select = true;
 					getCates();
 				}
 				$scope.delcate = function(index) {
+					$scope.selcates[index].select = false;
 					$scope.selcates.remove(index);
+
 				};
 				$scope.$watch('project.type',
 						function(type) {
@@ -408,7 +435,8 @@
 							}
 						});
 
-				$scope.projectimg = 'sysproject/p1.png';
+				$r = Math.round(Math.random()*6);
+				$scope.projectimg = 'sysproject/p'+$r+'.jpg';
 				//true代表显示图片，false代表显示图片操作
 				$scope.status = true;
 
@@ -441,6 +469,9 @@
 				};
 
 				$scope.select = function(tag3) {
+					if($scope.selecttag.length > 4){
+						return;
+					}
 					var isRepeat = false;
 					for ( var i = 0; i < $scope.selecttag.length; i++) {
 						if ($scope.selecttag[i].id == tag3.id) {
@@ -462,7 +493,7 @@
 							project_id: project,
 							tag_id: $scope.selecttag[i].id
 						},function(tag){ 
-				            console.log(tag);
+				            /* console.log(tag); */
 				            /* $scope.getUsertags();  */
 				        });
 					}
@@ -491,10 +522,19 @@
 					this.length -= 1
 				}
 
+				$scope.iscontentempty = true;
 				/* 用于标签页切换 */
 				$scope.currenttab = 0;
 				$scope.setCurTab = function(index) {
 					$scope.currenttab = index;
+					if($scope.currenttab == 2){
+						$scope.project.description = um.getContent();
+						if($scope.project.description == "undefined" || $scope.project.description == "" || $scope.project.description == null){
+							$scope.iscontentempty = true;
+						}else{
+							$scope.iscontentempty = false; 
+						}
+					}
 				};
 
 				$scope.isselect = function(index) {

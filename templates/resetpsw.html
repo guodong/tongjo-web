@@ -1,0 +1,65 @@
+{!extends file='layout.html'!} {!block name=main!}
+<form class="form-horizontal" name="pswform">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">新密码</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="newpsw" required="required" ng-pattern="/^.{6}$/">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">新密码确认</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="renewpsw" required="required" ng-pattern="/^.{6}$/">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-10 col-sm-offset-2">
+					<a class="btn btn-success" ng-click="resetpsw()"
+						ng-disabled="pswform.$invalid">修改密码</a>
+				</div>
+			</div>
+		</form>
+<script>
+function getPar(par){
+    //获取当前URL
+    var local_url = document.location.href; 
+    //获取要取得的get参数位置
+    var get = local_url.indexOf(par +"=");
+    if(get == -1){
+        return false;   
+    }   
+    //截取字符串
+    var get_par = local_url.slice(par.length + get + 1);    
+    //判断截取后的字符串是否还有其他get参数
+    var nextPar = get_par.indexOf("&");
+    if(nextPar != -1){
+        get_par = get_par.slice(0, nextPar);
+    }
+    return get_par;
+}
+	$(function() {
+		$("#send").click(function() {
+			function(){
+				if($("#newpsw").val() != $("#renewpsw").val()){
+					alert("两次密码输入不同");
+					return;
+				}
+				$.ajax({
+					type: 'post',
+					url: API + 'resetpassword',
+					data: {uid: getPar('id'), code: getPar('code'), newpsw: $("#newpsw").val()},
+					success: function(d){
+						if(d == 0){
+							alert("修改成功");
+							location.href='/login';
+						}else if(d == 1){
+							alert("原密码错误");
+						}
+					}
+				});
+			}
+		})
+	})
+</script>
+
+{!/block!}

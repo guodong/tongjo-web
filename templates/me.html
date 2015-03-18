@@ -183,6 +183,9 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 				            $scope.getUsertags(); 
 				        });
 					}
+					
+					//添加完成后清空缓存数组
+					$scope.selecttag =  new Array();
 				};
 				
 				
@@ -210,6 +213,9 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 				};
 				
 				$scope.select = function(tag3) {
+					if($scope.usertag.length+$scope.selecttag.length > 6){
+						return;
+					}
 					var isRepeat = false;
 					for(var i=0;i < $scope.selecttag.length;i++){
 						if($scope.selecttag[i].id == tag3.id){
