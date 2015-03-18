@@ -15,6 +15,11 @@
 			$scope.isActive = function (viewLocation) {
 		        return viewLocation === location.pathname;
 		    };
+		    
+		    $scope.click=function(){
+		    	localStorage.time = 0;
+		    	location.href="/";
+		    }
 		});
 		angular.bootstrap(document.getElementById("top"), ['top']);
 	});
@@ -39,7 +44,7 @@
 		ng-controller="topc" id="top">
 		<div class="wrapper">
 			<div class="navbar-header">
-				<a class="" href="/" style="margin-right: 25px;"><img alt="" src="/img/LOGO45.png"></a>
+				<a class="" ng-click="click()" style="margin-right: 25px;"><img alt="" src="/img/LOGO45.png"></a>
 			</div>
 
 			<div class="collapse navbar-collapse">
