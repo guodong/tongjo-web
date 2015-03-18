@@ -1,0 +1,37 @@
+{!extends file='layout.html'!} {!block name=main!}
+<form role="form" class="form-horizontal">
+	<div class="form-group">
+		<label class="col-sm-1 control-label">邮箱</label>
+		<div class="col-sm-11">
+			<input type="text" class="form-control" required="required">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-11 col-sm-offset-1">
+			<a class="btn btn-success" id="send"
+				ng-disabled="createform.$invalid">发送验证邮件</a>
+		</div>
+	</div>
+</form>
+<script>
+	$(function() {
+		$("#send").click(function() {
+			$.ajax({
+				url: API + 'findpsw',
+				data: {
+					email: $("#email").val()
+				},
+				success: function(d) {
+					if (d == 1) {
+						alert("已经发送验证邮件到" + $("#email").val())
+					} else {
+						alert("邮件发送失败");
+					}
+				}
+			});
+		})
+	})
+</script>
+
+{!/block!}
