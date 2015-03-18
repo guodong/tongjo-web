@@ -371,6 +371,13 @@
 				$scope.project.parttype = 2;
 				$scope.project.is_open = 1;
 				$scope.create = function() {
+					
+					var user = JSON.parse(localStorage.user);
+					if(user.is_email_verified != 1){
+						alert("请先验证邮箱");
+						location.href="/me#/account";
+					}
+					
 					$scope.project.description = um
 							.getContent();
 					var categorys = getCates();
