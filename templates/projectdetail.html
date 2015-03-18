@@ -172,7 +172,7 @@
 					<div class="creator-name">
 						<h3>
 							发布者 <a href="/userinfodetail/{{project.creator.id}}"
-								ng-bind="project.creator.realname"></a>
+								ng-bind="project.creator.realname"></a><img title="同舟认证用户" ng-show="project.creator.is_v==1" alt="" src="/img/v.png" style="width: 15px">
 						</h3>
 						<p ng-bind="project.creator.school.name"> </p>
 						<!-- <p>lv<span ng-bind="project.creator.degree"></span>&nbsp;<span ng-bind="project.creator.honor"></span></p> -->

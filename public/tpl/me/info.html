@@ -43,19 +43,19 @@
 						<label class="col-sm-1 control-label">学校</label>
 						<div class="col-sm-11">
 							<select class="form-control" ng-model="user.school_id"
-								ng-change="getCampuses()">
+								ng-change="getAcademies()">
 								<option ng-repeat="v in schools" ng-bind="v.name"
 									value="{{v.id}}" ng-selected="v.id==user.school_id"></option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group" ng-show="user.role=='student'">
-						<label class="col-sm-1 control-label">校区</label>
+						<label class="col-sm-1 control-label">学院</label>
 						<div class="col-sm-11">
-							<select class="form-control" ng-model="user.campus_id"
+							<select class="form-control" ng-model="user.academy_id" ng-change="getMajors()"
 								id="campus">
-								<option ng-repeat="v in campuses" ng-bind="v.name"
-									value="{{v.id}}" ng-selected="v.id==user.campus_id"></option>
+								<option ng-repeat="v in academies" ng-bind="v.name"
+									value="{{v.id}}" ng-selected="v.id==user.academy_id"></option>
 							</select>
 						</div>
 					</div>

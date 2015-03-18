@@ -3,7 +3,7 @@
 	<div class="form-group">
 		<label class="col-sm-1 control-label">邮箱</label>
 		<div class="col-sm-11">
-			<input type="text" class="form-control" required="required">
+			<input type="text" class="form-control" id="email" required="required">
 		</div>
 	</div>
 
@@ -19,6 +19,7 @@
 		$("#send").click(function() {
 			$.ajax({
 				url: API + 'findpsw',
+				method: 'post',
 				data: {
 					email: $("#email").val()
 				},
