@@ -336,7 +336,8 @@
 <script type="text/javascript" src="/lib/umeditor/umeditor.min.js"></script>
 <script type="text/javascript" src="/lib/umeditor/lang/zh-cn/zh-cn.js"></script>
 <script>
-	require([ 'angular', 'angular-resource' ],function(angular) {
+	require([ 'angular', 'Auth', 'angular-resource' ],function(angular, Auth) {
+			Auth.check();
 			var app = angular.module('mec', [ 'ngResource' ]);
 			app.controller(
 			'createform',

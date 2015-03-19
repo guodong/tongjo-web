@@ -122,19 +122,31 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					};
 					var School = $resource(API + 'school');
 					$scope.schools = School.query(function() {
-						$scope.getCampuses();
+						$scope.getAcademies();
 					});
-					var Major = $resource(API + 'major');
-					$scope.majors = Major.query();
-					$scope.getCampuses = function() {
-						$scope.campuses = [];
+					var _school, _academy;
+					$scope.getAcademies = function() {
+						$scope.academies = [];
+						//if(!_school)return;
 						for (var i in $scope.schools) {
 							if ($scope.schools[i].id == user.school_id) {
-								$scope.campuses = $scope.schools[i].campuses;
+								_school = $scope.schools[i];
+								$scope.academies = $scope.schools[i].academies;
+								break;
+							}
+						};
+						$scope.getMajors();
+					};
+					$scope.getMajors = function() {
+						$scope.majors = [];
+						if(!_school)return;
+						for (var i in _school.academies) {
+							if (_school.academies[i].id == user.academy_id) {
+								$scope.majors = _school.academies[i].majors;
 								break;
 							}
 						}
-					}
+					};
 				});
 				
 				/** 获取用户标签*/

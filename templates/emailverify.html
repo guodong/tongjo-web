@@ -22,9 +22,12 @@ $.ajax({
 	data: {id: getPar('id'), code: getPar('code')},
 	success: function(d){
 		if(d == 1){
-			var u = JSON.parse(localStorage.user);
-			u.is_email_verified = 1;
-			localStorage.user = JSON.stringify(u);
+			if(localStorage.user){
+				var u = JSON.parse(localStorage.user);
+				u.is_email_verified = 1;
+				localStorage.user = JSON.stringify(u);
+			}
+			
 			$("#success").removeClass("hide");
 		}else{
 			$("#fail").removeClass("hide");
