@@ -693,6 +693,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 								for (var j in $scope.project.categorys) {
 									if ($scope.project.categorys[j].id == $scope.cates[i].children[k].id) {
 										$scope.cates[i].children[k].select = true;
+									    
 									}
 								}
 							}
@@ -706,11 +707,12 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 						for (var j in cate) {
 							if (cate[j].select) {
 								cates.push(cate[j]);
+								console.log(cate[j].name); 
 							}
 						}
 					}
 					$scope.selcates = cates;
-					return cates;
+					console.log($scope.selcates.length); 
 				}
 				$scope.create = function() { 
 					$scope.project.description = um.getContent();
@@ -724,12 +726,21 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					});
 				};
 				
-				$scope.select = function($event, cate) {
-					var checkbox = $event.target;
-					cate.select = checkbox.checked ? true: false;
+				$scope.selectcate = function(cate) {
+					if($scope.selcates.length > 4) {
+						return;
+					}
+					/* var checkbox = $event.target;
+					cate.select = checkbox.checked ? true: false; */
+					cate.select = true;
 					getCates();
 				};
 				
+				/* $scope.delcate = function(index) {
+					$scope.selcates[index].select = false;
+					$scope.selcates.remove(index);
+
+				}; */
 				
 				/* 以下为弹出框部分 */
 				$scope.selecttag =  new Array();
