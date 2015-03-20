@@ -613,7 +613,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 						$scope.teams = $scope.teams_filtered = ProjectTs.query({
 							project_id: $routeParams.project_id
 						});
-						$scope.getprojectTs();
+						//$scope.getprojectTs();
 						var Team = $resource(API + 'team/:team_id', {team_id: '@team_id'}, {save:{method: 'PUT'}});
 						$scope.handle = function(team, status) {
 							var t = Team.get({team_id: team.id});
