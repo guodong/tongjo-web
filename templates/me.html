@@ -702,17 +702,26 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 				});
 				var getCates = function() {
 					var cates = [];
-					for (var i in $scope.cates) {
+					for ( var i in $scope.cates) {
 						var cate = $scope.cates[i].children;
-						for (var j in cate) {
+						for ( var j in cate) {
 							if (cate[j].select) {
-								cates.push(cate[j]);
-								console.log(cate[j].name); 
+								var repreate = false;
+								for(var k in cates){
+									if(cates[k].id == cate[j].id){
+										repreate = true;
+									}
+								}
+								if(!repreate && cate[j]!=null && cate[j] != "undefined"){
+									cates.push(cate[j]);
+								}
+								
 							}
 						}
 					}
 					$scope.selcates = cates;
 					console.log($scope.selcates.length); 
+					return cates;
 				}
 				$scope.create = function() { 
 					$scope.project.description = um.getContent();
@@ -720,6 +729,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					$scope.project.categorys = [];
 					for (var i in categorys) {
 						$scope.project.categorys.push(categorys[i].id);
+						console.log(categorys.length);
 					}
 					$scope.project.$save(function() {
 						alert("保存成功");
