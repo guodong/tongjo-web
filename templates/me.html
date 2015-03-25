@@ -693,6 +693,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 								for (var j in $scope.project.categorys) {
 									if ($scope.project.categorys[j].id == $scope.cates[i].children[k].id) {
 										$scope.cates[i].children[k].select = true;
+									    
 									}
 								}
 							}
@@ -701,15 +702,25 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 				});
 				var getCates = function() {
 					var cates = [];
-					for (var i in $scope.cates) {
+					for ( var i in $scope.cates) {
 						var cate = $scope.cates[i].children;
-						for (var j in cate) {
+						for ( var j in cate) {
 							if (cate[j].select) {
-								cates.push(cate[j]);
+								var repreate = false;
+								for(var k in cates){
+									if(cates[k].id == cate[j].id){
+										repreate = true;
+									}
+								}
+								if(!repreate && cate[j]!=null && cate[j] != "undefined"){
+									cates.push(cate[j]);
+								}
+								
 							}
 						}
 					}
 					$scope.selcates = cates;
+					console.log($scope.selcates.length); 
 					return cates;
 				}
 				$scope.create = function() { 
@@ -718,18 +729,28 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					$scope.project.categorys = [];
 					for (var i in categorys) {
 						$scope.project.categorys.push(categorys[i].id);
+						console.log(categorys.length);
 					}
 					$scope.project.$save(function() {
 						alert("保存成功");
 					});
 				};
 				
-				$scope.select = function($event, cate) {
-					var checkbox = $event.target;
-					cate.select = checkbox.checked ? true: false;
+				$scope.selectcate = function(cate) {
+					if($scope.selcates.length > 4) {
+						return;
+					}
+					/* var checkbox = $event.target;
+					cate.select = checkbox.checked ? true: false; */
+					cate.select = true;
 					getCates();
 				};
 				
+				/* $scope.delcate = function(index) {
+					$scope.selcates[index].select = false;
+					$scope.selcates.remove(index);
+
+				}; */
 				
 				/* 以下为弹出框部分 */
 				$scope.selecttag =  new Array();
