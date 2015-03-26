@@ -78,7 +78,7 @@ require(['angular','lib/ycd-validation', 'Util', 'Auth'], function(angular, v, U
           }
       });
   }]);
-  loginApp.controller("loginController", ["$scope", "$http", function ($scope, $http) {
+  loginApp.controller("loginController", ["$scope", "$http",function ($scope, $http) {
 	  
       $scope.remember = true;
 	  if(localStorage.isRemember){
@@ -137,7 +137,7 @@ require(['angular','lib/ycd-validation', 'Util', 'Auth'], function(angular, v, U
       	       error: function(data) {
       	    	   console.log(data);
       	    	   $scope.$apply(function () {
-        	    		  $scope.errorMsg = "error";
+        	    		  $scope.errorMsg = "网络错误";
         	       });
                  }
       	});

@@ -356,9 +356,13 @@
 					$scope.view_projects = new Array();
 					$scope.projectLoaded = false;
 					var Project = $resource(API + 'project');
-					var projects = Project.query({
-						categoryId : 2
-					}, function() {
+					var orderbyProAPI = API + 'project?orderby=';
+					if($rootScope.specialId == 2)
+						orderbyProAPI += "new";
+					else if($rootScope.specialId == 3)
+						orderbyProAPI += "hot";
+					var Project = $resource(orderbyProAPI);
+					var projects = Project.query(function() {
 						$scope.projects = projects;
 						$scope.projectLoaded = true;
 						for ( var i = 1; i <= 8; i++) {
