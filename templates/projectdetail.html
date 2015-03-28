@@ -279,6 +279,12 @@
 			};
 			$scope.joinone = function() {console.log(Auth)
 				Auth.check();
+				var u = JSON.parse(localStorage.user);
+				if(u.role != 'student'){
+					alert("您的身份不是学生，请完善信息后参加项目");
+					location.href="/me#/info";
+					return;
+				}
 				var PU = $resource(API
 						+ 'project/:project_id/user/:user_id/pivot', {
 					project_id : '@project_id',
