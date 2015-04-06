@@ -345,6 +345,23 @@
 						$scope.projects = projects;
 						$scope.projectLoaded = true;
 					});
+					$scope.hotProjectLoaded = false;
+					var Project = $resource(API + 'project');
+					var orderbyProAPI = API + 'project?orderby=hot';
+					var Project = $resource(orderbyProAPI);
+					var projects = Project.query(function() {
+						$scope.hotProjects = projects;
+						$scope.hotProjectLoaded = true;
+					});
+					
+					$scope.newProjectLoaded = false;
+					var Project = $resource(API + 'project');
+					var orderbyProAPI = API + 'project?orderby=new';
+					var Project = $resource(orderbyProAPI);
+					var projects = Project.query(function() {
+						$scope.newProjects = projects;
+						$scope.newProjectLoaded = true;
+					});
 				});
 				scanApp.controller('specialCtl', function($scope, $rootScope,
 						$routeParams, $resource) {
@@ -355,7 +372,6 @@
 					var last = -1;
 					$scope.view_projects = new Array();
 					$scope.projectLoaded = false;
-					var Project = $resource(API + 'project');
 					var orderbyProAPI = API + 'project?orderby=';
 					if($rootScope.specialId == 2)
 						orderbyProAPI += "new";
