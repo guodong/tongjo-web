@@ -1,14 +1,29 @@
 {!extends file='base.html'!} {!block name=base!}
 
 <script>
-	require(['angular', 'angular-resource'], function(angular) {
-		var app = angular.module('top', ['ngResource']);
+	require(['angular', 'Auth', 'angular-resource','angular-route',], function(angular, Auth, res, angular_route) {
+		var app = angular.module('top', ['ngRoute', 'ngResource']).config(['$routeProvider', '$httpProvider',function($routeProvider, $httpProvider){
+			$httpProvider.defaults.withCredentials = true;
+		}]);
 
-		app.controller('topc', function($scope, $resource, $location) {
-			if (localStorage.uid) {
+		app.controller('topc', function($scope, $resource) {
+			
+			if (Auth.isLogin()) {
 				$scope.auth = true;
 				var user = JSON.parse(localStorage.user);
 				$scope.user = user;
+				var Message = $resource(API + 'user/:user_id/message');
+				$scope.has_msg = false;
+				$scope.messages = Message.query({
+					user_id: localStorage.uid
+				},function() {
+					for(var i in $scope.messages){
+						if($scope.messages[i].is_viewed == 0){
+							$scope.has_msg = true;
+							break;
+						}
+					}
+				});	
 			} else {
 				$scope.auth = false;
 			}
@@ -59,8 +74,8 @@
 					</div>
 				</form> -->
 				<ul class="nav navbar-nav navbar-right" ng-show="auth==true">
-					<li><a href="/me#message" title="消息"><span
-							class="glyphicon glyphicon-envelope"></span></a></li>
+					<li><a href="/me#message" title="消息" style="position: relative"><span
+							class="glyphicon glyphicon-envelope"></span><div ng-show="has_msg==true" style="border-radius: 5px;width:10px;height:10px;background:#CD4242;top:12px;right:10px;position:absolute"></div></a></li>
 					<!-- <li><a href="/me#message"><span
 							class="glyphicon glyphicon-bell"></span></a></li> -->
 					<li><a href="/me"><span class="glyphicon glyphicon-user"></span>

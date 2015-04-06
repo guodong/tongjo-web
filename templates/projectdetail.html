@@ -285,6 +285,11 @@
 					location.href="/me#/info";
 					return;
 				}
+				if(u.realname == ''){
+					alert("请完善个人信息后参加项目");
+					location.href = "/me#info";
+					return;
+				}
 				var PU = $resource(API
 						+ 'project/:project_id/user/:user_id/pivot', {
 					project_id : '@project_id',
@@ -295,8 +300,11 @@
 					project_id : project_id
 				});
 				pu.$save(function(d) {
-					if (d.error) {
+					if (d.error==1) {
 						alert("你已经申请过了");
+						return;
+					}else if(d.error==2){
+						alert("团队已经组建完毕，不可加入");
 						return;
 					}
 					alert("参加成功");

@@ -1049,7 +1049,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 				$scope.user = User.get({
 					user_id: localStorage.uid
 				});
-				var Message = $resource(API + 'user/:user_id/message');
+				var Message = $resource(API + 'user/:user_id/message?view=1');
 				var messages = Message.query({
 					user_id: localStorage.uid
 				},function() {

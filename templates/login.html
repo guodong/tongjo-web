@@ -55,11 +55,11 @@
 </div>
 <script type="text/javascript">
 require(['angular','lib/ycd-validation', 'Util', 'Auth'], function(angular, v, Util, Auth){
-	Auth.check(function(d){
+	/* Auth.check(function(d){
 		if(!d.error){
 			location.href="/me";
 		}
-	})
+	}) */
   var loginApp = angular.module('loginApp', ["w5c.validator"]);
 	loginApp.config(["w5cValidatorProvider", "$httpProvider", function (w5cValidatorProvider, $httpProvider) {
 		$httpProvider.defaults.withCredentials = true;

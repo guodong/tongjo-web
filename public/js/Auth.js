@@ -34,6 +34,24 @@ define(function() {
 					location.href="/";
 				}
 			});
+		},
+		isLogin: function(){
+			var login = false;
+			$.ajax({
+				url: API + 'session',
+				async: false,
+				xhrFields: {
+					withCredentials: true
+				},
+				success: function(d) {
+					if(!d.error){
+						login = true;
+					}else{
+						login = false;
+					}
+				}
+			});
+			return login;
 		}
 	}
 })
