@@ -184,8 +184,10 @@
 					<div class="header">
 						<span class="label-icon"></span>技能需求标签
 					</div>
-					<div>
-					<div class="marker" ng-repeat="v in project.tags" ng-bind="v.name"></div>
+					<div class="marker">
+					<ul>					
+					<li ng-repeat="v in project.tags"><div class="rectangle" ng-bind="v.name"></div><div class="triangle"></div></li>
+					</ul>
 					</div>
 				</div>
 				<div class="panel time">
