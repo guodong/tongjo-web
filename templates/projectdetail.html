@@ -260,7 +260,7 @@
 					$scope.project.creator.honor = "大神";
 				}
 				var dateNow= new Date();
-				var dateDeadline = new Date($scope.project.deadline);
+				var dateDeadline = new Date(Date.parse($scope.project.deadline.replace(/-/g,"/")));
 				var openTime=dateDeadline.getTime() - dateNow.getTime();
 				$scope.project.opendays = Math.floor(openTime/(24*3600*1000));
 				if( $scope.project.opendays < 0){
