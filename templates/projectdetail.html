@@ -152,13 +152,14 @@
 					<section class="project-list">
 						<h3>相似项目：</h3>
 						<div class="clear clearfix tech">
-							<article ng-repeat="v in projects|limitTo:4" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+							<article ng-repeat="v in projects|limitTo:4" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false">
 								<span> <img ng-src="{{v.image|defaultImg}}">
 								</span>
+								<a>
 								<div class="hover" ng-show="hoverEdit">
 									<p ng-bind="v.description|defaultDescription"></p>
-									<a class="detail-button" href="/project/{{v.id}}">查看详情>></a>
 								</div>
+								</a>
 								<h5 ng-bind="v.name"></h5>
 							</article>
 						</div>
@@ -184,8 +185,10 @@
 					<div class="header">
 						<span class="label-icon"></span>技能需求标签
 					</div>
-					<div>
-					<div class="marker" ng-repeat="v in project.tags" ng-bind="v.name"></div>
+					<div class="marker">
+					<ul>					
+					<li ng-repeat="v in project.tags"><div class="rectangle" ng-bind="v.name"></div><div class="triangle"></div></li>
+					</ul>
 					</div>
 				</div>
 				<div class="panel time">
@@ -257,7 +260,7 @@
 					$scope.project.creator.honor = "大神";
 				}
 				var dateNow= new Date();
-				var dateDeadline = new Date($scope.project.deadline);
+				var dateDeadline = new Date(Date.parse($scope.project.deadline.replace(/-/g,"/")));
 				var openTime=dateDeadline.getTime() - dateNow.getTime();
 				$scope.project.opendays = Math.floor(openTime/(24*3600*1000));
 				if( $scope.project.opendays < 0){
@@ -270,13 +273,6 @@
 			$scope.project.description = $sce
 					.trustAsHtml($scope.project.description);
 			$scope.projects = Project.query();
-			$scope.hoverIn = function(){
-			    this.hoverEdit = true;
-			};
-
-			$scope.hoverOut = function(){
-			    this.hoverEdit = false;
-			};
 			$scope.joinone = function() {console.log(Auth)
 				Auth.check();
 				var u = JSON.parse(localStorage.user);

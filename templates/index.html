@@ -86,13 +86,15 @@ var p = setInterval("cgfocus()", 5000);
 			<h2 class="title">典型项目</h2>
 			<p ng-show="!projectLoaded">图片加载中...</p>
 			<article ng-repeat="project in projects track by $index">
-			<span ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+			<span ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false">
 			 <img ng-src="{{project.image|defaultImg}}">
+			   <a href="project/{{project.id}}">
 				<div class="transparent_class" ng-show="hoverEdit">
 					<p>已报名团队：{{project.teams_count}}</p>
 					<p>个人报名：{{project.users_count}}</p>
 					<a class="small-button red" href="project/{{project.id}}">我要参加</a>
 				</div>
+				</a>
 			   </span>		
 				<h3 ng-bind="project.name"></h3>
 			</article>
@@ -219,14 +221,6 @@ var API = 'http://api.tongjo.com/';
 				$scope.projects = recomProjects.slice(0,4);
 				$scope.projectLoaded = true;
 		});
-		
-		$scope.hoverIn = function(){
-			this.hoverEdit = true;
-		};
-
-		$scope.hoverOut = function(){
-			this.hoverEdit = false;
-		};
   }]);			   
   projectApp.filter('defaultImg',function(){
 	   return function(item){
@@ -239,7 +233,7 @@ var API = 'http://api.tongjo.com/';
 	   return function(item){
 		   console.log("item:"+item);
 		   if(item==null || item =="")
-			   return "项目是指一系列独特的、复杂的并相互关联的活动，这些活动有着一个明确的目标或目的，必须在特定的时间、预算、资源限定内，依据规范完成";
+			   return "";
 		   else  return item;
 		   
 	   }
