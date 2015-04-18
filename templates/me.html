@@ -550,6 +550,10 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					}
 				});
 				$scope.permit = function(user_id) {
+					if($scope.team.members_count >= teammember_all){
+						alert("团队成员已满");
+						return;
+					}
 					var st = new Status();
 					st.$save({
 						team_id: $routeParams.team_id,
@@ -613,7 +617,10 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 						$scope.teams = $scope.teams_filtered = ProjectTs.query({
 							project_id: $routeParams.project_id
 						});
-						$scope.getprojectTs();
+						var ProjectUs = $resource(API + 'project/:project_id/user', {project_id: '@project_id'});
+						$scope.users = $scope.users_filtered = ProjectUs.query({
+							project_id: $routeParams.project_id
+						});
 						var Team = $resource(API + 'team/:team_id', {team_id: '@team_id'}, {save:{method: 'PUT'}});
 						$scope.handle = function(team, status) {
 							var t = Team.get({team_id: team.id});
@@ -622,6 +629,16 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 							t.$save(function(){
 								team.status = status;
 							})
+						};
+						$scope.handleuser = function(user, status) {
+							var PU = $resource(API + 'project/:project_id/user/:user_id/pivot/1', {project_id: '@project_id', user_id: '@user_id'}, {save:{method: 'PUT'}});
+							var pu = new PU();
+							pu.project_id = $routeParams.project_id;
+							pu.user_id = user.id;
+							pu.status = status;
+							pu.$save(function(){
+								user.pivot.status = status;
+							});
 						};
 						$scope.filter = function(type){
 							$scope.teams_filtered = [];
@@ -1036,7 +1053,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 				$scope.user = User.get({
 					user_id: localStorage.uid
 				});
-				var Message = $resource(API + 'user/:user_id/message');
+				var Message = $resource(API + 'user/:user_id/message?view=1');
 				var messages = Message.query({
 					user_id: localStorage.uid
 				},function() {
