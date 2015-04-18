@@ -155,7 +155,7 @@
 							<article ng-repeat="v in projects|limitTo:4" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false">
 								<span> <img ng-src="{{v.image|defaultImg}}">
 								</span>
-								<a>
+								<a href="{{v.id}}">
 								<div class="hover" ng-show="hoverEdit">
 									<p ng-bind="v.description|defaultDescription"></p>
 								</div>
