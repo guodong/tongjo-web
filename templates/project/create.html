@@ -216,13 +216,13 @@
 				</table> -->
 
 				<div style="margin-top: 30px;">
-					<label class="title">选择技能需求标签</label>
+					<label class="title">选择项目需求</label>
 					<div>
 						<span ng-repeat="tag in projecttag" style="margin-left: 20px"
 							ng-bind="tag.name"></span> <a class="mbtn"
-							data-toggle="modal" data-target="#tagModal" ng-if="projecttag.length<1">添加技能标签 ></a>
+							data-toggle="modal" data-target="#tagModal" ng-if="projecttag.length<1">添加需求标签 ></a>
 							<a class="mbtn"
-							data-toggle="modal" data-target="#tagModal" ng-if="projecttag.length>0">编辑技能标签 ></a>
+							data-toggle="modal" data-target="#tagModal" ng-if="projecttag.length>0">编辑需求标签 ></a>
 						<div class="modal fade info" id="tagModal">
 							<div class="modal-dialog">
 								<div class="modal-content tagmodal">

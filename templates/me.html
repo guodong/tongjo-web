@@ -550,6 +550,10 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					}
 				});
 				$scope.permit = function(user_id) {
+					if($scope.team.members_count >= teammember_all){
+						alert("团队成员已满");
+						return;
+					}
 					var st = new Status();
 					st.$save({
 						team_id: $routeParams.team_id,
