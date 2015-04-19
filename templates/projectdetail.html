@@ -50,7 +50,7 @@
 							<a class="btn btn-primary pull-right" id="joinone"
 								ng-show="project.parttype==1||project.parttype==2"
 								style="margin-bottom: 20px; margin-left: 20px"
-								href="/newteam/{{project.id}}" ng-disabled="!project.is_open"><span
+								href="/newteam/{{project.id}}" ng-disabled="!project.is_open" ng-show="project.opendays>0"><span
 								class="glyphicon glyphicon-star"></span> 组建团队</a> <a
 								class="btn btn-info pull-right" id="join"
 								ng-show="project.parttype==0||project.parttype==2"
@@ -273,8 +273,12 @@
 			$scope.project.description = $sce
 					.trustAsHtml($scope.project.description);
 			$scope.projects = Project.query();
-			$scope.joinone = function() {console.log(Auth)
+			$scope.joinone = function() {
 				Auth.check();
+				if($scope.project.opendays < 0){
+					alert("项目报名已结束");
+					return;
+				}
 				var u = JSON.parse(localStorage.user);
 				if(u.role != 'student'){
 					alert("您的身份不是学生，请完善信息后参加项目");
@@ -308,6 +312,11 @@
 			};
 			$scope.jointeam = function(team) {
 				Auth.check();
+
+				if($scope.project.opendays < 0){
+					alert("项目报名已结束");
+					return;
+				}
 				var TU = $resource(API + 'team/:team_id/user/:user_id/pivot', {
 					team_id : '@team_id',
 					user_id : '@user_id'
