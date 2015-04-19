@@ -62,7 +62,7 @@
 <section class="tech">
 	<div class="clear clearfix">
 	<div ng-show="!newProjectLoaded" style="width:100%;text-align: center;padding-top:20px;padding-top:20px;"><p>加载中...</p></div>
-		<article ng-repeat="project in newProjects|paging:page.index:page.size track by $index" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverOut = false">
+		<article ng-repeat="project in newProjects|paging:page.index:page.size track by $index" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false">
 			<span> 
 			<img ng-src="{{project.image|defaultImg}}">
 			</span>
