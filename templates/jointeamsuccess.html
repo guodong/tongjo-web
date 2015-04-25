@@ -21,10 +21,10 @@
 </div>
 <script type="text/javascript">
 	/*$('#jointeamsuccessModal').modal('show');*/
-	require([ 'angular', 'model/alertmodal' ], function(angular, alertModal) {
-		angular.module('login', [ 'alertModal' ]).controller(
+	require([ 'angular', 'model/mailmodal' ], function(angular, alertModal) {
+		angular.module('login', [ 'mailModal' ]).controller(
 				'loginController',
-				function($scope, alertService) {
+				function($scope, mailService) {
 					$scope.aclick = function() {
 						/*loginService.showModal().then(
 								function(isSuccess) {
@@ -36,7 +36,7 @@
 		      		            closeButtonText: 'Cancel',
 		      		            bodyText: '请登陆邮箱验证链接'
 		      		        };
-		      		  	alertService.showModal({}, modalOptions).then(function (result) {
+		      		  	mailService.showModal({}, modalOptions).then(function (result) {
 		      	            	location.href = "/me";
 		      	   		 });
 					}

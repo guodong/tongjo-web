@@ -46,7 +46,7 @@ define([ 'angular', 'ui-bootstrap' ], function(angular, uibootstrap) {
 			                        $modalInstance.dismiss('cancel');
 			                    };
 			                }
-			            }
+			        }
 					return $modal.open(tempModalDefaults).result;
 				};
 
