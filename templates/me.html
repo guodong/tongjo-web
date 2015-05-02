@@ -14,10 +14,10 @@
 <script src="http://open.web.meitu.com/sources/xiuxiu.js" type="text/javascript"></script>
 
 <script>
-require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
-		function(angular, angular_route, $resource,bootstrap, Auth) {
+require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth','model/mailmodal'],
+		function(angular, angular_route, $resource,bootstrap, Auth, mailModal) {
 			Auth.check();
-			var app = angular.module('me', ['ngRoute', 'ngResource','ui.bootstrap']).config(['$routeProvider', '$httpProvider',
+			var app = angular.module('me', ['ngRoute', 'ngResource','ui.bootstrap','mailModal']).config(['$routeProvider', '$httpProvider',
 			function($routeProvider, $httpProvider) {
 				$httpProvider.defaults.withCredentials = true;
 				$routeProvider.when('/info', {
@@ -406,7 +406,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 			});
 
 			app.controller('project',
-			function($scope, $resource) {
+			function($scope, $resource, mailService) {
 				var Project = $resource(API + 'user/:user_id/type/:type/project');
 				$scope.joined = $scope.joined_filtered = Project.query({
 					user_id: localStorage.uid,
@@ -458,6 +458,19 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 						});
 						break;
 					}
+				}
+				$scope.broadcastmail = function(project_id,project_name){
+					var modalOptions = {
+	      		            resolve: {
+	      		            	project: function(){
+	      		            		return {
+	      		            		id: project_id,
+	      		            		name: project_name
+	      		            		}
+	      		            	}
+	      		            }
+	      		        };
+						mailService.showModal(modalOptions).then(function (result) {});
 				}
 			});
 			app.controller('team-detail',
