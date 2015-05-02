@@ -50,7 +50,7 @@
 							<a class="btn btn-primary pull-right" id="joinone"
 								ng-show="project.parttype==1||project.parttype==2"
 								style="margin-bottom: 20px; margin-left: 20px"
-								href="/newteam/{{project.id}}" ng-disabled="!project.is_open" ng-show="project.opendays>0"><span
+								href="/newteam/{{project.id}}" ng-disabled="!project.is_open||project.ods<0"><span
 								class="glyphicon glyphicon-star"></span> 组建团队</a> <a
 								class="btn btn-info pull-right" id="join"
 								ng-show="project.parttype==0||project.parttype==2"
@@ -262,7 +262,8 @@
 				var dateNow= new Date();
 				var dateDeadline = new Date(Date.parse($scope.project.deadline.replace(/-/g,"/")));
 				var openTime=dateDeadline.getTime() - dateNow.getTime();
-				$scope.project.opendays = Math.floor(openTime/(24*3600*1000));
+				
+				$scope.project.ods = $scope.project.opendays = Math.floor(openTime/(24*3600*1000));
 				if( $scope.project.opendays < 0){
 					$scope.project.daysmsg = "过期";
 					$scope.project.opendays = -$scope.project.opendays;
@@ -275,7 +276,7 @@
 			$scope.projects = Project.query();
 			$scope.joinone = function() {
 				Auth.check();
-				if($scope.project.opendays < 0){
+				if($scope.project.ods < 0){
 					alert("项目报名已结束");
 					return;
 				}
@@ -313,7 +314,7 @@
 			$scope.jointeam = function(team) {
 				Auth.check();
 
-				if($scope.project.opendays < 0){
+				if($scope.project.ods < 0){
 					alert("项目报名已结束");
 					return;
 				}

@@ -76,6 +76,9 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					$.ajax({
 						type: 'post',
 						url: API + 'resetpassword',
+			      		xhrFields: {
+			       		    withCredentials: true
+			       		},
 						data: {uid: localStorage.uid, oldpsw: $scope.user.oldpsw, newpsw: $scope.user.newpsw},
 						success: function(d){
 							if(d == 0){
