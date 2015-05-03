@@ -240,6 +240,10 @@
 								size : 8,
 								index : 1
 							};
+					        $scope.featureProject = []; 
+					        $scope.featureProject.push({active: "active", img:"/img/scanproject-1.png", order:1});
+					        $scope.featureProject.push({img:"/img/scanproject-2.png", order:2});
+					        $scope.featureProject.push({img:"/img/scanproject-3.png", order:3});
 						} ]);
 				scanApp.filter('size', function() {
 					return function(items) {
