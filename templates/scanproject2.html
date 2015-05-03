@@ -15,73 +15,6 @@
 <div class="scanprojecttwo">
 	<div class="container-fluid">
 		<div class="mainpanel">
-			<div class="left-nav" ng-controller="navController">
-				<div class="special nav-section">
-					<div>
-						<div>
-							<a href="#special-1"
-								ng-class="{current:isActive(1,$root.specialId)}"><span class="icon-recom"></span>推荐</a>
-						</div>
-						<div>
-							<a href="#special-2"
-								ng-class="{current:isActive(2,$root.specialId)}"><span class="icon-new"></span>最新</a>
-						</div>
-						<div>
-							<a href="#special-3"
-								ng-class="{current:isActive(3,$root.specialId)}"><span class="icon-hot"></span>最热</a>
-						</div>
-						<!--  <div>
-							<a href="#special-4"
-								ng-class="{current:isActive(4,$root.specialId)}">同校</a>
-						</div> -->
-					</div>
-				</div>
-				<div class="category nav-section">
-					<div class="title">
-						<span>类别</span>
-					</div>
-					<div class="dropdown">
-						<a role="button" data-toggle="dropdown"
-							class="btn btn-default cate-button" data-target="#"> <span
-							ng-bind="$root.cateTitle">全部</span> <span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-							<li><a tabindex="-1" href="#/">全部</a></li>
-							<li class="dropdown-submenu" ng-repeat = "fatherCategory in categoryArrays"><a tabindex="-1"
-								href="#category-{{fatherCategory.id}}/{{fatherCategory.name}}" ng-bind="fatherCategory.name"></a>
-								<ul class="dropdown-menu">
-									<li ng-repeat = "childCategory in fatherCategory.children"><a href="#category-{{fatherCategory.id}}/{{childCategory.id}}/{{childCategory.name}}"  ng-bind = "childCategory.name"></a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<!-- <div class="filter nav-section">
-					<div class="title">
-						<span>筛选</span>
-					</div>
-					<div>
-						<div class="checkbox">
-							<label><input type="checkbox">同校</label>
-						</div>
-						<div class="checkbox">
-							<label><input type="checkbox">异校</label>
-						</div>
-						<div class="checkbox">
-							<label><input type="checkbox">团队</label>
-						</div>
-						<div class="checkbox">
-							<label><input type="checkbox">个人</label>
-						</div>
-					</div>
-				</div> -->
-				<!-- <div class="feature">
-           <div><span>需求</span></div>
-           </div>
-           <div class="rank">
-           <div><span>排序</span></div>
-           </div>-->
-			</div>
 			<div class="rightpanel">
 				<div ng-controller="scanController">
 					<div ng-view></div>
@@ -91,198 +24,168 @@
 	</div>
 </div>
 <script>
-	require(
-			[ 'angular', 'angular-route', 'angular-resource', 'ui-bootstrap',
-					'infinite-scroll' ],
-			function(angular, route, bootstrap) {
-				//var categoryArrays = [];
-				var scanApp = angular.module('scanApp', [ 'ngRoute',
-						'ngResource', 'ui.bootstrap', 'infinite-scroll' ]);
+	require([ 'angular', 'angular-route', 'angular-resource', 'ui-bootstrap',
+			'infinite-scroll' ], function(angular, route, bootstrap) {
+		//var categoryArrays = [];
+		var scanApp = angular.module('scanApp', [ 'ngRoute', 'ngResource',
+				'ui.bootstrap', 'infinite-scroll' ]);
 
-				scanApp.config([ '$routeProvider', function($routeProvider) {
-					$routeProvider.when('/', {
-						templateUrl : 'scanproject-index-tpl',
-						controller : 'defaultCtl',
-					}).when('/special-:specialId', {
-						templateUrl : 'scanproject-tpl',
-						controller : 'specialCtl'
-					}).when('/category-:categoryId/:categoryName', {
-						templateUrl : 'scanproject-tpl',
-						controller : 'categoryCtl'
-					}).when('/category-:facategoryId/:categoryId/:categoryName', {
-						templateUrl : 'scanproject-tpl',
-						controller : 'categoryCtl'
-					}).otherwise({
-						redirectTo : '/'
-					});
-				} ]);
-				scanApp.controller("navController", function($scope, $rootScope, $resource) {						
-				    	var Category = $resource(API + 'category');
-						var categoryArrays = Category.query(function() {
-							$rootScope.categoryArrays = categoryArrays;
-						});
-							$scope.specialClick = function(specialId) {
-								$scope.specialId = specialId;
-							}
-							$scope.isActive = function(self, current) {
-								if (self == current)
-									return true;
-								else
-									return false;
-							}
-						});
-				scanApp.controller('defaultCtl', function($scope, $rootScope,
-						$routeParams, $resource) {
-					$rootScope.cateTitle = "全部";
-					$rootScope.specialId = -1;
-					$scope.projectLoaded = false;
-					var Project = $resource(API + 'project');
-					var projects = Project.query(function() {
-						$scope.projects = projects;
-						$scope.projectLoaded = true;
-					});
-					$scope.hotProjectLoaded = false;
-					var orderbyHotAPI = API + 'project?orderby=hot';
-					var ProjectHot = $resource(orderbyHotAPI);
-					var hotProjects = ProjectHot.query(function() {
-						$scope.hotProjects = hotProjects;
-						$scope.hotProjectLoaded = true;
-					});
-					
-					$scope.newProjectLoaded = false;
-					var orderbyNewAPI = API + 'project?orderby=new';
-					var ProjectNew = $resource(orderbyNewAPI);
-					var newProjects = ProjectNew.query(function() {
-						$scope.newProjects = newProjects;
-						$scope.newProjectLoaded = true;
-					});
-				});
-				scanApp.controller('specialCtl', function($scope, $rootScope,
-						$routeParams, $resource) {
-					//TODO 获得数据
-					$rootScope.cateTitle = "全部";
-					if ($routeParams.specialId != null)
-						$rootScope.specialId = $routeParams.specialId;
-					var last = -1;
-					$scope.view_projects = new Array();
-					$scope.projectLoaded = false;
-					var orderbyProAPI = API + 'project';
-					if($rootScope.specialId == 2)
-						orderbyProAPI += "?orderby=new";
-					else if($rootScope.specialId == 3)
-						orderbyProAPI += "?orderby=hot";
-					var Project = $resource(orderbyProAPI);
-					var projects = Project.query(function() {
-						$scope.projects = projects;
-						$scope.projectLoaded = true;
-						for ( var i = 1; i <= 8; i++) {
-							if (last + i < $scope.projects.length)
-								$scope.view_projects.push($scope.projects[last
-										+ i]);
-						}
-						last = $scope.view_projects.length - 1;
-					});
-					$scope.loadMore = function() {
-						if ($scope.projects != null) {
-							for ( var i = 1; i <= 8; i++) {
-								if (last + i < $scope.projects.length)
-									$scope.view_projects
-											.push($scope.projects[last + i]);
-							}
-							last = $scope.view_projects.length - 1;
-						}
-					};
-				});
-				scanApp
-						.controller(
-								'categoryCtl',
-								function($scope, $rootScope, $routeParams,
-										$resource) {
-									//修改分类标题
-									$rootScope.specialId = -1;
-									$rootScope.cateTitle = $routeParams.categoryName;
-									var last = -1;
-									$scope.view_projects = new Array();
-									$scope.projectLoaded = false;
-									var Project = $resource(API
-											+ 'category/:categoryId/project');
-									var projects = Project
-											.query(
-													{
-														categoryId : $routeParams.categoryId
-													},
-													function() {
-														$scope.projects = projects;
-														$scope.projectLoaded = true;
-														for ( var i = 1; i <= 8; i++) {
-															if (last + i < $scope.projects.length)
-																$scope.view_projects
-																		.push($scope.projects[last
-																				+ i]);
-														}
-														last = $scope.view_projects.length - 1;
-													});
-									$scope.loadMore = function() {
-										if ($scope.projects != null) {
-											for ( var i = 1; i <= 8; i++) {
-												if (last + i < $scope.projects.length)
-													$scope.view_projects
-															.push($scope.projects[last
-																	+ i]);
-											}
-											last = $scope.view_projects.length - 1;
-										}
-									};
-								});
-				scanApp.controller("scanController", [ "$scope",
-						function($scope) {
-							$scope.page = {
-								size : 8,
-								index : 1
-							};
-					        $scope.featureProject = []; 
-					        $scope.featureProject.push({active: "active", img:"/img/scanproject-1.png", order:1});
-					        $scope.featureProject.push({img:"/img/scanproject-2.png", order:2});
-					        $scope.featureProject.push({img:"/img/scanproject-3.png", order:3});
-						} ]);
-				scanApp.filter('size', function() {
-					return function(items) {
-						if (!items)
-							return 0;
-						return items.length || 0
-					}
-				});
-				scanApp.filter('paging', function() {
-					return function(items, index, pageSize) {
-						if (!items)
-							return [];
-						var offset = (index - 1) * pageSize;
-						return items.slice(offset, offset + pageSize);
-					}
-				});
-				scanApp.filter('defaultImg', function() {
-					return function(item) {
-						if (item == null || item == "")
-							return "/img/market.png";
-						else
-							return "http://api.tongjo.com/files/" + item;
-					}
-				});
-				scanApp
-						.filter(
-								'defaultDescription',
-								function() {
-									return function(item) {
-										if (item == null || item == "")
-											//return "项目是指一系列独特的、复杂的并相互关联的活动，这些活动有着一个明确的目标或目的，必须在特定的时间、预算、资源限定内，依据规范完成";
-										    return "";
-										else
-											return $($.parseHTML(item)).text();
-
-									}
-								});
-				angular.bootstrap(document.getElementById("body"),
-						[ 'scanApp' ]);
+		scanApp.config([ '$routeProvider', function($routeProvider) {
+			$routeProvider.when('/', {
+				templateUrl : 'scanproject-index-tpl',
+				controller : 'defaultCtl',
+			}).when('/special-:specialId', {
+				templateUrl : 'scanproject-tpl',
+				controller : 'specialCtl'
+			}).when('/category-:categoryId/:categoryName', {
+				templateUrl : 'scanproject-tpl',
+				controller : 'categoryCtl'
+			}).when('/category-:facategoryId/:categoryId/:categoryName', {
+				templateUrl : 'scanproject-tpl',
+				controller : 'categoryCtl'
+			}).otherwise({
+				redirectTo : '/'
 			});
+		} ]);
+		scanApp.controller('defaultCtl', function($scope, $rootScope,
+				$routeParams, $resource) {
+			$scope.projectLoaded = false;
+			var Project = $resource(API + 'project');
+			var projects = Project.query(function() {
+				$scope.projects = projects;
+				$scope.projectLoaded = true;
+			});
+			$scope.hotProjectLoaded = false;
+			var orderbyHotAPI = API + 'project?orderby=hot';
+			var ProjectHot = $resource(orderbyHotAPI);
+			var hotProjects = ProjectHot.query(function() {
+				$scope.hotProjects = hotProjects;
+				$scope.hotProjectLoaded = true;
+			});
+
+			$scope.newProjectLoaded = false;
+			var orderbyNewAPI = API + 'project?orderby=new';
+			var ProjectNew = $resource(orderbyNewAPI);
+			var newProjects = ProjectNew.query(function() {
+				$scope.newProjects = newProjects;
+				$scope.newProjectLoaded = true;
+			});
+		});
+		scanApp.controller('specialCtl', function($scope, $rootScope,
+				$routeParams, $resource) {
+			if ($routeParams.specialId != null)
+				$rootScope.specialId = $routeParams.specialId;
+			var last = -1;
+			$scope.view_projects = new Array();
+			$scope.projectLoaded = false;
+			var orderbyProAPI = API + 'project';
+			if ($rootScope.specialId == 2)
+				orderbyProAPI += "?orderby=new";
+			else if ($rootScope.specialId == 3)
+				orderbyProAPI += "?orderby=hot";
+			var Project = $resource(orderbyProAPI);
+			var projects = Project.query(function() {
+				$scope.projects = projects;
+				$scope.projectLoaded = true;
+				for (var i = 1; i <= 8; i++) {
+					if (last + i < $scope.projects.length)
+						$scope.view_projects.push($scope.projects[last + i]);
+				}
+				last = $scope.view_projects.length - 1;
+			});
+			$scope.loadMore = function() {
+				if ($scope.projects != null) {
+					for (var i = 1; i <= 8; i++) {
+						if (last + i < $scope.projects.length)
+							$scope.view_projects
+									.push($scope.projects[last + i]);
+					}
+					last = $scope.view_projects.length - 1;
+				}
+			};
+		});
+		scanApp.controller('categoryCtl', function($scope, $rootScope,
+				$routeParams, $resource) {
+			var last = -1;
+			$scope.view_projects = new Array();
+			$scope.projectLoaded = false;
+			var Project = $resource(API + 'category/:categoryId/project');
+			var projects = Project.query({
+				categoryId : $routeParams.categoryId
+			}, function() {
+				$scope.projects = projects;
+				$scope.projectLoaded = true;
+				for (var i = 1; i <= 8; i++) {
+					if (last + i < $scope.projects.length)
+						$scope.view_projects.push($scope.projects[last + i]);
+				}
+				last = $scope.view_projects.length - 1;
+			});
+			$scope.loadMore = function() {
+				if ($scope.projects != null) {
+					for (var i = 1; i <= 8; i++) {
+						if (last + i < $scope.projects.length)
+							$scope.view_projects
+									.push($scope.projects[last + i]);
+					}
+					last = $scope.view_projects.length - 1;
+				}
+			};
+		});
+		scanApp.controller("scanController", [ "$scope", function($scope) {
+			$scope.page = {
+				size : 8,
+				index : 1
+			};
+			$scope.featureProject = [];
+			$scope.featureProject.push({
+				active : "active",
+				img : "/img/scanproject-1.png",
+				order : 1
+			});
+			$scope.featureProject.push({
+				img : "/img/scanproject-2.png",
+				order : 2
+			});
+			$scope.featureProject.push({
+				img : "/img/scanproject-3.png",
+				order : 3
+			});
+		} ]);
+		scanApp.filter('size', function() {
+			return function(items) {
+				if (!items)
+					return 0;
+				return items.length || 0
+			}
+		});
+		scanApp.filter('paging', function() {
+			return function(items, index, pageSize) {
+				if (!items)
+					return [];
+				var offset = (index - 1) * pageSize;
+				return items.slice(offset, offset + pageSize);
+			}
+		});
+		scanApp.filter('defaultImg', function() {
+			return function(item) {
+				if (item == null || item == "")
+					return "/img/market.png";
+				else
+					return "http://api.tongjo.com/files/" + item;
+			}
+		});
+		scanApp.filter('defaultDescription', function() {
+			return function(item) {
+				if (item == null || item == "")
+					//return "项目是指一系列独特的、复杂的并相互关联的活动，这些活动有着一个明确的目标或目的，必须在特定的时间、预算、资源限定内，依据规范完成";
+					return "";
+				else
+					return $($.parseHTML(item)).text();
+
+			}
+		});
+		angular.bootstrap(document.getElementById("body"), [ 'scanApp' ]);
+	});
 </script>
 {!/block!}
