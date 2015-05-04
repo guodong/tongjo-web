@@ -1,42 +1,94 @@
 {!extends file='base.html'!} {!block name=base!}
 
 <script>
-	require(['angular', 'angular-resource'], function(angular) {
-		var app = angular.module('top', ['ngResource']);
+	require(
+			[ 'angular', 'Auth', 'angular-resource', 'angular-route', ],
+			function(angular, Auth, res, angular_route) {
+				var app = angular
+						.module('top', [ 'ngRoute', 'ngResource' ])
+						.config(
+								[
+										'$routeProvider',
+										'$httpProvider',
+										function($routeProvider, $httpProvider) {
+											$httpProvider.defaults.withCredentials = true;
+										} ]);
 
-		app.controller('topc', function($scope, $resource, $location) {
-			if (localStorage.uid) {
-				$scope.auth = true;
-				var user = JSON.parse(localStorage.user);
-				$scope.user = user;
-			} else {
-				$scope.auth = false;
-			}
-			$scope.isActive = function (viewLocation) {
-		        return viewLocation === location.pathname;
-		    };
-		    
-		    $scope.click=function(){
-		    	localStorage.time = 0;
-		    	location.href="/";
-		    }
-		});
-		angular.bootstrap(document.getElementById("top"), ['top']);
-	});
+				app.controller('topc', function($scope, $resource) {
+					if (Auth.isLogin()) {
+						$scope.auth = true;
+						var user = JSON.parse(localStorage.user);
+						$scope.user = user;
+						var Message = $resource(API + 'user/:user_id/message');
+						$scope.has_msg = false;
+						$scope.messages = Message.query({
+							user_id : localStorage.uid
+						}, function() {
+							for ( var i in $scope.messages) {
+								if ($scope.messages[i].is_viewed == 0) {
+									$scope.has_msg = true;
+									break;
+								}
+							}
+						});
+					} else {
+						$scope.auth = false;
+					}
+					$scope.isActive = function(viewLocation) {
+						return location.pathname.indexOf(viewLocation) !== -1;
+					};
+
+					$scope.click = function() {
+						localStorage.time = 0;
+						location.href = "/";
+					}
+					// load categorys
+					var Category = $resource(API + 'category');
+					var categoryArrays = Category.query(function() {
+						$scope.categoryArrays = categoryArrays;
+					});
+				});
+				angular.bootstrap(document.getElementById("top"), [ 'top' ]);
+			});
 </script>
 <style>
-#top ada{
+#top ada {
 	color: #6dbccb;
 }
-.navbar{
-	background: #666;
+
+.navbar {
+	background: #3399EE;
 	height: 40px;
 }
-.navbar a{
+
+.navbar a {
 	color: #eee !important;
 }
-.navbar li.active a{
+
+.navbar li.active a {
 	color: #7baf52 !important;
+}
+
+.navbar li .multi-level a {
+	color: #000 !important;
+}
+.navbar-default .navbar-nav>.dropdown.open > a {
+	color:#fff !important;;
+	background-color: #7baf52;
+}
+
+.navbar-default .nav>li.dropdown>a:hover {
+	color:#fff !important;;
+	background-color: #7baf52;
+}
+
+navbar-default .navbar-nav>.dropdown.open > a, .navbar-default .navbar-nav>.dropdown.open > a:hover{
+	color:#fff !important;
+	background-color: #7baf52;
+}
+
+.navbar-default .nav>li.dropdown:hover .multi-level {
+	display: block;
 }
 </style>
 <div class="footer-fix">
@@ -44,13 +96,48 @@
 		ng-controller="topc" id="top">
 		<div class="wrapper">
 			<div class="navbar-header">
-				<a class="" ng-click="click()" style="margin-right: 25px;"><img alt="" src="/img/LOGO45.png"></a>
+				<a class="" ng-click="click()" style="margin-right: 25px;"><img
+					alt="" src="/img/LOGO45.png"></a>
 			</div>
 
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li ng-class="{ active: isActive('/scanproject')}"><a href="/scanproject#/">浏览项目</a></li>
-					<li ng-class="{ active: isActive('/project/create')}"><a href="/project/create">发布项目</a></li>
+					<!--<li ng-class="{ active: isActive('/scanproject')}"><a href="/scanproject#/">浏览项目</a></li>-->
+					<li id ="scanproject-dropmenu" class="dropdown" role="menu" ng-class="{ active: isActive('/scanproject')}">
+						<a id="scanproject-a" data-toggle="dropdown" data-target="#">
+								发现项目<span
+							class="caret"></span>
+						</a>
+						<ul  class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+							<li><a tabindex="-1" href="/scanproject#/">全部</a></li>
+							<li class="dropdown-submenu"
+								ng-repeat="fatherCategory in categoryArrays"><a
+								tabindex="-1"
+								href="/scanproject#/category-{{fatherCategory.id}}/{{fatherCategory.name}}"
+								ng-bind="fatherCategory.name"></a>
+								<ul class="dropdown-menu">
+									<li ng-repeat="childCategory in fatherCategory.children"><a
+										href="/scanproject#/category-{{fatherCategory.id}}/{{childCategory.id}}/{{childCategory.name}}"
+										ng-bind="childCategory.name"></a></li>
+								</ul></li>
+						</ul>
+						</li>
+
+					<script>
+						$("#scanproject-a").on("mouseover", function() {
+							if ($(this).parent().is(".open")) {
+								return							
+							}
+							$(this).dropdown("toggle");
+						});
+						$("#scanproject-dropmenu").on("mouseleave", function() {
+							if ($(this).is(".open")) {
+								$("#scanproject-a").dropdown("toggle");						
+							}
+						});
+					</script>
+					<li ng-class="{ active: isActive('/project/create')}"><a
+						href="/project/create">发布项目</a></li>
 				</ul>
 				<!-- <form class="navbar-form navbar-left" role="search">
 					<div class="form-group has-feedback">
@@ -59,8 +146,11 @@
 					</div>
 				</form> -->
 				<ul class="nav navbar-nav navbar-right" ng-show="auth==true">
-					<li><a href="/me#message" title="消息"><span
-							class="glyphicon glyphicon-envelope"></span></a></li>
+					<li><a href="/me#message" title="消息"
+						style="position: relative"><span
+							class="glyphicon glyphicon-envelope"></span>
+							<div ng-show="has_msg==true"
+								style="border-radius: 5px; width: 10px; height: 10px; background: #CD4242; top: 12px; right: 10px; position: absolute"></div></a></li>
 					<!-- <li><a href="/me#message"><span
 							class="glyphicon glyphicon-bell"></span></a></li> -->
 					<li><a href="/me"><span class="glyphicon glyphicon-user"></span>

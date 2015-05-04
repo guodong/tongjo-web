@@ -34,7 +34,7 @@
 					<td><a href="/project/{{v.id}}" target="_blank" ng-bind="v.name"></a></td>
 					<td ng-bind="v.created_at|limitTo:10"></td>
 					<td><span class="label label-success" ng-if="v.is_open==1">报名中</span><span class="label label-danger" ng-if="v.is_open==0">报名关闭</span></td>
-					<td><a href="#project/{{v.id}}">修改</a> | <a href="#projectmanager/{{v.id}}">查看参加者</td>
+					<td><a href="#project/{{v.id}}">修改</a> | <a href="#projectmanager/{{v.id}}">查看参加者</a> | <a ng-click="broadcastmail(v.id,v.name)">群发舟邮</a> </td> 
 				</tr>
 			</tbody>
 		</table>

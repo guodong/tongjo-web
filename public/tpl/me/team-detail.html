@@ -1,68 +1,77 @@
 <div class="me-teamdetail container-fluid ">
 	<div class="page-header" style="text-align: bottom">
-		<h2 class="title">我的团队 <small >编辑团队</small></h2>
+		<h2 class="title">
+			我的团队 <small ng-bind="team.name"></small>
+		</h2>
 	</div>
-
-	<div class="editteam">
-		<form class="form-horizontal col-md-9" role="form"
-			name="editteamForm">
-			<div class="form-group">
-				<label class="col-md-3 control-label">团队名称：</label>
-				<div class="col-md-9 inputline">
-					<input type="text" class="form-control inputtext"
-						id="inputteamname" placeholder="团队名称" name="name"
-						ng-model="team.name" required>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-md-3 control-label">团队人数：</label>
-				<div class="input-group col-md-9">
-					<input type="text" class="form-control" name="teammember_all"
-						ng-model="team.teammember_all" placeholder="团队需要的总人数" required>
-					<div class="input-group-btn">
-						<button type="button" class="btn btn-default dropdown-toggle"
-							data-toggle="dropdown" aria-expanded="false">
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu dropdown-menu-right" role="menu">
-							<li><a href="#" ng-click="setteammember('1')">1</a></li>
-							<li><a href="#" ng-click="setteammember('2')">2</a></li>
-							<li><a href="#" ng-click="setteammember('3')">3</a></li>
-							<li><a href="#" ng-click="setteammember('4')">4</a></li>
-							<li><a href="#" ng-click="setteammember('5')">5</a></li>
-							<li role="presentation" class="divider"></li>
-							<li><a href="#" ng-click="setteammember('6')">6</a></li>
-							<li><a href="#" ng-click="setteammember('7')">7</a></li>
-							<li><a href="#" ng-click="setteammember('8')">8</a></li>
-							<li><a href="#" ng-click="setteammember('9')">9</a></li>
-							<li><a href="#" ng-click="setteammember('10')">10</a></li>
-						</ul>
+	<ul id="myTab" class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active"><a role="tab" tabid="t1"
+			data-toggle="tab">团队信息</a></li>
+		<li role="presentation"><a role="tab" tabid="t2"
+			data-toggle="tab">团队成员</a></li>
+	</ul>
+	<div class="tab-content">
+		<div role="tabpanel" tcid="t1" class="tab-pane active" id="home">
+			<div class="editteam">
+				<form class="form-horizontal col-md-9" role="form"
+					name="editteamForm">
+					<div class="form-group">
+						<label class="col-md-3 control-label">团队名称：</label>
+						<div class="col-md-9 inputline">
+							<input type="text" class="form-control inputtext"
+								id="inputteamname" placeholder="团队名称" name="name"
+								ng-model="team.name" required>
+						</div>
 					</div>
-				</div>
-			</div>
 
-			<div class="form-group">
-				<label class="col-md-3 control-label">截止日期：</label>
-				<div class="inputline col-md-9">
-					<input type="text" class="form-control inputtext datepicker" 
-						name="signup_time" ng-model="team.signup_time"
-						data-provide="datepicker" placeholder="在这里填写团队报名截止日期" required
-						data-date-format="yyyy-mm-dd" autoclose="true">
-				</div>
-			</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label">团队人数：</label>
+						<div class="input-group col-md-9">
+							<input type="text" class="form-control" name="teammember_all"
+								ng-model="team.teammember_all" placeholder="团队需要的总人数" required>
+							<div class="input-group-btn">
+								<button type="button" class="btn btn-default dropdown-toggle"
+									data-toggle="dropdown" aria-expanded="false">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-menu-right" role="menu">
+									<li><a href="#" ng-click="setteammember('1')">1</a></li>
+									<li><a href="#" ng-click="setteammember('2')">2</a></li>
+									<li><a href="#" ng-click="setteammember('3')">3</a></li>
+									<li><a href="#" ng-click="setteammember('4')">4</a></li>
+									<li><a href="#" ng-click="setteammember('5')">5</a></li>
+									<li role="presentation" class="divider"></li>
+									<li><a href="#" ng-click="setteammember('6')">6</a></li>
+									<li><a href="#" ng-click="setteammember('7')">7</a></li>
+									<li><a href="#" ng-click="setteammember('8')">8</a></li>
+									<li><a href="#" ng-click="setteammember('9')">9</a></li>
+									<li><a href="#" ng-click="setteammember('10')">10</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
 
-			<div class="form-group">
-				<label class="col-md-3 control-label">团队简介：</label>
-				<div class="input-group col-md-9">
-					<textarea cols="5" type="text" class="form-control mutilinput"
-						placeholder="在这里描述一下你的团队" name="description"
-						ng-model="team.description" required></textarea>
-				</div>
-			</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label">截止日期：</label>
+						<div class="inputline col-md-9">
+							<input type="text" class="form-control inputtext datepicker"
+								name="signup_time" ng-model="team.signup_time"
+								data-provide="datepicker" placeholder="在这里填写团队报名截止日期" required
+								data-date-format="yyyy-mm-dd" autoclose="true">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-3 control-label">团队简介：</label>
+						<div class="input-group col-md-9">
+							<textarea cols="5" type="text" class="form-control mutilinput"
+								placeholder="在这里描述一下你的团队" name="description"
+								ng-model="team.description" required></textarea>
+						</div>
+					</div>
 
 
-			<div class="form-group">
+					<!-- <div class="form-group">
 				<label class="col-md-5 control-label">是否开启报名确认：</label>
 				<div class="input-group col-md-7" style="text-align: left">
 
@@ -76,51 +85,69 @@
 
 
 				</div>
-			</div>
+			</div> -->
 
-			<div class="form-group" style="margin-top: 30px; text-align: center">
-				<div class="col-md-3"></div>
-				<button type="submit" class="btn btn-success summitbutton" ng-click="update()" 
-					ng-disabled="newteamForm.$invalid">保 存 修 改</button>
+					<div class="form-group"
+						style="margin-top: 30px; text-align: center">
+						<div class="col-md-3"></div>
+						<button type="submit" class="btn btn-success summitbutton"
+							ng-click="update()" ng-disabled="newteamForm.$invalid">保
+							存 修 改</button>
 
+					</div>
+				</form>
 			</div>
-		</form>
+		</div>
+
+		<div role="tabpanel" tcid="t2" class="tab-pane" id="profile">
+			<table class="team-teamer">
+				<thead class="bg-primary">
+					<tr>
+						<th>团队成员介绍</th>
+						<th>大学</th>
+						<th>专业</th>
+						<th>状态</th>
+						<th width="130px">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="member in team.members">
+						<td><img src="img/head.jpg" alt="*" class="smallhead">
+							<a class="text-primary" ng-bind="member.realname"
+							href="userinfodetail/{{member.id}}"></a></td>
+						<td>
+							<h5 class="text-primary" ng-bind="member.school.name"></h5>
+						</td>
+
+						<td>
+							<h5 class="text-primary" ng-bind="member.major.name"></h5>
+						</td>
+
+						<td>
+							<h5 class="text-primary" ng-bind="getstatus(member.pivot.status)"></h5>
+						</td>
+
+						<td><a class="text-primary"
+							ng-show="isshowagree(team.user_id,member.id,member.pivot.status)"
+							ng-click="permit(member.id)">同意</a> <a class="text-primary"
+							ng-show="isshowdeny(team.user_id,member.id,member.pivot.status)"
+							ng-click="deny(member.id)">拒绝</a> <a class="text-primary"
+							ng-show="isshowremove(team.user_id,member.id,member.pivot.status)"
+							ng-click="remove(member.id)">剔除</a></td>
+					</tr>
+				</tbody>
+			</table>
+			<button class="btn btn-lg center-block btn-success"
+				ng-click="complete()" ng-show="team.status==0">完成团队建设</button>
+		</div>
 	</div>
-	
-	<div class="clear"></div>
-	<table class="team-teamer">
-		<thead class="bg-primary">
-			<tr>
-				<th>团队成员介绍</th>
-				<th>大学</th>
-				<th>专业</th>
-				<th>状态</th>
-				<th width="130px">操作</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="member in team.members">
-				<td><img src="img/head.jpg" alt="*" class="smallhead">
-					<a class="text-primary" ng-bind="member.realname" href="userinfodetail/{{member.id}}"></a></td>
-				<td>
-					<h5 class="text-primary" ng-bind="member.school.name"></h5>
-				</td>
 
-				<td>
-					<h5 class="text-primary" ng-bind="member.major.name"></h5>
-				</td>
-				
-				<td>
-					<h5 class="text-primary" ng-bind="getstatus(member.pivot.status)"></h5>
-				</td>
-
-				<td>
-					<a class="text-primary" ng-show="isshowagree(team.user_id,member.id,member.pivot.status)" ng-click="permit(member.id)">同意</a>
-					<a class="text-primary" ng-show="isshowdeny(team.user_id,member.id,member.pivot.status)"  ng-click="deny(member.id)">拒绝</a>
-					<a class="text-primary" ng-show="isshowremove(team.user_id,member.id,member.pivot.status)"  ng-click="remove(member.id)">剔除</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<button class="btn btn-lg center-block btn-success" ng-click="complete()" ng-show="team.status==0">完成团队建设</button>
 </div>
+<script>
+	$('#myTab a').click(function(e) {
+		e.preventDefault();
+		var p = $(this).attr("tabid");
+		$("[tcid=" + p + "]").siblings().removeClass("active");
+		$("[tcid=" + p + "]").addClass("active");
+	})
+</script>

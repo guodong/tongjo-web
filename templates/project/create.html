@@ -204,7 +204,7 @@
 					</tr>
 				</table>
 
-				<table style="margin-top:30px;">
+				<!-- <table style="margin-top:30px;">
 					<tr>
 						<td width="10%" nowrap="nowrap"><label class="title">是否开启报名审核功能</label></td>
 						<td style="padding-left: 14px; padding-right: 14px;"><label
@@ -213,16 +213,16 @@
 							class="radio-inline radiolabel"><input type="radio" name="opentype"
 								value="0" required ng-model="project.is_open"> 关闭 </label></td>
 					</tr>
-				</table>
+				</table> -->
 
 				<div style="margin-top: 30px;">
-					<label class="title">选择技能需求标签</label>
+					<label class="title">选择项目需求</label>
 					<div>
 						<span ng-repeat="tag in projecttag" style="margin-left: 20px"
 							ng-bind="tag.name"></span> <a class="mbtn"
-							data-toggle="modal" data-target="#tagModal" ng-if="projecttag.length<1">添加技能标签 ></a>
+							data-toggle="modal" data-target="#tagModal" ng-if="projecttag.length<1">添加需求标签 ></a>
 							<a class="mbtn"
-							data-toggle="modal" data-target="#tagModal" ng-if="projecttag.length>0">编辑技能标签 ></a>
+							data-toggle="modal" data-target="#tagModal" ng-if="projecttag.length>0">编辑需求标签 ></a>
 						<div class="modal fade info" id="tagModal">
 							<div class="modal-dialog">
 								<div class="modal-content tagmodal">
@@ -338,6 +338,11 @@
 <script>
 	require([ 'angular', 'Auth', 'angular-resource' ],function(angular, Auth) {
 			Auth.check();
+			var u = JSON.parse(localStorage.user);
+			if(u.is_email_verified == 0){
+				alert("请先验证邮箱");
+				location.href="http://www.tongjo.com/me#/account";
+			}
 			var app = angular.module('mec', [ 'ngResource' ]);
 			app.controller(
 			'createform',

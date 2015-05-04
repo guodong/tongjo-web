@@ -25,7 +25,7 @@
 						<li><a ng-click="filter('failed')">报名失败</a></li>
 					</ul>
 				</th>
-				<th>操作</th>
+				<th>操作 <span class="label label-info"><a ng-click="broadcastmail(project.id,project.name)">群发舟邮</a></span></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -39,8 +39,18 @@
 					class="label label-success" ng-if="team.status==2">报名通过</span> <span
 					class="label label-danger" ng-if="team.status==3">报名失败</span></td>
 				<td><a class="text-primary" ng-if="team.status==1" ng-click="handle(team, 2)">通过</a> <a
-					class="text-primary" ng-if="team.status==1" ng-click="handle(team, 3)">拒绝</a> <a
-					class="text-primary" ng-if="team.status==2">评价</a></td>
+					class="text-primary" ng-if="team.status==1" ng-click="handle(team, 3)">拒绝</a> <!-- <a
+					class="text-primary" ng-if="team.status==2">评价</a> --></td>
+			</tr>
+			<tr ng-repeat="user in users_filtered">
+				<td><a ng-bind="user.realname" href="/userinfodetail/{{user.id}}"></a></td>
+				<td>-</td>
+				<td><span
+					class="label label-info" ng-if="user.pivot.status==1">报名审核中</span> <span
+					class="label label-success" ng-if="user.pivot.status==2">报名通过</span> <span
+					class="label label-danger" ng-if="user.pivot.status==3">报名失败</span></td>
+				<td><a class="text-primary" ng-if="user.pivot.status==1" ng-click="handleuser(user, 2)">通过</a> <a
+					class="text-primary" ng-if="user.pivot.status==1" ng-click="handleuser(user, 3)">拒绝</a></td>
 			</tr>
 		</tbody>
 	</table>

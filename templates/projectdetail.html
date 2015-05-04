@@ -132,7 +132,7 @@
 										<div class="comment">
 											<div class="comment-header">
 												<strong> <a
-													href="/userinfodetail!{{comment.user.id}}" class="author"
+													href="/userinfodetail/{{comment.user.id}}" class="author"
 													ng-bind="comment.user.realname"></a>
 												</strong> 发表于 <span ng-bind="comment.updated_at"></span>
 											</div>
@@ -152,13 +152,11 @@
 					<section class="project-list">
 						<h3>相似项目：</h3>
 						<div class="clear clearfix tech">
-							<article ng-repeat="v in projects|limitTo:4" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+							<article ng-repeat="v in projects|limitTo:4" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false" ng-class="{'active': hoverEdit}">
+								<a href="{{v.id}}">
 								<span> <img ng-src="{{v.image|defaultImg}}">
-								</span>
-								<div class="hover" ng-show="hoverEdit">
-									<p ng-bind="v.description|defaultDescription"></p>
-									<a class="detail-button" href="/project/{{v.id}}">查看详情>></a>
-								</div>
+								</span>								
+								</a>
 								<h5 ng-bind="v.name"></h5>
 							</article>
 						</div>
@@ -182,18 +180,20 @@
 				</div>
 				<div class="panel labels clear clearfix">
 					<div class="header">
-						<span class="label-icon"></span>技能标签
+						<span class="label-icon"></span>技能需求标签
 					</div>
-					<div>
-					<div class="marker" ng-repeat="v in project.categorys" ng-bind="v.name"></div>
+					<div class="marker">
+					<ul>					
+					<li ng-repeat="v in project.tags"><div class="rectangle" ng-bind="v.name"></div><div class="triangle"></div></li>
+					</ul>
 					</div>
 				</div>
 				<div class="panel time">
 					<div class="leave">
 						<span ng-bind = "project.daysmsg"></span><span class="day" ng-bind = "project.opendays"></span>天
 					</div>
-					<div class="open" ng-show="project.is_open">报名开放</div>
-				    <div class="open" ng-show="!project.is_open">报名关闭</div>
+					<!--  ><div class="open" ng-show="project.is_open">报名开放</div>
+				    <div class="open" ng-show="!project.is_open">报名关闭</div>-->
 				</div>
 <!-- 				<div class="panel collect">
 					<a href="#collect"><img src="/img/collect.png"></img></a>
@@ -257,7 +257,7 @@
 					$scope.project.creator.honor = "大神";
 				}
 				var dateNow= new Date();
-				var dateDeadline = new Date($scope.project.deadline);
+				var dateDeadline = new Date(Date.parse($scope.project.deadline.replace(/-/g,"/")));
 				var openTime=dateDeadline.getTime() - dateNow.getTime();
 				$scope.project.opendays = Math.floor(openTime/(24*3600*1000));
 				if( $scope.project.opendays < 0){
@@ -270,15 +270,19 @@
 			$scope.project.description = $sce
 					.trustAsHtml($scope.project.description);
 			$scope.projects = Project.query();
-			$scope.hoverIn = function(){
-			    this.hoverEdit = true;
-			};
-
-			$scope.hoverOut = function(){
-			    this.hoverEdit = false;
-			};
 			$scope.joinone = function() {console.log(Auth)
 				Auth.check();
+				var u = JSON.parse(localStorage.user);
+				if(u.role != 'student'){
+					alert("您的身份不是学生，请完善信息后参加项目");
+					location.href="/me#/info";
+					return;
+				}
+				if(u.realname == ''){
+					alert("请完善个人信息后参加项目");
+					location.href = "/me#info";
+					return;
+				}
 				var PU = $resource(API
 						+ 'project/:project_id/user/:user_id/pivot', {
 					project_id : '@project_id',
@@ -289,8 +293,11 @@
 					project_id : project_id
 				});
 				pu.$save(function(d) {
-					if (d.error) {
+					if (d.error==1) {
 						alert("你已经申请过了");
+						return;
+					}else if(d.error==2){
+						alert("团队已经组建完毕，不可加入");
 						return;
 					}
 					alert("参加成功");

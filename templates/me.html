@@ -14,10 +14,10 @@
 <script src="http://open.web.meitu.com/sources/xiuxiu.js" type="text/javascript"></script>
 
 <script>
-require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
-		function(angular, angular_route, $resource,bootstrap, Auth) {
+require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth','model/mailmodal'],
+		function(angular, angular_route, $resource,bootstrap, Auth, mailModal) {
 			Auth.check();
-			var app = angular.module('me', ['ngRoute', 'ngResource','ui.bootstrap']).config(['$routeProvider', '$httpProvider',
+			var app = angular.module('me', ['ngRoute', 'ngResource','ui.bootstrap','mailModal']).config(['$routeProvider', '$httpProvider',
 			function($routeProvider, $httpProvider) {
 				$httpProvider.defaults.withCredentials = true;
 				$routeProvider.when('/info', {
@@ -403,7 +403,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 			});
 
 			app.controller('project',
-			function($scope, $resource) {
+			function($scope, $resource, mailService) {
 				var Project = $resource(API + 'user/:user_id/type/:type/project');
 				$scope.joined = $scope.joined_filtered = Project.query({
 					user_id: localStorage.uid,
@@ -455,6 +455,19 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 						});
 						break;
 					}
+				}
+				$scope.broadcastmail = function(project_id,project_name){
+					var modalOptions = {
+	      		            resolve: {
+	      		            	project: function(){
+	      		            		return {
+	      		            		id: project_id,
+	      		            		name: project_name
+	      		            		}
+	      		            	}
+	      		            }
+	      		        };
+						mailService.showModal(modalOptions).then(function (result) {});
 				}
 			});
 			app.controller('team-detail',
@@ -550,6 +563,10 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 					}
 				});
 				$scope.permit = function(user_id) {
+					if($scope.team.members_count >= teammember_all){
+						alert("团队成员已满");
+						return;
+					}
 					var st = new Status();
 					st.$save({
 						team_id: $routeParams.team_id,
@@ -599,7 +616,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 			
 			
 			app.controller('project-manager',
-					function($scope, $resource, $routeParams) {
+					function($scope, $resource, $routeParams, mailService) {
 						$scope.project = $resource(API+'project/:project_id').get({project_id: $routeParams.project_id});
 						var ProjectTs = $resource(API + 'project/:project_id/team', {
 							project_id: '@id'
@@ -613,7 +630,10 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 						$scope.teams = $scope.teams_filtered = ProjectTs.query({
 							project_id: $routeParams.project_id
 						});
-						$scope.getprojectTs();
+						var ProjectUs = $resource(API + 'project/:project_id/user', {project_id: '@project_id'});
+						$scope.users = $scope.users_filtered = ProjectUs.query({
+							project_id: $routeParams.project_id
+						});
 						var Team = $resource(API + 'team/:team_id', {team_id: '@team_id'}, {save:{method: 'PUT'}});
 						$scope.handle = function(team, status) {
 							var t = Team.get({team_id: team.id});
@@ -623,6 +643,29 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 								team.status = status;
 							})
 						};
+						$scope.handleuser = function(user, status) {
+							var PU = $resource(API + 'project/:project_id/user/:user_id/pivot/1', {project_id: '@project_id', user_id: '@user_id'}, {save:{method: 'PUT'}});
+							var pu = new PU();
+							pu.project_id = $routeParams.project_id;
+							pu.user_id = user.id;
+							pu.status = status;
+							pu.$save(function(){
+								user.pivot.status = status;
+							});
+						};
+						$scope.broadcastmail = function(project_id,project_name){
+							var modalOptions = {
+			      		            resolve: {
+			      		            	project: function(){
+			      		            		return {
+			      		            		id: project_id,
+			      		            		name: project_name
+			      		            		}
+			      		            	}
+			      		            }
+			      		        };
+								mailService.showModal(modalOptions).then(function (result) {});
+						}
 						$scope.filter = function(type){
 							$scope.teams_filtered = [];
 							switch(type){
@@ -1036,7 +1079,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth'],
 				$scope.user = User.get({
 					user_id: localStorage.uid
 				});
-				var Message = $resource(API + 'user/:user_id/message');
+				var Message = $resource(API + 'user/:user_id/message?view=1');
 				var messages = Message.query({
 					user_id: localStorage.uid
 				},function() {
