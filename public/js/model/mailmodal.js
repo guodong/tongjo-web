@@ -10,7 +10,7 @@ define([ 'angular', 'angular-resource', 'ui-bootstrap' ], function(angular, reso
 						var Mail = $resource(API + 'email/broadcast');
 						var m = new Mail();
 						m.$save({
-							title : $scope.mail.title,
+							title : "来自项目" + project.name +"发布方的通知邮件：" + $scope.mail.title,
 							project_id : $scope.project_id,
 							content : $scope.mail.content
 						}, function(mes) {
