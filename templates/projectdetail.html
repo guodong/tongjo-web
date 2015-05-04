@@ -152,13 +152,10 @@
 					<section class="project-list">
 						<h3>相似项目：</h3>
 						<div class="clear clearfix tech">
-							<article ng-repeat="v in projects|limitTo:4" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false">
-								<span> <img ng-src="{{v.image|defaultImg}}">
-								</span>
+							<article ng-repeat="v in projects|limitTo:4" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false" ng-class="{'active': hoverEdit}">
 								<a href="{{v.id}}">
-								<div class="hover" ng-show="hoverEdit">
-									<p ng-bind="v.description|defaultDescription"></p>
-								</div>
+								<span> <img ng-src="{{v.image|defaultImg}}">
+								</span>								
 								</a>
 								<h5 ng-bind="v.name"></h5>
 							</article>
