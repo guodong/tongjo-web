@@ -15,23 +15,20 @@
     <div class="section" style="text-align: center;background:#75c1cb"><img src="/img/WEB3.png" style="width:65%"></div>
     <div class="section" style="text-align: center;background:#e9d04e;position:relative"><img src="/img/WEB4.png" style="width:65%"><a href="/scanproject" style="position:absolute;bottom:150px;color: white;right: 150px;text-decoration: none;font-size: 32px">立即开启旅程&gt;&gt;</a></div>
 </div>
+<div style="display:none"><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254922613'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/stat.php%3Fid%3D1254922613%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></div>
 <script>
+$time = localStorage.time;
+if($time == 1){
+	location.href = "/scanproject";
+}else{
+	localStorage.time = 1;
+}
 $(document).ready(function() {
     $('#fullpage').fullpage({
     	navigation: true,
         navigationPosition: 'right',
     });
 });
-</script>
-	
-<script>
-$(function(){
-	$(".tech span").hover(function(){
-		$(this).find("div").fadeIn();
-	},function(){
-		$(this).find("div").fadeOut();
-	})
-})
 </script>
 </body>
 </html>
