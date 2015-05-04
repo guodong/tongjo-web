@@ -619,7 +619,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth','m
 			
 			
 			app.controller('project-manager',
-					function($scope, $resource, $routeParams) {
+					function($scope, $resource, $routeParams, mailService) {
 						$scope.project = $resource(API+'project/:project_id').get({project_id: $routeParams.project_id});
 						var ProjectTs = $resource(API + 'project/:project_id/team', {
 							project_id: '@id'
@@ -656,6 +656,19 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth','m
 								user.pivot.status = status;
 							});
 						};
+						$scope.broadcastmail = function(project_id,project_name){
+							var modalOptions = {
+			      		            resolve: {
+			      		            	project: function(){
+			      		            		return {
+			      		            		id: project_id,
+			      		            		name: project_name
+			      		            		}
+			      		            	}
+			      		            }
+			      		        };
+								mailService.showModal(modalOptions).then(function (result) {});
+						}
 						$scope.filter = function(type){
 							$scope.teams_filtered = [];
 							switch(type){

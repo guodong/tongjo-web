@@ -6,7 +6,6 @@ return array(
 		'#^/personjoin$#' => 'personjoin',
 		'#^/personjoinsuccess$#' => 'personjoinsuccess',
 		'#^/jointeamsuccess$#' => 'jointeamsuccess',
-		'#^/scanproject2$#' => 'scanproject',
 		'#^/scanproject-tpl$#' => 'scanproject-tpl',
 		'#^/recomproject$#' => 'recomproject',
 		'#^/choseskill$#' => 'choseskill',
