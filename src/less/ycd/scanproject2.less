@@ -57,8 +57,6 @@ table-layout: fixed;
 margin-left: auto;
 margin-right: auto;
 margin-top:30px;
-/*border-bottom:1px solid #bdbdbd;*/
-/*border-right: 1px solid #bdbdbd;*/
 .left-nav{
 display:table-cell;
 vertical-align: top;
@@ -67,8 +65,6 @@ padding-left:10px;
 padding-top:10px;
 padding-right:10px;
 background-color: #f6f6f6;
-/*border-right: 1px solid #bdbdbd;*/
-/*border-left: 1px solid #bdbdbd;*/
 .icon-hot{
 	width:14px;
 	height:14px;
@@ -152,7 +148,6 @@ margin-top: -1px;
 }
 .rightpanel{
 	display: table-cell;
-	/*box-shadow: inset 0 0 1px #b2b2b2;*/
 	min-height: 100%;
 	background-color: #f6f6f6;
 	padding-top:0px;
@@ -167,12 +162,6 @@ margin-top: -1px;
 	width:100%;
 	color: #b8b8b8;
 	background-color: #f8f8f8;
-	/*border-top: 1px solid #bdbdbd;*/
-	/*border-right: 1px solid #bdbdbd;*/
-	/*border-bottom: 1px solid #bdbdbd;*/
-	/*-webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;
-	-moz-box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;
-	box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;*/
 	.title{
 	font-size: 28px;
 	text-shadow: 0px 1px rgba(255,255,255,0.8);
@@ -234,16 +223,13 @@ float: left;
 width: 23%;
 margin: 0 0 0 0%;
 padding:0px;
-border: 1px solid #c6c6c6;
+border: 2px solid #c6c6c6;
 margin:1%;
-/*border-right: 1px solid #c6c6c6;*/
-/*border-bottom: 1px solid #c6c6c6;*/
 position: relative;
 }
 section.tech article span {
 display: block;
 position: relative;
-border: solid 1px #ddd;
 height: 0;
 overflow: hidden;
 padding-bottom: 75%;
@@ -260,6 +246,9 @@ section.tech article img {
   -webkit-transform: translate(-50%,-50%);
       -ms-transform: translate(-50%,-50%);
           transform: translate(-50%,-50%);
+}
+section.tech article.active{
+	border: solid 2px #7baf52;	
 }
 section.tech article .hover{
 position: absolute;
@@ -294,13 +283,6 @@ white-space: nowrap;
 text-overflow: ellipsis; 
 overflow: hidden;
 }
-.detail-button{
-	position: absolute;
-	font-size:14px;
-	color:#FFF;
-	right:10px;
-	bottom:30px;	
-}
 img {
 	max-width: 100%;
 	display: block;
@@ -316,53 +298,6 @@ display: table;
 .pagination-bottom {
  padding-top:10px;
   margin: 0;
-}
-.recomd{
-section.tech article {
-float: left;
-width: 45%;
-margin: 0 0 0 5%;
-}
-section.tech article span {
-display: block;
-position: relative;
-border: 6px solid #fff;
-height: 0;
-overflow: hidden;
-padding-bottom: 56%;
-}
-section.tech article img {
-	width: 100%;
-	display: block;
-	border: 0;
-	vertical-align:middle;
-}
-section.tech article h5{
-position: absolute;
-bottom:0;
-width:100%;
-height:15%;
-margin: 0px;
-line-height: 3;
-text-align:center;
-background-color: white;
-vertical-align: middle;
-}
-.title {
-	width:auto;
-	font: 900 20px/24px 'Source Sans Pro', sans-serif;
-	text-align: left;
-	display: block;
-	padding-left:5%;
-	margin-top:20px;
-	margin-bottom:10px;
-}
-a.more{
-	float: right;
-	display:block;
-	padding-top:20px;
-	padding-bottom: 20px;
-}
 }
 }
 }

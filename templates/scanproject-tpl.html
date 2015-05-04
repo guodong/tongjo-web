@@ -2,13 +2,10 @@
 	<section class="tech">
 		<div class="clear clearfix">
 			<article ng-repeat="project in view_projects track by $index"
-				ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false">
-				<span> <img ng-src="{{project.image|defaultImg}}">
-				</span> 
-				<a href="project/{{project.id}}">
-					<div class="hover" ng-show="hoverEdit">
-						<p ng-bind="project.description|defaultDescription"></p>
-					</div>
+				ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false" ng-class="{'active': hoverEdit}">
+				<a href="project/{{project.id}}"> <span> <img
+						ng-src="{{project.image|defaultImg}}">
+				</span>
 				</a>
 				<h5 ng-bind="project.name"></h5>
 			</article>
