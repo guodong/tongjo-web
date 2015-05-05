@@ -758,7 +758,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth','m
 										repreate = true;
 									}
 								}
-								if(!repreate && cate[j]!=null && cate[j] != "undefined"){
+								if(!repreate && cate[j]!=null && cate[j]!='null'&& cate[j] != "undefined"){
 									cates.push(cate[j]);
 								}
 								
@@ -773,7 +773,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth','m
 					$scope.project.description = um.getContent();
 					var categorys = getCates();
 					$scope.project.categorys = [];
-					for (var i in categorys) {
+					for (var i = 0;i<categorys.length;i++) {
 						$scope.project.categorys.push(categorys[i].id);
 						console.log(categorys.length);
 					}
