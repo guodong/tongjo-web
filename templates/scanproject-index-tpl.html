@@ -8,7 +8,8 @@
 			</ol>
 			<div class="carousel-inner" role="listbox">
 				<div class="item {{fp.active}}" ng-repeat="fp in featureProject">
-					<img ng-src="{{ fp.img }}" alt="..." />
+					<a ng-if="fp.id !== -1" href="project/{{fp.id}}"><img ng-src="{{ fp.img }}" alt="..." /></a>
+					<img ng-if="fp.id === -1" ng-src="{{ fp.img }}" alt="..." />
 					<div class="carousel-caption"></div>
 				</div>
 			</div>
