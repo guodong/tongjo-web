@@ -50,7 +50,7 @@
 							<a class="btn btn-primary pull-right" id="joinone"
 								ng-show="project.parttype==1||project.parttype==2"
 								style="margin-bottom: 20px; margin-left: 20px"
-								href="/newteam/{{project.id}}" ng-disabled="!project.is_open"><span
+								href="/newteam/{{project.id}}" ng-disabled="!project.is_open||project.ods<0"><span
 								class="glyphicon glyphicon-star"></span> 组建团队</a> <a
 								class="btn btn-info pull-right" id="join"
 								ng-show="project.parttype==0||project.parttype==2"
@@ -173,7 +173,7 @@
 							发布者 <a href="/userinfodetail/{{project.creator.id}}"
 								ng-bind="project.creator.realname"></a><img title="同舟认证用户" ng-show="project.creator.is_v==1" alt="" src="/img/v.png" style="width: 15px">
 						</h3>
-						<p ng-bind="project.creator.school.name"> </p>
+						<p ng-bind="project.creator.school.name" ng-show="project.creator.is_v!=1"> </p>
 						<!-- <p>lv<span ng-bind="project.creator.degree"></span>&nbsp;<span ng-bind="project.creator.honor"></span></p> -->
 						<p ng-bind="project.creator.major.name" style="max-width:100px"></p>
 					</div>
@@ -259,7 +259,8 @@
 				var dateNow= new Date();
 				var dateDeadline = new Date(Date.parse($scope.project.deadline.replace(/-/g,"/")));
 				var openTime=dateDeadline.getTime() - dateNow.getTime();
-				$scope.project.opendays = Math.floor(openTime/(24*3600*1000));
+				
+				$scope.project.ods = $scope.project.opendays = Math.floor(openTime/(24*3600*1000));
 				if( $scope.project.opendays < 0){
 					$scope.project.daysmsg = "过期";
 					$scope.project.opendays = -$scope.project.opendays;
@@ -270,8 +271,12 @@
 			$scope.project.description = $sce
 					.trustAsHtml($scope.project.description);
 			$scope.projects = Project.query();
-			$scope.joinone = function() {console.log(Auth)
+			$scope.joinone = function() {
 				Auth.check();
+				if($scope.project.ods < 0){
+					alert("项目报名已结束");
+					return;
+				}
 				var u = JSON.parse(localStorage.user);
 				if(u.role != 'student'){
 					alert("您的身份不是学生，请完善信息后参加项目");
@@ -305,6 +310,11 @@
 			};
 			$scope.jointeam = function(team) {
 				Auth.check();
+
+				if($scope.project.ods < 0){
+					alert("项目报名已结束");
+					return;
+				}
 				var TU = $resource(API + 'team/:team_id/user/:user_id/pivot', {
 					team_id : '@team_id',
 					user_id : '@user_id'

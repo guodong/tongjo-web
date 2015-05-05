@@ -3,243 +3,32 @@
 <head>
 <title>同舟</title>
 <meta charset="utf-8" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<link rel="stylesheet" type="text/css" href="/css/site.css" />
+<link rel="stylesheet" type="text/css" href="/lib/fullpage/jquery.fullPage.css" />
+
 <script src="/lib/jquery/jquery.js"></script>
-<script src="/lib/angular/angular.js"></script>
-<script src="/lib/angular-resource/angular-resource.js"></script>
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no" />
-</head>
+
+<script type="text/javascript" src="/lib/fullpage/jquery.fullPage.min.js"></script>
 <body>
+<div id="fullpage">
+    <div class="section" style="text-align: center;background:#b9cf51"><img src="/img/WEB1.png" style="width:65%"></div>
+    <div class="section" style="text-align: center;background:#e46839"><img src="/img/WEB2.png" style="width:65%"></div>
+    <div class="section" style="text-align: center;background:#75c1cb"><img src="/img/WEB3.png" style="width:65%"></div>
+    <div class="section" style="text-align: center;background:#e9d04e;position:relative"><img src="/img/WEB4.png" style="width:65%"><a href="/scanproject" style="position:absolute;bottom:150px;color: white;right: 150px;text-decoration: none;font-size: 32px">立即开启旅程&gt;&gt;</a></div>
+</div>
+<div style="display:none"><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254922613'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/stat.php%3Fid%3D1254922613%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></div>
 <script>
-var i = 2;
-var cgfocus = function(){
-	$(".header.home").css("background-image", "url(/img/index"+i+".png)");
-	$(".header .clear section").hide();
-	$("#focus"+i).fadeIn();
-	i++;
-	i = i==4?1:i;
-};
-var p = setInterval("cgfocus()", 5000);
+$time = localStorage.time;
+if($time == 1){
+	location.href = "/scanproject";
+}else{
+	localStorage.time = 1;
+}
+$(document).ready(function() {
+    $('#fullpage').fullpage({
+    	navigation: true,
+        navigationPosition: 'right',
+    });
+});
 </script>
-	<section class="header home" ng-controller="index">
-		<div class="clear">
-			<header>
-				<a href="/" class="logo"><img alt="" src="/img/LOGO3.png" ng-bind="lo"></a>
-				<nav>
-					<a href="/login" class="signup">登陆</a> <a href="/signup" class="signup">注册</a>
-				</nav>
-				</header>
-
-			<section id="focus1">
-				<h1>十八般武艺，会四方英雄</h1>
-				<p>Make A Difference</p>
-
-				<form class="clear">
-					<a href="project/create" class="big-button home btn"
-						id="signupSubmit">发 布</a> <a href="scanproject" class="big-button home btn"
-						id="signupSubmit">参 加</a>
-				</form>
-			</section>
-			<section style="display:none" id="focus2">
-				<h1>在这里,你总会找到你自己</h1>
-				<p>Make A Difference</p>
-
-				<form class="clear">
-					<a href="project/create" class="big-button home btn"
-						id="signupSubmit">发 布</a> <a href="scanproject" class="big-button home btn"
-						id="signupSubmit">参 加</a>
-				</form>
-			</section>
-			<section style="display:none" id="focus3">
-				<h1>梦在延续，朝前方奋力奔跑</h1>
-				<p>Make A Difference</p>
-
-				<form class="clear">
-					<a href="project/create" class="big-button home btn"
-						id="signupSubmit">发 布</a> <a href="scanproject" class="big-button home btn"
-						id="signupSubmit">参 加</a>
-				</form>
-			</section>
-		</div>
-		<section class="short-list-features">
-			<ul class="clear">
-				<li><img src="/img/dengpao.png">
-					<strong>创新课题</strong>
-					<p>企业、实验室带薪让你做课题.</p></li>
-
-				<li><img src="/img/xiangmu.png">
-					<strong>学生项目</strong>
-					<p>创业、公益丰富你的大学生活</p></li>
-
-				<li><img src="/img/bisai.png">
-					<strong>比赛竞赛</strong>
-					<p>赛一赛，方显英雄本色</p></li>
-			</ul>
-		</section>
-	</section>
-	<main class="home">
-
-	<section class="tech" ng-app="projectApp" ng-controller="projectController">
-		<div class="clear">
-			<h2 class="title">典型项目</h2>
-			<p ng-show="!projectLoaded">图片加载中...</p>
-			<article ng-repeat="project in projects track by $index">
-			<span ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false">
-			 <img ng-src="{{project.image|defaultImg}}">
-			   <a href="project/{{project.id}}">
-				<div class="transparent_class" ng-show="hoverEdit">
-					<p>已报名团队：{{project.teams_count}}</p>
-					<p>个人报名：{{project.users_count}}</p>
-					<a class="small-button red" href="project/{{project.id}}">我要参加</a>
-				</div>
-				</a>
-			   </span>		
-				<h3 ng-bind="project.name"></h3>
-			</article>
-	   </div>
-	</section>
-<script>
-$(function(){
-	$(".tech span").hover(function(){
-		$(this).find("div").fadeIn();
-	},function(){
-		$(this).find("div").fadeOut();
-	})
-})
-</script>
-	<section class="flexibility">
-		<div class="clear">
-			<h2 class="title">在这里，你可以得到什么</h2>
-
-				<article>
-				<span>
-				<img src="/img/inv.png">
-				</span>
-				<h3>践行</h3>
-				<p>纸上得来终觉浅</p>
-				<p>绝知此事要躬行</p>
-				<p>百炼成才</p>
-			</article>
-			<article>
-				<span>
-				<img src="/img/cop.png">
-				</span>
-				<h3>团队</h3>
-				<p>一个人可以走的很快</p>
-				<p>一群人可以走得更远</p>
-				<p>其利断金</p>
-			</article>
-
-			
-
-			<article>
-				<span>
-				<img src="/img/grow.png">
-				</span>
-				<h3>成长</h3>
-				<p>成长不仅是能力</p>
-				<p>还有难忘的回忆 </p>
-				<p>内外兼修</p>
-			</article>
-		</div>
-	</section>
-
-	<section class="beta">
-		<div>
-			<h2 class="title medium">马上开启你的旅程吧</h2>
-			<a href="/scanproject" class="big-button grlue">Go</a>
-		</div>
-	</section>
-	</main>
-
-	<section class="footer" style="padding:20px 30px">
-		<div class="clear">
-			<div class="lists clear" style="line-height:1.4em">
-				<div>
-					<ul>
-						<li><a href="/about#/about" target="_blank">关于同舟</a></li>
-						<!-- <li><a href="https://www.getclouder.com/">意见反馈</a></li>
-						<li><a href="https://www.getclouder.com/technology">联系我们</a></li>
-						<li><a href="https://www.getclouder.com/features">联系我们</a></li> -->
-					</ul>
-				</div>
-				<div>
-					<ul>
-						<li><a href="/about#/join" target="_blank">加入我们</a></li>
-						<!-- <li><a href="#">隐私条款</a></li>
-						<li><a href="#">服务范围</a></li>
-						<li><a href="https://tutorials.getclouder.com/">免费申请</a></li> -->
-					</ul>
-				</div>
-				<div>
-					<ul>
-						<li><a href="/about#/mobile" target="_blank">移动应用</a></li>
-						<!--  <li><a href="#">服务范围</a></li>
-						<li><a href="https://www.facebook.com/getclouder" target="_blank">友情链接</a></li>
-						<li><a href="https://twitter.com/GetClouder" target="_blank">移动应用</a></li> -->
-					</ul>
-				</div>
-				<div>
-					<ul>
-						<li><a href="/about#/service" target="_blank">服务范围</a></li>
-						<!-- <li><a href="#">帮助手册</a></li>
-						<li><a href="https://www.getclouder.com/terms">招聘及广告服务</a></li> -->
-					</ul>
-				</div>
-			</div>
-			<div class="logo">
-				<figure>
-				<img src="/img/index/tongjo-qrcode.jpg"></img>
-				</figure>
-			</div>
-		</div>
-	</section>
-	<section class="footertwo">
-					<p class="text">
-					© 2014 同舟2014版权所有
-				</p>
-</section>
 </body>
-<script type="text/javascript">
-var API = 'http://api.tongjo.com/';
-  var projectApp = angular.module('projectApp', ['ngResource']);
-  projectApp.controller("projectController", ["$scope", "$resource",function ($scope, $resource) {
-		//get recommendation projects	
-		
-		$time = localStorage.time;
-		if($time == 1){
-			location.href = "http://www.tongjo.com/scanproject";
-		}else{
-			localStorage.time = 1;
-		}
-		
-		$scope.projectLoaded = false;
-		var RecomProject = $resource(API + 'project');
-		var recomProjects = RecomProject.query(function() {
-				$scope.projects = recomProjects.slice(0,4);
-				$scope.projectLoaded = true;
-		});
-  }]);			   
-  projectApp.filter('defaultImg',function(){
-	   return function(item){
-		   if(item==null || item =="")
-			   return "/img/market.png";
-		   else return "http://api.tongjo.com/files/"+item;
-	   }
-   });
-  projectApp.filter('defaultDescription',function(){
-	   return function(item){
-		   console.log("item:"+item);
-		   if(item==null || item =="")
-			   return "";
-		   else  return item;
-		   
-	   }
-  });
-  projectApp.controller("index", ["$scope", function($scope){
-	  $scope.lo = '123';
-  }]);
-</script>
 </html>
