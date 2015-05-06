@@ -782,6 +782,7 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth','m
 					});
 				};
 				
+				/* 添加项目分类 */
 				$scope.selectcate = function(cate) {
 					if($scope.selcates.length > 4) {
 						return;
@@ -792,11 +793,13 @@ require(['angular','angular-route', 'angular-resource','ui-bootstrap', 'Auth','m
 					getCates();
 				};
 				
-				/* $scope.delcate = function(index) {
-					$scope.selcates[index].select = false;
-					$scope.selcates.remove(index);
+				
+				/* 删除项目分类 */
+				$scope.delcate = function(cate) {
+					cate.select = false;
+					getCates();
 
-				}; */
+				};
 				
 				/* 以下为弹出框部分 */
 				$scope.selecttag =  new Array();
