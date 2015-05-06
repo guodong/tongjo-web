@@ -109,11 +109,11 @@
 	}; */
 
 
-	require([ 'angular', 'angular-route', 'angular-resource' ], function(
-			angular) {
+	require([ 'angular', 'Auth', 'angular-route', 'angular-resource' ], function(
+			angular, Auth) {
 		var app = angular.module('newteamApp', [ 'ngRoute', 'ngResource' ]);
 		app.controller('newteamController', function($scope,$resource) {
-			
+			Auth.check();
 			$('.datepicker').datepicker({
 				startDate: '1d',
 				autoclose: true,

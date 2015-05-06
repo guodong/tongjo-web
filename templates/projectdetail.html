@@ -47,10 +47,10 @@
 					</div>
 					<div ng-show="isActive(1,selectedTab)" class="teamview" id="team" style="margin-top:-45px;padding-top:80px;">
 						<section>
-							<a class="btn btn-primary pull-right" id="joinone"
+							<a class="btn btn-primary pull-right" ng-click="newteam()"
 								ng-show="project.parttype==1||project.parttype==2"
 								style="margin-bottom: 20px; margin-left: 20px"
-								href="/newteam/{{project.id}}" ng-disabled="!project.is_open||project.ods<0"><span
+								ng-disabled="!project.is_open||project.ods<0"><span
 								class="glyphicon glyphicon-star"></span> 组建团队</a> <a
 								class="btn btn-info pull-right" id="join"
 								ng-show="project.parttype==0||project.parttype==2"
@@ -71,7 +71,7 @@
 										</td>
 										<td>
 											<p class="text-primary">
-												已有：<span ng-bind="v.members_count"></span>人
+												已有：<span ng-bind="v.members_permited_count"></span>人
 											</p>
 											<p class="text-muted">
 												共需：<span ng-bind="v.teammember_all"></span>人
@@ -271,6 +271,10 @@
 			$scope.project.description = $sce
 					.trustAsHtml($scope.project.description);
 			$scope.projects = Project.query();
+			$scope.newteam = function(){
+				Auth.check();
+				location.href="/newteam/"+$scope.project.id;
+			};
 			$scope.joinone = function() {
 				Auth.check();
 				if($scope.project.ods < 0){
@@ -324,6 +328,10 @@
 					user_id : localStorage.uid,
 				});
 				tu.$save(function(d) {
+					if(d.error == 2){
+						alert("团队已经组建完毕，不可加入");
+						return;
+					}
 					if (d.error) {
 						alert("你已经申请过了");
 						return;
