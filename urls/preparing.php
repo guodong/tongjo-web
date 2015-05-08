@@ -1,6 +1,6 @@
 <?php
 return array(
-        '#^/team/\d+#' => 'teamdetail',
+        '#^/team/\w+#' => 'teamdetail',
         '#^/newteam/\d#' => 'newteam',
 		'#^/userinfodetail/\d#' => 'userinfo-detail',
 		'#^/sharemodal$#' => 'sharemodal',

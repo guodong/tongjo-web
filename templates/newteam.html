@@ -137,7 +137,7 @@
 				t = new Team($scope.team);
 				t.$save(null,function(team){ 
 		            console.log(team);
-		            if(team.id > 0){
+		            if(team.id){
 		            	location.href = "/team/"+team.id;
 		            }
 		        });

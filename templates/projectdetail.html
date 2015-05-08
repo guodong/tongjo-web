@@ -215,7 +215,7 @@
 </script>
 
 <script>
-	var project_id = location.pathname.replace(/\/project\/(\d+)$/, '$1');
+	var project_id = location.pathname.replace(/\/project\/(.+)$/, '$1');
 	require([ 'angular', 'angular-resource', 'Auth' ], function(angular, angular_resource, Auth) {
 		var app = angular.module('me', [ 'ngResource' ]);
 		app.filter('trusted', [ '$sce', function($sce) {
