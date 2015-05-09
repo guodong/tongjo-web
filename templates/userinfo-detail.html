@@ -205,7 +205,7 @@
 	require(
 			[ 'angular', 'angular-route', 'angular-resource' ],
 			function(angular) {
-				var uid = location.pathname.replace(/\/.*\/(\d+)$/, '$1');
+				var uid = location.pathname.replace(/\/.*\/(.+)$/, '$1');
 				var app = angular.module('userinfoApp', [ 'ngRoute',
 						'ngResource' ]);
 				app
